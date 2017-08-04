@@ -6,11 +6,30 @@ namespace BetterConsoleTables
 {
     public class TableConfiguration
     {
+        public TableConfiguration() { }
+        public TableConfiguration(Style style)
+        {
+            switch (style)
+            {
+                case Style.Markdown:
+                    SetMarkdown();
+                    break;
+                case Style.Simple:
+                    SetSimple();
+                    break;
+                case Style.MySql:
+                    SetMySql();
+                    break;
+
+            }
+        }
+
         public bool hasTopRow = true;
         public bool hasBottomRow = true;
         public bool hasHeaderRow = true;
         public bool hasInnerRows = true;
 
+        public bool hasOuterColumns = true;
         public bool hasInnerColumns = true;
 
         /// <summary>
@@ -38,32 +57,53 @@ namespace BetterConsoleTables
         /// </summary>
         public char headerRowColumnDelimiter = '-';
 
+        private void SetMarkdown()
+        {
+            hasInnerRows = false;
+            hasTopRow = false;
+            hasBottomRow = false;
+            columnDelimiter = '|';
+            rowDivider = ' ';
+            rowColumsDelimiter = '|';
+            headerRowColumnDelimiter = '|';
+        }
+
+        private void SetSimple()
+        {
+            hasInnerRows = false;
+            hasTopRow = false;
+            hasBottomRow = false;
+            hasOuterColumns = false;
+            columnDelimiter = ' ';
+            rowDivider = ' ';
+            headerRowColumnDelimiter = ' ';
+        }
+
+        private void SetMySql()
+        {
+            columnDelimiter = '|';
+            rowColumsDelimiter = '+';
+            headerRowColumnDelimiter = '+';
+        } 
+
+        public static TableConfiguration Default()
+        {
+            return new TableConfiguration(Style.Default);
+        }
+
         public static TableConfiguration Markdown()
         {
-            return new TableConfiguration()
-            {
-                hasInnerRows = false,
-                hasTopRow = false,
-                hasBottomRow = false,
-                columnDelimiter = '|',
-                rowDivider = ' ',
-                rowColumsDelimiter = '|',
-                headerRowColumnDelimiter = '|'
-            };
+            return new TableConfiguration(Style.Markdown);
         }
 
         public static TableConfiguration Simple()
         {
-            return new TableConfiguration()
-            {
-                hasInnerRows = false,
-                hasTopRow = false,
-                hasBottomRow = false,
-                hasInnerColumns = false,
-                columnDelimiter = ' ',
-                rowDivider = ' ',
-                headerRowColumnDelimiter = ' '
-            };
+            return new TableConfiguration(Style.Simple);
+        }
+
+        public static TableConfiguration MySql()
+        {
+            return new TableConfiguration(Style.MySql);
         }
     }
 }

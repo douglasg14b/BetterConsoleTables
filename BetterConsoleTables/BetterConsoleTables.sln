@@ -5,9 +5,12 @@ VisualStudioVersion = 15.0.26430.15
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BetterConsoleTables", "BetterConsoleTables.csproj", "{97A09A23-3E34-482D-9852-0C5E7451A466}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetterConsoleTables_Example", "..\BetterConsoleTables_Example\BetterConsoleTables_Example.csproj", "{38F959D5-7375-40F9-B7AD-92D2C9E8BD61}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BetterConsoleTables_Example", "..\BetterConsoleTables_Example\BetterConsoleTables_Example.csproj", "{38F959D5-7375-40F9-B7AD-92D2C9E8BD61}"
 EndProject
 Global
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -24,5 +27,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
 	EndGlobalSection
 EndGlobal

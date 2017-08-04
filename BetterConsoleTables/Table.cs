@@ -164,7 +164,16 @@ namespace BetterConsoleTables
         {
             string output = String.Empty;
 
-            for (int i = 0; i < m_columns.Count; i++)
+            if (Config.hasOuterColumns)
+            {
+                output = String.Concat(output, Config.columnDelimiter, " ", values[0].ToString().PadRight(columnLengths[0]), " ");
+            }
+            else
+            {
+                output = String.Concat(output, " ", values[0].ToString().PadRight(columnLengths[0]), " ");
+            }
+
+            for (int i = 1; i < m_columns.Count; i++)
             {
                 output = String.Concat(output, Config.columnDelimiter, " ", values[i].ToString().PadRight(columnLengths[i]), " ");
             }
