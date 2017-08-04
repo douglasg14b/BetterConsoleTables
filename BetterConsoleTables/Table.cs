@@ -90,15 +90,16 @@ namespace BetterConsoleTables
             StringBuilder builder = new StringBuilder();
 
             int[] columnLengths = GetColumnLengths();
-            string formattedHeaders = FormatRow(columnLengths, m_columns);
-            string[] formattedRows = FormatRows(columnLengths, m_rows);
+            string formattedHeaders = FormatRow(columnLengths, m_columns, Config.innerColumnDelimiter, Config.outerColumnDelimiter);
+            string[] formattedRows = FormatRows(columnLengths, m_rows, Config.innerColumnDelimiter, Config.outerColumnDelimiter);
 
-            string headerDivider = GenerateDivider(columnLengths, Config.headerRowColumnDelimiter, Config.headerRowDivider);
-            string divider = GenerateDivider(columnLengths, Config.rowColumsDelimiter, Config.rowDivider);
+            string headerDivider = GenerateDivider(columnLengths, Config.headerBottomIntersection, Config.headerRowDivider, Config.outerLeftVerticalIntersection, Config.outerRightVerticalIntersection);
+            string innerDivider = GenerateDivider(columnLengths, Config.innerIntersection, Config.innerRowDivider, Config.outerLeftVerticalIntersection, Config.outerRightVerticalIntersection);
 
             if (Config.hasTopRow)
             {
-                builder.AppendLine(headerDivider);
+                string divider = GenerateDivider(columnLengths, Config.headerTopIntersection, Config.headerRowDivider, Config.topLeftCorner, Config.topRightCorner);
+                builder.AppendLine(divider);
             }
 
             builder.AppendLine(formattedHeaders);
@@ -114,13 +115,14 @@ namespace BetterConsoleTables
             {
                 if (Config.hasInnerRows)
                 {
-                    builder.AppendLine(divider);
+                    builder.AppendLine(innerDivider);
                 }
                 builder.AppendLine(formattedRows[i]);
             }
 
             if (Config.hasBottomRow)
             {
+                string divider = GenerateDivider(columnLengths, Config.outerBottomHorizontalIntersection, Config.outerRowDivider, Config.bottomLeftCorner, Config.bottomRightCorner);
                 builder.AppendLine(divider);
             }
 
@@ -160,13 +162,26 @@ namespace BetterConsoleTables
             return output;
         }
 
+        private string[] FormatRows(int[] columnLengths, IList<object[]> values, char innerDelimiter, char outerDelimiter)
+        {
+            string[] output = new string[values.Count];
+            for (int i = 0; i < values.Count; i++)
+            {
+                output[i] = FormatRow(columnLengths, values[i], innerDelimiter, outerDelimiter);
+            }
+            return output;
+        }
+
+        /// <summary>
+        /// Formats a row with the default delimiter fields
+        /// </summary>
         private string FormatRow(int[] columnLengths, IList<object> values)
         {
             string output = String.Empty;
 
             if (Config.hasOuterColumns)
             {
-                output = String.Concat(output, Config.columnDelimiter, " ", values[0].ToString().PadRight(columnLengths[0]), " ");
+                output = String.Concat(output, Config.innerColumnDelimiter, " ", values[0].ToString().PadRight(columnLengths[0]), " ");
             }
             else
             {
@@ -175,9 +190,9 @@ namespace BetterConsoleTables
 
             for (int i = 1; i < m_columns.Count; i++)
             {
-                output = String.Concat(output, Config.columnDelimiter, " ", values[i].ToString().PadRight(columnLengths[i]), " ");
+                output = String.Concat(output, Config.innerColumnDelimiter, " ", values[i].ToString().PadRight(columnLengths[i]), " ");
             }
-            output = String.Concat(output, Config.columnDelimiter);
+            output = String.Concat(output, Config.innerColumnDelimiter);
             return output;
         }
 
@@ -193,6 +208,20 @@ namespace BetterConsoleTables
             return output;
         }
 
+        private string FormatRow(int[] columnLengths, IList<object> values, char innerDelimiter, char outerDelimiter)
+        {
+            string output = String.Empty;
+            output = String.Concat(output, outerDelimiter, " ", values[0].ToString().PadRight(columnLengths[0]), " ");
+            for (int i = 1; i < m_columns.Count; i++)
+            {
+                output = String.Concat(output, innerDelimiter, " ", values[i].ToString().PadRight(columnLengths[i]), " ");
+            }
+            output = String.Concat(output, outerDelimiter);
+            return output;
+        }
+
+
+
         private string GenerateDivider(int[] columnLengths, char delimiter, char divider)
         {
             string output = String.Empty;
@@ -201,6 +230,33 @@ namespace BetterConsoleTables
                 output = String.Concat(output, delimiter, String.Empty.PadRight(columnLengths[i] + 2, divider)); //+2 for the 2 spaces around the delimiters
             }
             output = String.Concat(output, delimiter);
+            return output;
+        }
+       
+        private string GenerateDivider(int[] columnLengths, char innerDelimiter, char divider, char outerDelimiter)
+        {
+            string output = String.Empty;
+
+            output = String.Concat(output, outerDelimiter, String.Empty.PadRight(columnLengths[0] + 2, divider));
+            for (int i = 1; i < m_columns.Count; i++)
+            {
+                output = String.Concat(output, innerDelimiter, String.Empty.PadRight(columnLengths[i] + 2, divider)); //+2 for the 2 spaces around the delimiters
+            }
+            output = String.Concat(output, outerDelimiter);
+            return output;
+        }
+
+        //Top/bottom generator
+        private string GenerateDivider(int[] columnLengths, char innerDelimiter, char divider, char left, char right)
+        {
+            string output = String.Empty;
+
+            output = String.Concat(output, left, String.Empty.PadRight(columnLengths[0] + 2, divider));
+            for (int i = 1; i < m_columns.Count; i++)
+            {
+                output = String.Concat(output, innerDelimiter, String.Empty.PadRight(columnLengths[i] + 2, divider)); //+2 for the 2 spaces around the delimiters
+            }
+            output = String.Concat(output, right);
             return output;
         }
 
@@ -243,5 +299,11 @@ namespace BetterConsoleTables
         }
 
         #endregion
+    }
+
+    enum Side
+    {
+        top = 0,
+        bottom = 1
     }
 }

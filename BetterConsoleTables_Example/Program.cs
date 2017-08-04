@@ -1,6 +1,7 @@
 ﻿using System;
 using BetterConsoleTables;
 using System.Diagnostics;
+using System.Text;
 
 namespace BetterConsoleTables_Example
 {
@@ -8,8 +9,15 @@ namespace BetterConsoleTables_Example
     {
         static void Main(string[] args)
         {
+            RunPerformanceTest();
+
+            Console.ReadLine();
+        }
+
+        private static void RunPerformanceTest()
+        {
+            Console.OutputEncoding = Encoding.UTF8;
             Stopwatch stopwatch = new Stopwatch();
-            //stopwatch.Start();
             long total = 0;
             for(int i = 0; i < 100000; i++)
             {
@@ -17,7 +25,7 @@ namespace BetterConsoleTables_Example
                 stopwatch.Restart();
 
                 Table table = new Table("One", "Two", "Three");
-                table.Config = TableConfiguration.MySql();
+                table.Config = TableConfiguration.Unicode();
                 table.AddRow("1", "2", "3");
                 table.AddRow("Short", "item", "Here");
                 table.AddRow("Longer items go here", "stuff", "stuff");
@@ -28,14 +36,30 @@ namespace BetterConsoleTables_Example
                 Console.WriteLine(i);
             }
             Console.WriteLine(total/100000);
+        }
 
-            //Console.WriteLine(stopwatch.ElapsedMilliseconds);
-            //stopwatch.Restart();
+        private static void ShowTestTables()
+        {
+            Table table = new Table("One", "Two", "Three");
+            table.AddRow("1", "2", "3");
+            table.AddRow("Short", "item", "Here");
+            table.AddRow("Longer items go here", "stuff", "stuff");
 
-            //string tableString = table.ToString();
-            //Console.Write(tableString);
-            //Console.Write(stopwatch.ElapsedMilliseconds);
-            Console.ReadLine();
+            table.Config = TableConfiguration.Default();
+            Console.Write(table.ToString());
+            Console.WriteLine();
+            table.Config = TableConfiguration.Markdown();
+            Console.Write(table.ToString());
+            Console.WriteLine();
+            table.Config = TableConfiguration.MySql();
+            Console.Write(table.ToString());
+            Console.WriteLine();
+            table.Config = TableConfiguration.MySqlSimple();
+            Console.Write(table.ToString());
+            Console.WriteLine();
+            table.Config = TableConfiguration.Unicode();
+            Console.Write(table.ToString());
+            Console.WriteLine();
         }
     }
 }
