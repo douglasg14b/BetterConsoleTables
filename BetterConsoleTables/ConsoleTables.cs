@@ -15,6 +15,7 @@ namespace BetterConsoleTables
         Simple = 2,
         MySql = 3,
         MySqlSimple = 4,
-        Unicode = 5
+        Unicode = 5,
+        UnicodeAlt = 6
     }
 }

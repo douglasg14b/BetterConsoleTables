@@ -9,7 +9,8 @@ namespace BetterConsoleTables_Example
     {
         static void Main(string[] args)
         {
-            RunPerformanceTest();
+
+            ShowExampleTables();
 
             Console.ReadLine();
         }
@@ -38,7 +39,7 @@ namespace BetterConsoleTables_Example
             Console.WriteLine(total/100000);
         }
 
-        private static void ShowTestTables()
+        private static void ShowExampleTables()
         {
             Table table = new Table("One", "Two", "Three");
             table.AddRow("1", "2", "3");
@@ -58,6 +59,9 @@ namespace BetterConsoleTables_Example
             Console.Write(table.ToString());
             Console.WriteLine();
             table.Config = TableConfiguration.Unicode();
+            Console.Write(table.ToString());
+            Console.WriteLine();
+            table.Config = TableConfiguration.UnicodeAlt();
             Console.Write(table.ToString());
             Console.WriteLine();
         }

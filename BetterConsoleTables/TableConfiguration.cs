@@ -27,6 +27,9 @@ namespace BetterConsoleTables
                 case Style.Unicode:
                     SetUnicode();
                     break;
+                case Style.UnicodeAlt:
+                    SetUnicodeAlt();
+                    break;
             }
             SetDefaults();
         }
@@ -156,6 +159,37 @@ namespace BetterConsoleTables
         {
             hasInnerRows = false;
 
+            headerTopIntersection = '┬';
+            headerBottomIntersection = '┼';
+
+            outerLeftVerticalIntersection = '├';
+            outerRightVerticalIntersection = '┤';
+            outerBottomHorizontalIntersection = '┴';
+
+            topLeftCorner = '┌';
+            topRightCorner = '┐';
+            bottomLeftCorner = '└';
+            bottomRightCorner = '┘';
+
+            innerColumnDelimiter = '│';
+            outerColumnDelimiter = '│';
+            innerRowDivider = '─';
+
+            headerRowDivider = '─';
+            headerTopIntersection = '┬';
+            headerBottomIntersection = '┼';
+            innerIntersection = '┼';
+
+            if (!Console.OutputEncoding.Equals(Encoding.UTF8))
+            {
+                Console.OutputEncoding = Encoding.UTF8;
+            }
+        }
+
+        private void SetUnicodeAlt()
+        {
+            hasInnerRows = false;
+
             headerTopIntersection = '╦';
             headerBottomIntersection = '╬';
 
@@ -177,7 +211,7 @@ namespace BetterConsoleTables
             headerBottomIntersection = '╬';
             innerIntersection = '╬';
 
-            if (Console.OutputEncoding.Equals(Encoding.UTF8.EncodingName))
+            if (!Console.OutputEncoding.Equals(Encoding.UTF8))
             {
                 Console.OutputEncoding = Encoding.UTF8;
             }
@@ -211,6 +245,11 @@ namespace BetterConsoleTables
         public static TableConfiguration Unicode()
         {
             return new TableConfiguration(Style.Unicode);
+        }
+
+        public static TableConfiguration UnicodeAlt()
+        {
+            return new TableConfiguration(Style.UnicodeAlt);
         }
     }
 }
