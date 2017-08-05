@@ -25,9 +25,25 @@ namespace BetterConsoleTables
             }
         }
 
+        /// <summary>
+        /// Gets the row with the greatest number of elements
+        /// </summary>
+        public int LongestRow
+        {
+            get
+            {
+                int max = 0;
+                for(int i = 0; i < m_rows.Count; i++)
+                {
+                    max = m_rows[i].Length > max ? m_rows[i].Length : max;
+                }
+                return max;
+            }
+        }
+
         public TableConfiguration Config { get; set; }
 
-        #region Constructors & Addings
+        #region Constructors
 
         public Table() : this(new TableConfiguration()) { }
 
@@ -36,8 +52,8 @@ namespace BetterConsoleTables
             Config = config;
         }
 
-        public Table(params object[] columns)
-            : this(new TableConfiguration())
+        public Table(TableConfiguration config, params object[] columns)
+            : this(config)
         {
             if (columns == null)
             {
@@ -48,6 +64,13 @@ namespace BetterConsoleTables
             m_rows = new List<object[]>();
 
         }
+
+        public Table(params object[] columns)
+            : this(new TableConfiguration(), columns){}
+
+        #endregion
+
+        #region Public Method API
 
         public Table AddRow(params object[] values)
         {
@@ -62,11 +85,17 @@ namespace BetterConsoleTables
                 throw new Exception("No columns exist, please add columns before adding rows");
             }
 
-            if(Columns.Count != values.Length)
+            if(values.Length > Columns.Count)
             {
                 throw new Exception(
-                    $"The number columns in the row ({Columns.Count}) does not match the values ({values.Length}");
+                    $"The number columns in the row ({values.Length}) is greater than the number of columns in the table ({m_columns.Count}");
             }
+
+            if (values.Length < Columns.Count)
+            {
+                ResizeRow(ref values, Columns.Count);
+            }
+
             m_rows.Add(values);
 
             return this;
@@ -75,6 +104,34 @@ namespace BetterConsoleTables
         public Table AddRows(IEnumerable<object[]> rows)
         {
             m_rows.AddRange(rows);
+            return this;
+        }
+
+        public Table AddColumn(object title)
+        {
+            if(m_rows.Count > 0 && LongestRow == m_columns.Count)
+            {
+                m_columns.Add(title);
+                IncrimentRowElements(1);
+            }
+            else
+            {
+                m_columns.Add(title);
+            }
+            return this;
+        }
+
+        public Table AddColumns(params object[] columns)
+        {
+            if (m_rows.Count > 0 && LongestRow == m_columns.Count)
+            {
+                m_columns.AddRange(columns);
+                IncrimentRowElements(columns.Length);
+            }
+            else
+            {
+                m_columns.AddRange(columns);
+            }
             return this;
         }
 
@@ -299,6 +356,33 @@ namespace BetterConsoleTables
         }
 
         #endregion
+
+        //More expensive than using a list, but should rarely be needed
+        private void IncrimentRowElements(int incriments)
+        {
+            for(int i = 0; i < m_rows.Count; i++)
+            {
+                object[] array = m_rows[i];
+                int length = array.Length;
+                Array.Resize(ref array, length + incriments);
+                m_rows[i] = array;
+                for(int j = length; j < m_rows[i].Length; j++)
+                {
+                    m_rows[i][j] = String.Empty;
+                }
+            }
+        }
+
+        private void ResizeRow(ref object[] row, int newSize)
+        {
+            int length = row.Length;
+            Array.Resize(ref row, newSize);
+            for(int i = length; i < row.Length; i++)
+            {
+                row[i] = String.Empty;
+            }
+        }
+
     }
 
     enum Side

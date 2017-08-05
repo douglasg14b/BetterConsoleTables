@@ -9,18 +9,25 @@ namespace BetterConsoleTables_Example
     {
         static void Main(string[] args)
         {
+            RunPerformanceTest();
+            /*Table table = new Table("One", "Two", "Three", "Four");
+            table.AddRow("1", "2", "3");
+            table.AddRow("Short", "item", "Here");
+            table.AddRow("Longer items go here", "stuff", "stuff");
 
-            ShowExampleTables();
-
+            table.Config = TableConfiguration.Default();
+            Console.Write(table.ToString());
+            Console.WriteLine();*/
             Console.ReadLine();
         }
 
         private static void RunPerformanceTest()
         {
+            int iterations = 25000;
             Console.OutputEncoding = Encoding.UTF8;
             Stopwatch stopwatch = new Stopwatch();
             long total = 0;
-            for(int i = 0; i < 100000; i++)
+            for(int i = 0; i < iterations; i++)
             {
                 Console.SetCursorPosition(0, 0);
                 stopwatch.Restart();
@@ -36,7 +43,7 @@ namespace BetterConsoleTables_Example
                 total += stopwatch.ElapsedTicks;
                 Console.WriteLine(i);
             }
-            Console.WriteLine(total/100000);
+            Console.WriteLine(total/ iterations);
         }
 
         private static void ShowExampleTables()
