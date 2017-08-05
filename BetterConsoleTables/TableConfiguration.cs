@@ -34,6 +34,9 @@ namespace BetterConsoleTables
             SetDefaults();
         }
 
+        public bool wrapText = false;
+        public int textWrapLimit = 25;
+
         public bool hasTopRow = true;
         public bool hasBottomRow = true;
         public bool hasHeaderRow = true;
