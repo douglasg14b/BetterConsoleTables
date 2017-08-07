@@ -250,7 +250,7 @@ namespace BetterConsoleTables
                 output = String.Concat(output, Config.innerColumnDelimiter, " ", values[i].ToString().PadRight(columnLengths[i]), " ");
             }
             output = String.Concat(output, Config.innerColumnDelimiter);
-            return output;
+            return PadRow(output);
         }
 
         private string FormatRow(int[] columnLengths, IList<object> values, char delimiter)
@@ -262,7 +262,7 @@ namespace BetterConsoleTables
                 output = String.Concat(output, delimiter, " ", values[i].ToString().PadRight(columnLengths[i]), " ");
             }
             output = String.Concat(output, delimiter);
-            return output;
+            return PadRow(output);
         }
 
         private string FormatRow(int[] columnLengths, IList<object> values, char innerDelimiter, char outerDelimiter)
@@ -274,7 +274,7 @@ namespace BetterConsoleTables
                 output = String.Concat(output, innerDelimiter, " ", values[i].ToString().PadRight(columnLengths[i]), " ");
             }
             output = String.Concat(output, outerDelimiter);
-            return output;
+            return PadRow(output);
         }
 
 
@@ -287,7 +287,7 @@ namespace BetterConsoleTables
                 output = String.Concat(output, delimiter, String.Empty.PadRight(columnLengths[i] + 2, divider)); //+2 for the 2 spaces around the delimiters
             }
             output = String.Concat(output, delimiter);
-            return output;
+            return PadRow(output);
         }
        
         private string GenerateDivider(int[] columnLengths, char innerDelimiter, char divider, char outerDelimiter)
@@ -300,7 +300,7 @@ namespace BetterConsoleTables
                 output = String.Concat(output, innerDelimiter, String.Empty.PadRight(columnLengths[i] + 2, divider)); //+2 for the 2 spaces around the delimiters
             }
             output = String.Concat(output, outerDelimiter);
-            return output;
+            return PadRow(output);
         }
 
         //Top/bottom generator
@@ -314,33 +314,23 @@ namespace BetterConsoleTables
                 output = String.Concat(output, innerDelimiter, String.Empty.PadRight(columnLengths[i] + 2, divider)); //+2 for the 2 spaces around the delimiters
             }
             output = String.Concat(output, right);
-            return output;
+            return PadRow(output);
         }
 
-
-        //Unused now?
-        private string[][] PadRows(int[] columnLengths, IList<object[]> values)
+        private string PadRow(string row)
         {
-            string[][] output = new string[values.Count][];
-            for(int i = 0; i < values.Count; i++)
+            if(row.Length < Console.WindowWidth)
             {
-                output[i] = PadRow(columnLengths, values[i]);
+                return row.PadRight(Console.WindowWidth - 1);
             }
-            return output;
+            else
+            {
+                Console.WindowWidth = row.Length + 1;
+                return row;
+            }
         }
 
-        //Unused now?
-        private string[] PadRow(int[] columnLengths, IList<object> values)
-        {
-            string[] output = new string[m_columns.Count];
 
-            for(int i = 0; i < m_columns.Count; i++)
-            {
-                output[i] = String.Concat(values[i].ToString().PadRight(columnLengths[i]));
-            }
-
-            return output;
-        }
 
         //Potentially will be unused.
         private string GetColumnsFormat(int[] columnLengths, char delimiter = '|')
@@ -357,6 +347,7 @@ namespace BetterConsoleTables
 
         #endregion
 
+        //Unused, will require re-thinking how tables are generated
         private string WrapText(string text)
         {
             int limit = 20;
