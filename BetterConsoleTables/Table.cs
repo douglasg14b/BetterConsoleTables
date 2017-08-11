@@ -144,46 +144,8 @@ namespace BetterConsoleTables
         /// </summary>
         public override string ToString()
         {
-            StringBuilder builder = new StringBuilder();
-
             int[] columnLengths = GetColumnLengths();
-            string formattedHeaders = FormatRow(columnLengths, m_columns, Config.innerColumnDelimiter, Config.outerColumnDelimiter);
-            string[] formattedRows = FormatRows(columnLengths, m_rows, Config.innerColumnDelimiter, Config.outerColumnDelimiter);
-
-            string headerDivider = GenerateDivider(columnLengths, Config.headerBottomIntersection, Config.headerRowDivider, Config.outerLeftVerticalIntersection, Config.outerRightVerticalIntersection);
-            string innerDivider = GenerateDivider(columnLengths, Config.innerIntersection, Config.innerRowDivider, Config.outerLeftVerticalIntersection, Config.outerRightVerticalIntersection);
-
-            if (Config.hasTopRow)
-            {
-                string divider = GenerateDivider(columnLengths, Config.headerTopIntersection, Config.headerRowDivider, Config.topLeftCorner, Config.topRightCorner);
-                builder.AppendLine(divider);
-            }
-
-            builder.AppendLine(formattedHeaders);
-
-            if (Config.hasHeaderRow)
-            {
-                builder.AppendLine(headerDivider);
-            }
-
-            builder.AppendLine(formattedRows[0]);
-
-            for (int i = 1; i < formattedRows.Length; i++)
-            {
-                if (Config.hasInnerRows)
-                {
-                    builder.AppendLine(innerDivider);
-                }
-                builder.AppendLine(formattedRows[i]);
-            }
-
-            if (Config.hasBottomRow)
-            {
-                string divider = GenerateDivider(columnLengths, Config.outerBottomHorizontalIntersection, Config.outerRowDivider, Config.bottomLeftCorner, Config.bottomRightCorner);
-                builder.AppendLine(divider);
-            }
-
-            return builder.ToString();
+            return ToString(columnLengths);
         }
 
         public string ToString(int[] columnLengths)

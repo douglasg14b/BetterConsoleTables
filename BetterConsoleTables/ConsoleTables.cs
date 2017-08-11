@@ -18,9 +18,29 @@ namespace BetterConsoleTables
             m_tables = new List<Table>();
         }
 
+        public ConsoleTables(params Table[] tables)
+        {
+            m_tables = new List<Table>(tables);
+        }
+
+        public ConsoleTables(IEnumerable<Table> tables)
+        {
+            m_tables = new List<Table>(tables);
+        }
+
         public ConsoleTables AddTable(Table table)        
         {
             m_tables.Add(table);
+            return this;
+        }
+        public ConsoleTables AddTables(params Table[] tables)
+        {
+            m_tables.AddRange(tables);
+            return this;
+        }
+        public ConsoleTables AddTables(IEnumerable<Table> tables)
+        {
+            m_tables.AddRange(tables);
             return this;
         }
 
@@ -30,6 +50,7 @@ namespace BetterConsoleTables
             {
                 throw new InvalidCastException("No tables exist");
             }
+
             StringBuilder builder = new StringBuilder();
             int[] columnLengths = GetMatchingColumnWidths();
 
