@@ -186,11 +186,54 @@ namespace BetterConsoleTables
             return builder.ToString();
         }
 
+        public string ToString(int[] columnLengths)
+        {
+            StringBuilder builder = new StringBuilder();
+
+            string formattedHeaders = FormatRow(columnLengths, m_columns, Config.innerColumnDelimiter, Config.outerColumnDelimiter);
+            string[] formattedRows = FormatRows(columnLengths, m_rows, Config.innerColumnDelimiter, Config.outerColumnDelimiter);
+
+            string headerDivider = GenerateDivider(columnLengths, Config.headerBottomIntersection, Config.headerRowDivider, Config.outerLeftVerticalIntersection, Config.outerRightVerticalIntersection);
+            string innerDivider = GenerateDivider(columnLengths, Config.innerIntersection, Config.innerRowDivider, Config.outerLeftVerticalIntersection, Config.outerRightVerticalIntersection);
+
+            if (Config.hasTopRow)
+            {
+                string divider = GenerateDivider(columnLengths, Config.headerTopIntersection, Config.headerRowDivider, Config.topLeftCorner, Config.topRightCorner);
+                builder.AppendLine(divider);
+            }
+
+            builder.AppendLine(formattedHeaders);
+
+            if (Config.hasHeaderRow)
+            {
+                builder.AppendLine(headerDivider);
+            }
+
+            builder.AppendLine(formattedRows[0]);
+
+            for (int i = 1; i < formattedRows.Length; i++)
+            {
+                if (Config.hasInnerRows)
+                {
+                    builder.AppendLine(innerDivider);
+                }
+                builder.AppendLine(formattedRows[i]);
+            }
+
+            if (Config.hasBottomRow)
+            {
+                string divider = GenerateDivider(columnLengths, Config.outerBottomHorizontalIntersection, Config.outerRowDivider, Config.bottomLeftCorner, Config.bottomRightCorner);
+                builder.AppendLine(divider);
+            }
+
+            return builder.ToString();
+        }
+
         #endregion
 
         #region Generation Utility
 
-        private int[] GetColumnLengths()
+        internal int[] GetColumnLengths()
         {
             int[] lengths = new int[m_columns.Count];
             for(int i = 0; i < m_columns.Count; i++)
@@ -303,7 +346,6 @@ namespace BetterConsoleTables
             return PadRow(output);
         }
 
-        //Top/bottom generator
         private string GenerateDivider(int[] columnLengths, char innerDelimiter, char divider, char left, char right)
         {
             string output = String.Empty;
@@ -317,6 +359,7 @@ namespace BetterConsoleTables
             return PadRow(output);
         }
 
+        //Pads the row out to the edge of the console, if row is wider than console expand console window
         private string PadRow(string row)
         {
             if(row.Length < Console.WindowWidth)
@@ -329,8 +372,6 @@ namespace BetterConsoleTables
                 return row;
             }
         }
-
-
 
         //Potentially will be unused.
         private string GetColumnsFormat(int[] columnLengths, char delimiter = '|')

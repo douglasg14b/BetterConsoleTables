@@ -10,7 +10,7 @@ namespace BetterConsoleTables_Example
     {
         static void Main(string[] args)
         {
-            ShowExampleTables();
+            ShowExmapleMultiTable();
             Console.ReadLine();
         }
 
@@ -248,6 +248,26 @@ namespace BetterConsoleTables_Example
             table.Config = TableConfiguration.UnicodeAlt();
             Console.Write(table.ToString());
             Console.WriteLine();
+        }
+
+        private static void ShowExmapleMultiTable()
+        {
+            Table table = new Table("One", "Two", "Three");
+            table.Config = TableConfiguration.Default();
+            table.AddRow("1", "2", "3");
+            table.AddRow("Short", "item", "Here");
+            table.AddRow("Longer items go here", "stuff stuff", "stuff");
+
+            Table table2 = new Table("One", "Two", "Three", "Four");
+            table2.Config = TableConfiguration.UnicodeAlt();
+            table2.AddRow("One", "Two", "Three");
+            table2.AddRow("Short", "item", "Here", "A fourth column!!!");
+            table2.AddRow("stuff", "longer stuff", "even longer stuff in this cell");
+
+            ConsoleTables tables = new ConsoleTables();
+            tables.AddTable(table);
+            tables.AddTable(table2);
+            Console.Write(tables.ToString());
         }
     }
 }
