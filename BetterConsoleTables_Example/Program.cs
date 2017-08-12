@@ -10,7 +10,7 @@ namespace BetterConsoleTables_Example
     {
         static void Main(string[] args)
         {
-            ShowExmapleMultiTable();
+            ShowExampleGeneratedTable();
             Console.ReadLine();
         }
 
@@ -264,10 +264,36 @@ namespace BetterConsoleTables_Example
             table2.AddRow("Short", "item", "Here", "A fourth column!!!");
             table2.AddRow("stuff", "longer stuff", "even longer stuff in this cell");
 
-            ConsoleTables tables = new ConsoleTables();
-            tables.AddTable(table);
-            tables.AddTable(table2);
+            ConsoleTables tables = new ConsoleTables(table, table2);
             Console.Write(tables.ToString());
         }
+
+        private static void ShowExampleGeneratedTable()
+        {
+            DataStuff[] objects = new DataStuff[10];
+            Random random = new Random();
+            for (int i = 0; i < 10; i++)
+            {
+                objects[i] = new DataStuff(random);
+            }
+            Table table = new Table(TableConfiguration.MySql());
+            table.From<DataStuff>(objects);
+
+            Console.Write(table.ToString());
+        }
+    }
+
+    public class DataStuff
+    {
+        public DataStuff(Random random)
+        {
+            Name = $"Name #{random.Next(1, 100)}";
+            Count = random.Next(1000, 50000);
+            TimeSpent = new TimeSpan(random.Next(123456, 1234567890));
+        }
+
+        string Name { get; set; }
+        int Count { get; set; }
+        TimeSpan TimeSpent { get; set; }
     }
 }

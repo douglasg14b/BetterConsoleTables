@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Text;
 
 namespace BetterConsoleTables
@@ -49,6 +50,8 @@ namespace BetterConsoleTables
 
         public Table(TableConfiguration config)
         {
+            m_columns = new List<object>();
+            m_rows = new List<object[]>();
             Config = config;
         }
 
@@ -60,9 +63,7 @@ namespace BetterConsoleTables
                 throw new ArgumentNullException(nameof(columns));
             }
 
-            m_columns = new List<object>(columns);
-            m_rows = new List<object[]>();
-
+            m_columns.AddRange(columns);
         }
 
         public Table(params object[] columns)
@@ -132,6 +133,14 @@ namespace BetterConsoleTables
             {
                 m_columns.AddRange(columns);
             }
+            return this;
+        }
+
+        public Table From<T>(IList<T> items)
+        {
+            T[] array = new T[items.Count];
+            items.CopyTo(array, 0);
+            ProcessReflectionData(array);
             return this;
         }
 
@@ -349,6 +358,44 @@ namespace BetterConsoleTables
         }
 
         #endregion
+
+        #region Reflection 
+
+        private void ProcessReflectionData<T>(T[] genericData)
+        {
+            PropertyInfo[] properties = typeof(T).GetProperties(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static);
+            string[] columns = GetColumnNames(properties);
+            string[][] data = GetRowsData(genericData, properties);
+            m_columns.AddRange(columns);
+            m_rows.AddRange(data);
+        }
+
+        private string[] GetColumnNames(PropertyInfo[] properties)
+        {
+            string[] output = new string[properties.Length];
+            for (int i = 0; i < properties.Length; i++)
+            {
+                output[i] = properties[i].Name;
+            }
+            return output;
+        }
+
+        private string[][] GetRowsData<T>(T[] data, PropertyInfo[] properties)
+        {
+            string[][] output = new string[data.Length][];
+            for(int i = 0; i < data.Length; i++)
+            {
+                string[] values = new string[properties.Length];
+                for(int j = 0; j < properties.Length; j++)
+                {
+                    values[j] = properties[j].GetValue(data[i]).ToString();
+                }
+                output[i] = values;
+            }
+            return output;
+        }
+
+        #endregion 
 
         //Unused, will require re-thinking how tables are generated
         private string WrapText(string text)
