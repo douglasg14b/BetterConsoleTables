@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26430.15
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BetterConsoleTables", "BetterConsoleTables.csproj", "{97A09A23-3E34-482D-9852-0C5E7451A466}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BetterConsoleTables", "src\BetterConsoleTables\BetterConsoleTables.csproj", "{97A09A23-3E34-482D-9852-0C5E7451A466}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BetterConsoleTables_Example", "..\BetterConsoleTables_Example\BetterConsoleTables_Example.csproj", "{38F959D5-7375-40F9-B7AD-92D2C9E8BD61}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BetterConsoleTablesExample", "src\BetterConsoleTablesExample\BetterConsoleTablesExample.csproj", "{38F959D5-7375-40F9-B7AD-92D2C9E8BD61}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
