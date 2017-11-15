@@ -8,12 +8,20 @@ Provides tables for your console application! But really, it provides tables in 
 
 ## Why?
 
-To make something better than the defacto [console tables library](https://github.com/khalidabuhakmeh/ConsoleTables). While using it, I had issues displaying multiple tables, and had concerns over the performance.
+To make something better than the defacto [console tables library](https://github.com/khalidabuhakmeh/ConsoleTables).
 
 ## How do I use it?
 
 1. Get it from nuget `Install-Package BetterConsoleTables -Version 1.0.0`
 2. Include it `using BetterConsoleTables;`
+3. See code examples or example directory
+
+## You mentioned performance?
+
+Yes! Yes I did. I wrote this to not just be configurable, but also performance friendly. So much so I have to measure it's performance in microseconds instead of milliseconds.
+
+Generating a default table in the same manner as seen in the first example takes approximately 1900 ticks (microseconds), or 0.19 milliseconds. I'm happy with this number, considering it's ~5x faster than other libraries.
+
 
 ## Code Examples
 
