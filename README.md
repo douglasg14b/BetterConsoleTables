@@ -18,9 +18,9 @@ To make something better than the defacto [console tables library](https://githu
 
 ## You mentioned performance?
 
-Yes! Yes I did. I wrote this to not just be configurable, but also performance friendly. So much so I have to measure it's performance in microseconds instead of milliseconds.
+Yes! Yes I did. I wrote this to not just be configurable, but also performance friendly. I meausre it's performance in ticks (10,000 ticks/millisecond), not milliseconds.
 
-Generating a default table in the same manner as seen in the first example takes approximately 1900 ticks (microseconds), or 0.19 milliseconds. I'm happy with this number, considering it's ~5x faster than other libraries.
+Generating a default table in the same manner as seen in the first example takes approximately 1900 ticks (19,000 nanoseconds), or 0.19 milliseconds. I'm happy with this number, considering it's an order of magnitude faster than other libraries.
 
 
 ## Code Examples
