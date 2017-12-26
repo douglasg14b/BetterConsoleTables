@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Text;
 
 namespace BetterConsoleTables
@@ -339,7 +340,10 @@ namespace BetterConsoleTables
             }
             else
             {
-                Console.WindowWidth = row.Length + 1;
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows)) 
+                {
+                    Console.WindowWidth = row.Length + 1;
+                }
                 return row;
             }
         }
