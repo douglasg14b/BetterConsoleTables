@@ -12,7 +12,7 @@ To make something better than the defacto [console tables library](https://githu
 
 ## How do I use it?
 
-1. Get it from nuget `Install-Package BetterConsoleTables -Version 1.0.0`
+1. Get it from nuget `Install-Package BetterConsoleTables -Version 1.0.1`
 2. Include it `using BetterConsoleTables;`
 3. See code examples or example directory
 
