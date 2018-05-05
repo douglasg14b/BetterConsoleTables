@@ -3,6 +3,8 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp1.1</TargetFramework>
+    <StartupObject>BetterConsoleTables_Example.Program</StartupObject>
+    <ApplicationIcon />
   </PropertyGroup>
 
   <ItemGroup>

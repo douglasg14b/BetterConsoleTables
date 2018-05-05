@@ -10,7 +10,7 @@ namespace BetterConsoleTables_Example
     {
         static void Main(string[] args)
         {
-            ShowExampleGeneratedTable();
+            RunPerformanceTest();
             Console.ReadLine();
         }
 
@@ -197,17 +197,27 @@ namespace BetterConsoleTables_Example
 
         private static void RunPerformanceTest()
         {
-            int iterations = 25000;
+            int iterations = 5000;
             Console.OutputEncoding = Encoding.UTF8;
             Stopwatch stopwatch = new Stopwatch();
             long total = 0;
-            for(int i = 0; i < iterations; i++)
+
+            //Preroll
+            Table table1 = new Table("One", "Two", "Three");
+            //table.Config = Config.Unicode();
+            table1.AddRow("1", "2", "3");
+            table1.AddRow("Short", "item", "Here");
+            table1.AddRow("Longer items go here", "stuff", "stuff");
+
+            string tableString1 = table1.ToString();
+
+            for (int i = 0; i < iterations; i++)
             {
                 Console.SetCursorPosition(0, 0);
                 stopwatch.Restart();
 
                 Table table = new Table("One", "Two", "Three");
-                table.Config = TableConfiguration.Unicode();
+                //table.Config = Config.Unicode();
                 table.AddRow("1", "2", "3");
                 table.AddRow("Short", "item", "Here");
                 table.AddRow("Longer items go here", "stuff", "stuff");
@@ -227,25 +237,25 @@ namespace BetterConsoleTables_Example
             table.AddRow("Short", "item", "Here");
             table.AddRow("Longer items go here", "stuff stuff", "stuff");
 
-            table.Config = TableConfiguration.Default();
-            string test = String.Empty.PadRight(Console.WindowWidth, '-');
-            Console.Write(test);
+            table.Config = Config.Default();
+            //string test = String.Empty.PadRight(Console.WindowWidth, '-');
+            //Console.Write(test);
             Console.SetCursorPosition(0, 0);
             Console.Write(table.ToString());
             Console.WriteLine();
-            table.Config = TableConfiguration.Markdown();
+            table.Config = Config.Markdown();
             Console.Write(table.ToString());
             Console.WriteLine();
-            table.Config = TableConfiguration.MySql();
+            table.Config = Config.MySql();
             Console.Write(table.ToString());
             Console.WriteLine();
-            table.Config = TableConfiguration.MySqlSimple();
+            table.Config = Config.MySqlSimple();
             Console.Write(table.ToString());
             Console.WriteLine();
-            table.Config = TableConfiguration.Unicode();
+            table.Config = Config.Unicode();
             Console.Write(table.ToString());
             Console.WriteLine();
-            table.Config = TableConfiguration.UnicodeAlt();
+            table.Config = Config.UnicodeAlt();
             Console.Write(table.ToString());
             Console.WriteLine();
         }
@@ -253,13 +263,13 @@ namespace BetterConsoleTables_Example
         private static void ShowExmapleMultiTable()
         {
             Table table = new Table("One", "Two", "Three");
-            table.Config = TableConfiguration.Default();
+            table.Config = Config.Default();
             table.AddRow("1", "2", "3");
             table.AddRow("Short", "item", "Here");
             table.AddRow("Longer items go here", "stuff stuff", "stuff");
 
             Table table2 = new Table("One", "Two", "Three", "Four");
-            table2.Config = TableConfiguration.UnicodeAlt();
+            table2.Config = Config.UnicodeAlt();
             table2.AddRow("One", "Two", "Three");
             table2.AddRow("Short", "item", "Here", "A fourth column!!!");
             table2.AddRow("stuff", "longer stuff", "even longer stuff in this cell");
@@ -276,7 +286,7 @@ namespace BetterConsoleTables_Example
             {
                 objects[i] = new DataStuff(random);
             }
-            Table table = new Table(TableConfiguration.MySql());
+            Table table = new Table(Config.MySql());
             table.From<DataStuff>(objects);
 
             Console.Write(table.ToString());

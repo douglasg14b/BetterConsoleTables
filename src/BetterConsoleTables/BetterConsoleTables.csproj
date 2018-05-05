@@ -4,12 +4,12 @@
     <TargetFramework>netstandard1.6</TargetFramework>
     <PackageVersion>1.0.0</PackageVersion>
     <Authors>Douglas Gaskell</Authors>
-    <Description>Better tables for your console application</Description>
+    <Description>Print out faster, more configurable, and better tables for your console application.</Description>
     <PackageProjectUrl>https://github.com/douglasg14b/BetterConsoleTables</PackageProjectUrl>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <PackageReleaseNotes>First release</PackageReleaseNotes>
     <Copyright>Copyright 2017 (c) Douglas Gaskell. All rights reserved.</Copyright>
-    <LicenceUrl>https://github.com/douglasg14b/BetterConsoleTables/LICENCE</LicenceUrl>
+    <LicenceUrl>https://github.com/douglasg14b/BetterConsoleTables/blob/master/LICENCE</LicenceUrl>
     <PackageTags>console table tables</PackageTags>
   </PropertyGroup>
   

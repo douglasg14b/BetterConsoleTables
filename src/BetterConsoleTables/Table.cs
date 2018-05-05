@@ -6,7 +6,7 @@ using System.Text;
 
 namespace BetterConsoleTables
 {
-    public class Table
+    public class Table : ITable
     {
         //Expose interfaces over concrete classes, also CA2227
         private List<object> m_columns;
@@ -43,20 +43,20 @@ namespace BetterConsoleTables
             }
         }
 
-        public TableConfiguration Config { get; set; }
+        public Config Config { get; set; }
 
         #region Constructors
 
-        public Table() : this(new TableConfiguration()) { }
+        public Table() : this(new Config()) { }
 
-        public Table(TableConfiguration config)
+        public Table(Config config)
         {
             m_columns = new List<object>();
             m_rows = new List<object[]>();
             Config = config;
         }
 
-        public Table(TableConfiguration config, params object[] columns)
+        public Table(Config config, params object[] columns)
             : this(config)
         {
             if (columns == null)
@@ -68,13 +68,13 @@ namespace BetterConsoleTables
         }
 
         public Table(params object[] columns)
-            : this(new TableConfiguration(), columns){}
+            : this(new Config(), columns){}
 
         #endregion
 
         #region Public Method API
 
-        public Table AddRow(params object[] values)
+        public ITable AddRow(params object[] values)
         {
             if(values == null)
             {
@@ -103,13 +103,13 @@ namespace BetterConsoleTables
             return this;
         }
 
-        public Table AddRows(IEnumerable<object[]> rows)
+        public ITable AddRows(IEnumerable<object[]> rows)
         {
             m_rows.AddRange(rows);
             return this;
         }
 
-        public Table AddColumn(object title)
+        public ITable AddColumn(object title)
         {
             if(m_rows.Count > 0 && LongestRow == m_columns.Count)
             {
@@ -123,7 +123,7 @@ namespace BetterConsoleTables
             return this;
         }
 
-        public Table AddColumns(params object[] columns)
+        public ITable AddColumns(params object[] columns)
         {
             if (m_rows.Count > 0 && LongestRow == m_columns.Count)
             {
@@ -137,7 +137,7 @@ namespace BetterConsoleTables
             return this;
         }
 
-        public Table From<T>(IList<T> items)
+        public ITable From<T>(IList<T> items)
         {
             T[] array = new T[items.Count];
             items.CopyTo(array, 0);
@@ -530,11 +530,5 @@ namespace BetterConsoleTables
             }
         }
 
-    }
-
-    enum Side
-    {
-        top = 0,
-        bottom = 1
     }
 }

@@ -4,6 +4,9 @@ using System.Text;
 
 namespace BetterConsoleTables
 {
+    /// <summary>
+    /// Contains multiple tables that cna be printed out together
+    /// </summary>
     public class ConsoleTables
     {
         public List<Table> m_tables;

@@ -5,10 +5,10 @@ using System.Text;
 
 namespace BetterConsoleTables
 {
-    public class TableConfiguration
+    public class Config
     {
-        public TableConfiguration() { }
-        public TableConfiguration(Style style)
+        public Config() { }
+        public Config(Style style)
         {
             switch (style)
             {
@@ -37,6 +37,7 @@ namespace BetterConsoleTables
         public bool wrapText = false;
         public int textWrapLimit = 25;
 
+
         public bool hasTopRow = true;
         public bool hasBottomRow = true;
         public bool hasHeaderRow = true;
@@ -49,9 +50,20 @@ namespace BetterConsoleTables
         /// Seperates each column of data inside the table
         /// </summary>
         public char innerColumnDelimiter = '|';
+
+        /// <summary>
+        /// Seperates each column of data outside the table
+        /// </summary>
         public char outerColumnDelimiter = char.MinValue;
 
+        /// <summary>
+        /// Seperates each row of data inside the table
+        /// </summary>
         public char innerRowDivider = '-';
+
+        /// <summary>
+        /// The outer horizontal edge of the table
+        /// </summary>
         public char outerRowDivider = char.MinValue;
 
         /// <summary>
@@ -113,11 +125,11 @@ namespace BetterConsoleTables
             SetDefault(ref headerBottomIntersection, headerIntersection);
         }
 
-        private void SetDefault(ref char character, char def)
+        private void SetDefault(ref char character, char definition)
         {
             if(character == Char.MinValue)
             {
-                character = def;
+                character = definition;
             }
         }
 
@@ -220,39 +232,39 @@ namespace BetterConsoleTables
             }
         }
 
-        public static TableConfiguration Default()
+        public static Config Default()
         {
-            return new TableConfiguration(Style.Default);
+            return new Config(Style.Default);
         }
 
-        public static TableConfiguration Markdown()
+        public static Config Markdown()
         {
-            return new TableConfiguration(Style.Markdown);
+            return new Config(Style.Markdown);
         }
 
-        public static TableConfiguration Simple()
+        public static Config Simple()
         {
-            return new TableConfiguration(Style.Simple);
+            return new Config(Style.Simple);
         }
 
-        public static TableConfiguration MySql()
+        public static Config MySql()
         {
-            return new TableConfiguration(Style.MySql);
+            return new Config(Style.MySql);
         }
 
-        public static TableConfiguration MySqlSimple()
+        public static Config MySqlSimple()
         {
-            return new TableConfiguration(Style.MySqlSimple);
+            return new Config(Style.MySqlSimple);
         }
 
-        public static TableConfiguration Unicode()
+        public static Config Unicode()
         {
-            return new TableConfiguration(Style.Unicode);
+            return new Config(Style.Unicode);
         }
 
-        public static TableConfiguration UnicodeAlt()
+        public static Config UnicodeAlt()
         {
-            return new TableConfiguration(Style.UnicodeAlt);
+            return new Config(Style.UnicodeAlt);
         }
     }
 }
