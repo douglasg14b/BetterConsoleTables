@@ -47,82 +47,90 @@ namespace BetterConsoleTables
         public bool hasInnerColumns = true;
 
         /// <summary>
-        /// Seperates each column of data inside the table
+        /// Seperates each column of data inside the table (data intersection)
         /// </summary>
-        public char innerColumnDelimiter = '|';
-
+        public char InnerColumnDivider { get => _innerColumnDelimiter; set => _innerColumnDelimiter = value; }
         /// <summary>
-        /// Seperates each column of data outside the table
+        /// Seperates each column of data on the outer edges of the table (Vertical)
         /// </summary>
-        public char outerColumnDelimiter = char.MinValue;
-
+        public char OuterColumnDelimiter { get => _outerColumnDelimiter; set => _outerColumnDelimiter = value; }
         /// <summary>
-        /// Seperates each row of data inside the table
+        /// Seperates each row of data inside the table (Horizontal)
         /// </summary>
-        public char innerRowDivider = '-';
-
+        public char InnerRowDivider { get => _innerRowDivider; set => _innerRowDivider = value; }      
         /// <summary>
         /// The outer horizontal edge of the table
         /// </summary>
-        public char outerRowDivider = char.MinValue;
-
+        public char OuterRowDivider { get => _outerRowDivider; set => _outerRowDivider = value; }      
         /// <summary>
         /// Each inner row/column intersection
         /// </summary>
-        public char innerIntersection = '-';
-
-        public char outerRightVerticalIntersection = char.MinValue;
-        public char outerLeftVerticalIntersection = char.MinValue;
-
+        public char InnerIntersection { get => _innerIntersection; set => _innerIntersection = value; }
+        public char OuterRightVerticalIntersection { get => _outerRightVerticalIntersection; set => _outerRightVerticalIntersection = value; }
+        public char OuterLeftVerticalIntersection { get => _outerLeftVerticalIntersection; set => _outerLeftVerticalIntersection = value; }
         /// <summary>
         /// Only used if here is no header
         /// </summary>
-        public char outerTopHorizontalIntersection = char.MinValue;
-        public char outerBottomHorizontalIntersection = char.MinValue;
-
-        public char topLeftCorner = char.MinValue;
-        public char topRightCorner = char.MinValue;
-        public char bottomLeftCorner = char.MinValue;
-        public char bottomRightCorner = char.MinValue;
-
+        public char OuterTopHorizontalIntersection { get => _outerTopHorizontalIntersection; set => _outerTopHorizontalIntersection = value; }
+        public char OuterBottomHorizontalIntersection { get => _outerBottomHorizontalIntersection; set => _outerBottomHorizontalIntersection = value; }
+        public char TopLeftCorner { get => _topLeftCorner; set => _topLeftCorner = value; }
+        public char TopRightCorner { get => _topRightCorner; set => _topRightCorner = value; }
+        public char BottomLeftCorner { get => _bottomLeftCorner; set => _bottomLeftCorner = value; }
+        public char BottomRightCorner { get => _bottomRightCorner; set => _bottomRightCorner = value; }
 
         /// <summary>
         /// The top and bottom header rows
         /// </summary>
-        public char headerRowDivider = '-';
-        
+        public char HeaderRowDivider { get => _headerRowDivider; set => _headerRowDivider = value; }
         /// <summary>
-        /// Top and bottom header row/column intersections. Only used if top and bottom are not defined
+        /// Top and bottom header row -> column intersections. Only used if top and bottom are not defined
         /// </summary>
-        public char headerIntersection = '-';
+        public char HeaderIntersection { get => _headerIntersection; set => _headerIntersection = value; }
+        /// <summary>
+        /// Top header row -> column intersections 
+        /// </summary>
+        public char HeaderTopIntersection { get => _headerTopIntersection; set => _headerTopIntersection = value; }
+        /// <summary>
+        /// Bottom header row -> column intersections 
+        /// </summary>
+        public char HeaderBottomIntersection { get => _headerBottomIntersection; set => _headerBottomIntersection = value; }
 
-        /// <summary>
-        /// Top header row/column intersections 
-        /// </summary>
-        public char headerTopIntersection = char.MinValue;
-        /// <summary>
-        /// Bottom header row/column intersections 
-        /// </summary>
-        public char headerBottomIntersection = char.MinValue;
+        private char _innerColumnDelimiter = '|';
+        private char _outerColumnDelimiter = char.MinValue;
+        private char _innerRowDivider = '-';
+        private char _outerRowDivider = char.MinValue;
+        private char _innerIntersection = '-';
+        private char _outerRightVerticalIntersection = char.MinValue;
+        private char _outerLeftVerticalIntersection = char.MinValue;
+        private char _outerTopHorizontalIntersection = char.MinValue;
+        private char _outerBottomHorizontalIntersection = char.MinValue;
+        private char _topLeftCorner = char.MinValue;
+        private char _topRightCorner = char.MinValue;
+        private char _bottomLeftCorner = char.MinValue;
+        private char _bottomRightCorner = char.MinValue;
+        private char _headerRowDivider = '-';
+        private char _headerIntersection = '-';
+        private char _headerTopIntersection = char.MinValue;
+        private char _headerBottomIntersection = char.MinValue;
 
 
         //Sets the default values based on existing values
         private void SetDefaults()
         {
-            SetDefault(ref outerColumnDelimiter, innerColumnDelimiter);
-            SetDefault(ref outerRowDivider, innerRowDivider);
-            SetDefault(ref outerRightVerticalIntersection, innerIntersection);
-            SetDefault(ref outerLeftVerticalIntersection, innerIntersection);
-            SetDefault(ref outerTopHorizontalIntersection, innerIntersection);
-            SetDefault(ref outerBottomHorizontalIntersection, innerIntersection);
+            SetDefault(ref _outerColumnDelimiter, InnerColumnDivider);
+            SetDefault(ref _outerRowDivider, InnerRowDivider);
+            SetDefault(ref _outerRightVerticalIntersection, InnerIntersection);
+            SetDefault(ref _outerLeftVerticalIntersection, InnerIntersection);
+            SetDefault(ref _outerTopHorizontalIntersection, InnerIntersection);
+            SetDefault(ref _outerBottomHorizontalIntersection, InnerIntersection);
 
-            SetDefault(ref topLeftCorner, innerIntersection);
-            SetDefault(ref topRightCorner, innerIntersection);
-            SetDefault(ref bottomLeftCorner, innerIntersection);
-            SetDefault(ref bottomRightCorner, innerIntersection);
+            SetDefault(ref _topLeftCorner, InnerIntersection);
+            SetDefault(ref _topRightCorner, InnerIntersection);
+            SetDefault(ref _bottomLeftCorner, InnerIntersection);
+            SetDefault(ref _bottomRightCorner, InnerIntersection);
 
-            SetDefault(ref headerTopIntersection, headerIntersection);
-            SetDefault(ref headerBottomIntersection, headerIntersection);
+            SetDefault(ref _headerTopIntersection, HeaderIntersection);
+            SetDefault(ref _headerBottomIntersection, HeaderIntersection);
         }
 
         private void SetDefault(ref char character, char definition)
@@ -138,10 +146,10 @@ namespace BetterConsoleTables
             hasInnerRows = false;
             hasTopRow = false;
             hasBottomRow = false;
-            innerColumnDelimiter = '|';
-            innerRowDivider = ' ';
-            innerIntersection = '|';
-            headerIntersection = '|';
+            InnerColumnDivider = '|';
+            InnerRowDivider = ' ';
+            InnerIntersection = '|';
+            HeaderIntersection = '|';
         }
 
         private void SetSimple()
@@ -150,50 +158,50 @@ namespace BetterConsoleTables
             hasTopRow = false;
             hasBottomRow = false;
             hasOuterColumns = false;
-            innerColumnDelimiter = ' ';
-            innerRowDivider = ' ';
-            headerIntersection = ' ';
+            InnerColumnDivider = ' ';
+            InnerRowDivider = ' ';
+            HeaderIntersection = ' ';
         }
 
         private void SetMySql()
         {
-            innerColumnDelimiter = '|';
-            innerIntersection = '+';
-            headerIntersection = '+';
+            InnerColumnDivider = '|';
+            InnerIntersection = '+';
+            HeaderIntersection = '+';
         }
 
         private void SetMySqlSimple()
         {
             hasInnerRows = false;
-            innerColumnDelimiter = '|';
-            innerIntersection = '+';
-            headerIntersection = '+';
+            InnerColumnDivider = '|';
+            InnerIntersection = '+';
+            HeaderIntersection = '+';
         }
 
         private void SetUnicode()
         {
             hasInnerRows = false;
 
-            headerTopIntersection = '┬';
-            headerBottomIntersection = '┼';
+            HeaderTopIntersection = '┬';
+            HeaderBottomIntersection = '┼';
 
-            outerLeftVerticalIntersection = '├';
-            outerRightVerticalIntersection = '┤';
-            outerBottomHorizontalIntersection = '┴';
+            OuterLeftVerticalIntersection = '├';
+            OuterRightVerticalIntersection = '┤';
+            OuterBottomHorizontalIntersection = '┴';
 
-            topLeftCorner = '┌';
-            topRightCorner = '┐';
-            bottomLeftCorner = '└';
-            bottomRightCorner = '┘';
+            TopLeftCorner = '┌';
+            TopRightCorner = '┐';
+            BottomLeftCorner = '└';
+            BottomRightCorner = '┘';
 
-            innerColumnDelimiter = '│';
-            outerColumnDelimiter = '│';
-            innerRowDivider = '─';
+            InnerColumnDivider = '│';
+            OuterColumnDelimiter = '│';
+            InnerRowDivider = '─';
 
-            headerRowDivider = '─';
-            headerTopIntersection = '┬';
-            headerBottomIntersection = '┼';
-            innerIntersection = '┼';
+            HeaderRowDivider = '─';
+            HeaderTopIntersection = '┬';
+            HeaderBottomIntersection = '┼';
+            InnerIntersection = '┼';
 
             if (!Console.OutputEncoding.Equals(Encoding.UTF8))
             {
@@ -205,26 +213,26 @@ namespace BetterConsoleTables
         {
             hasInnerRows = false;
 
-            headerTopIntersection = '╦';
-            headerBottomIntersection = '╬';
+            HeaderTopIntersection = '╦';
+            HeaderBottomIntersection = '╬';
 
-            outerLeftVerticalIntersection = '╠';
-            outerRightVerticalIntersection = '╣';
-            outerBottomHorizontalIntersection = '╩';
+            OuterLeftVerticalIntersection = '╠';
+            OuterRightVerticalIntersection = '╣';
+            OuterBottomHorizontalIntersection = '╩';
 
-            topLeftCorner = '╔';
-            topRightCorner = '╗';
-            bottomLeftCorner = '╚';
-            bottomRightCorner = '╝';
+            TopLeftCorner = '╔';
+            TopRightCorner = '╗';
+            BottomLeftCorner = '╚';
+            BottomRightCorner = '╝';
 
-            innerColumnDelimiter = '║';
-            outerColumnDelimiter = '║';
-            innerRowDivider = '═';
+            InnerColumnDivider = '║';
+            OuterColumnDelimiter = '║';
+            InnerRowDivider = '═';
 
-            headerRowDivider = '═';
-            headerTopIntersection = '╦';
-            headerBottomIntersection = '╬';
-            innerIntersection = '╬';
+            HeaderRowDivider = '═';
+            HeaderTopIntersection = '╦';
+            HeaderBottomIntersection = '╬';
+            InnerIntersection = '╬';
 
             if (!Console.OutputEncoding.Equals(Encoding.UTF8))
             {
