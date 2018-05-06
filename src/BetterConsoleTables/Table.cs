@@ -162,15 +162,15 @@ namespace BetterConsoleTables
         {
             StringBuilder builder = new StringBuilder();
 
-            string formattedHeaders = FormatRow(columnLengths, m_columns, Config.InnerColumnDivider, Config.OuterColumnDelimiter);
-            string[] formattedRows = FormatRows(columnLengths, m_rows, Config.InnerColumnDivider, Config.OuterColumnDelimiter);
+            string formattedHeaders = FormatRow(columnLengths, m_columns, Config.InnerColumnDelimiter, Config.OuterColumnEdge);
+            string[] formattedRows = FormatRows(columnLengths, m_rows, Config.InnerColumnDelimiter, Config.OuterColumnEdge);
 
-            string headerDivider = GenerateDivider(columnLengths, Config.HeaderBottomIntersection, Config.HeaderRowDivider, Config.OuterLeftVerticalIntersection, Config.OuterRightVerticalIntersection);
-            string innerDivider = GenerateDivider(columnLengths, Config.InnerIntersection, Config.InnerRowDivider, Config.OuterLeftVerticalIntersection, Config.OuterRightVerticalIntersection);
+            string headerDivider = GenerateDivider(columnLengths, Config.HeaderBottomIntersection, Config.HeaderRowDelimiter, Config.OuterLeftVerticalIntersection, Config.OuterRightVerticalIntersection);
+            string innerDivider = GenerateDivider(columnLengths, Config.InnerIntersection, Config.InnerRowDelimiter, Config.OuterLeftVerticalIntersection, Config.OuterRightVerticalIntersection);
 
             if (Config.hasTopRow)
             {
-                string divider = GenerateDivider(columnLengths, Config.HeaderTopIntersection, Config.HeaderRowDivider, Config.TopLeftCorner, Config.TopRightCorner);
+                string divider = GenerateDivider(columnLengths, Config.HeaderTopIntersection, Config.HeaderRowDelimiter, Config.TopLeftCorner, Config.TopRightCorner);
                 builder.AppendLine(divider);
             }
 
@@ -194,7 +194,7 @@ namespace BetterConsoleTables
 
             if (Config.hasBottomRow)
             {
-                string divider = GenerateDivider(columnLengths, Config.OuterBottomHorizontalIntersection, Config.OuterRowDivider, Config.BottomLeftCorner, Config.BottomRightCorner);
+                string divider = GenerateDivider(columnLengths, Config.OuterBottomHorizontalIntersection, Config.OuterBottomRowEdge, Config.BottomLeftCorner, Config.BottomRightCorner);
                 builder.AppendLine(divider);
             }
 
@@ -253,7 +253,7 @@ namespace BetterConsoleTables
 
             if (Config.hasOuterColumns)
             {
-                output = String.Concat(output, Config.InnerColumnDivider, " ", values[0].ToString().PadRight(columnLengths[0]), " ");
+                output = String.Concat(output, Config.InnerColumnDelimiter, " ", values[0].ToString().PadRight(columnLengths[0]), " ");
             }
             else
             {
@@ -262,9 +262,9 @@ namespace BetterConsoleTables
 
             for (int i = 1; i < m_columns.Count; i++)
             {
-                output = String.Concat(output, Config.InnerColumnDivider, " ", values[i].ToString().PadRight(columnLengths[i]), " ");
+                output = String.Concat(output, Config.InnerColumnDelimiter, " ", values[i].ToString().PadRight(columnLengths[i]), " ");
             }
-            output = String.Concat(output, Config.InnerColumnDivider);
+            output = String.Concat(output, Config.InnerColumnDelimiter);
             return PadRow(output);
         }
 
