@@ -168,7 +168,7 @@ namespace BetterConsoleTables
             string headerDivider = GenerateDivider(columnLengths, Config.HeaderBottomIntersection, Config.HeaderRowDelimiter, Config.OuterLeftVerticalIntersection, Config.OuterRightVerticalIntersection);
             string innerDivider = GenerateDivider(columnLengths, Config.InnerIntersection, Config.InnerRowDelimiter, Config.OuterLeftVerticalIntersection, Config.OuterRightVerticalIntersection);
 
-            if (Config.hasTopRow)
+            if (Config.HasTopRow)
             {
                 string divider = GenerateDivider(columnLengths, Config.HeaderTopIntersection, Config.HeaderRowDelimiter, Config.TopLeftCorner, Config.TopRightCorner);
                 builder.AppendLine(divider);
@@ -176,7 +176,7 @@ namespace BetterConsoleTables
 
             builder.AppendLine(formattedHeaders);
 
-            if (Config.hasHeaderRow)
+            if (Config.HasHeaderRow)
             {
                 builder.AppendLine(headerDivider);
             }
@@ -185,14 +185,14 @@ namespace BetterConsoleTables
 
             for (int i = 1; i < formattedRows.Length; i++)
             {
-                if (Config.hasInnerRows)
+                if (Config.HasInnerRows)
                 {
                     builder.AppendLine(innerDivider);
                 }
                 builder.AppendLine(formattedRows[i]);
             }
 
-            if (Config.hasBottomRow)
+            if (Config.HasBottomRow)
             {
                 string divider = GenerateDivider(columnLengths, Config.OuterBottomHorizontalIntersection, Config.OuterBottomRowEdge, Config.BottomLeftCorner, Config.BottomRightCorner);
                 builder.AppendLine(divider);
@@ -251,7 +251,7 @@ namespace BetterConsoleTables
         {
             string output = String.Empty;
 
-            if (Config.hasOuterColumns)
+            if (Config.HasOuterColumns)
             {
                 output = String.Concat(output, Config.InnerColumnDelimiter, " ", values[0].ToString().PadRight(columnLengths[0]), " ");
             }

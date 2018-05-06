@@ -64,13 +64,13 @@ namespace BetterConsoleTables
         public int textWrapLimit = 25;
 
 
-        public bool hasTopRow = true;
-        public bool hasBottomRow = true;
-        public bool hasHeaderRow = true;
-        public bool hasInnerRows = true;
+        public bool HasTopRow { get; set; } = true;
+        public bool HasBottomRow { get; set; } = true;
+        public bool HasHeaderRow { get; set; } = true;
+        public bool HasInnerRows { get; set; } = true;
 
-        public bool hasOuterColumns = true;
-        public bool hasInnerColumns = true;
+        public bool HasOuterColumns { get; set; } = true;
+        public bool HasInnerColumns { get; set; } = true;
 
         /// <summary>
         /// Seperates each column of data inside the table (data intersection)
@@ -200,9 +200,9 @@ namespace BetterConsoleTables
 
         private void SetMarkdown()
         {
-            hasInnerRows = false;
-            hasTopRow = false;
-            hasBottomRow = false;
+            HasInnerRows = false;
+            HasTopRow = false;
+            HasBottomRow = false;
             InnerColumnDelimiter = '|';
             InnerRowDelimiter = ' ';
             InnerIntersection = '|';
@@ -211,10 +211,10 @@ namespace BetterConsoleTables
 
         private void SetSimple()
         {
-            hasInnerRows = false;
-            hasTopRow = false;
-            hasBottomRow = false;
-            hasOuterColumns = false;
+            HasInnerRows = false;
+            HasTopRow = false;
+            HasBottomRow = false;
+            HasOuterColumns = false;
             InnerColumnDelimiter = ' ';
             InnerRowDelimiter = ' ';
             HeaderIntersection = ' ';
@@ -229,7 +229,7 @@ namespace BetterConsoleTables
 
         private void SetMySqlSimple()
         {
-            hasInnerRows = false;
+            HasInnerRows = false;
             InnerColumnDelimiter = '|';
             InnerIntersection = '+';
             HeaderIntersection = '+';
@@ -237,7 +237,7 @@ namespace BetterConsoleTables
 
         private void SetUnicode()
         {
-            hasInnerRows = false;
+            HasInnerRows = false;
 
             HeaderTopIntersection = '┬';
             HeaderBottomIntersection = '┼';
@@ -268,7 +268,7 @@ namespace BetterConsoleTables
 
         private void SetUnicodeAlt()
         {
-            hasInnerRows = false;
+            HasInnerRows = false;
 
             HeaderTopIntersection = '╦';
             HeaderBottomIntersection = '╬';
