@@ -26,7 +26,7 @@ namespace BetterConsoleTables
     //      - Column: Vertical (Interchangeable)
     //
     //
-    // Naming Conventions:
+    // Naming Conventions: (I mostly stick to this...)
     //  Names are made up of segments using a combination of the above definitions. 
     //  The following is the order these are placed in property names.
     //  NOTE: Not all segments may be used in every name. An excluded {Area} means it's for the table instead of the header
