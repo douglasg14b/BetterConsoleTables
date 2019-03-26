@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -304,7 +305,16 @@ namespace BetterConsoleTables
             output = String.Concat(output, delimiter);
             return PadRow(output);
         }
-       
+
+
+        /// <summary>
+        /// Generates a dividing row between content
+        /// </summary>
+        /// <param name="columnLengths">The width of each of the columns</param>
+        /// <param name="innerDelimiter">The inner intersection divider</param>
+        /// <param name="divider">The horizontal divider</param>
+        /// <param name="outerDelimiter">The left and right outer edge character</param>
+        /// <returns></returns>  
         private string GenerateDivider(int[] columnLengths, char innerDelimiter, char divider, char outerDelimiter)
         {
             string output = String.Empty;
@@ -318,6 +328,15 @@ namespace BetterConsoleTables
             return PadRow(output);
         }
 
+        /// <summary>
+        /// Generates a dividing row between content
+        /// </summary>
+        /// <param name="columnLengths">The width of each of the columns</param>
+        /// <param name="innerDelimiter">The inner intersection divider</param>
+        /// <param name="divider">The horizontal divider</param>
+        /// <param name="left">The left outer edge character</param>
+        /// <param name="right">The right outer edge character</param>
+        /// <returns></returns>
         private string GenerateDivider(int[] columnLengths, char innerDelimiter, char divider, char left, char right)
         {
             string output = String.Empty;
@@ -334,18 +353,30 @@ namespace BetterConsoleTables
         //Pads the row out to the edge of the console, if row is wider than console expand console window
         private string PadRow(string row)
         {
-            if (!TableConfiguration.ConsoleAvailable) return row;
-
-            if(row.Length < Console.WindowWidth)
+            //Cannot pad out rows if there is no console
+            if (!TableConfiguration.ConsoleAvailable)
             {
-                return row.PadRight(Console.WindowWidth - 1);
+                return row;
             }
-            else
+
+            try
             {
-                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows)) 
+                if (row.Length < Console.WindowWidth)
                 {
-                    Console.WindowWidth = row.Length + 1;
+                    return row.PadRight(Console.WindowWidth - 1);
                 }
+                else
+                {
+                    if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                    {
+                        Console.WindowWidth = row.Length + 1;
+                    }
+                    return row;
+                }
+            }
+            catch(IOException ex) //If a console is not available an IOException is thrown
+            {
+                TableConfiguration.ConsoleAvailable = false;
                 return row;
             }
         }
@@ -404,6 +435,7 @@ namespace BetterConsoleTables
         #endregion 
 
         //Unused, will require re-thinking how tables are generated
+        //Singe pass, performant line wrapper
         private string WrapText(string text)
         {
             int limit = 20;

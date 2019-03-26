@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Text;
 
 namespace BetterConsoleTables
@@ -34,6 +35,12 @@ namespace BetterConsoleTables
             SetDefaults();
         }
 
+        /// <summary>
+        /// Set to false when console is not available to avoid exceptions.
+        /// </summary>
+        public static bool ConsoleAvailable { get; set; } = true;
+
+        //Unused
         public bool wrapText = false;
         public int textWrapLimit = 25;
 
@@ -49,8 +56,15 @@ namespace BetterConsoleTables
         /// Seperates each column of data inside the table
         /// </summary>
         public char innerColumnDelimiter = '|';
+
+        /// <summary>
+        /// Seperates each column of data on the outsde of the table
+        /// </summary>
         public char outerColumnDelimiter = char.MinValue;
 
+        /// <summary>
+        /// Divides inner rows of the table
+        /// </summary>
         public char innerRowDivider = '-';
         public char outerRowDivider = char.MinValue;
 
@@ -93,6 +107,22 @@ namespace BetterConsoleTables
         /// </summary>
         public char headerBottomIntersection = char.MinValue;
 
+
+        private void TrySetUTF8Encoding()
+        {
+            if (ConsoleAvailable && !Console.OutputEncoding.Equals(Encoding.UTF8))
+            {
+                try
+                {
+                    Console.OutputEncoding = Encoding.UTF8;
+                }
+                catch (IOException)
+                {
+                    ConsoleAvailable = false;
+                }
+            }
+
+        } 
 
         //Sets the default values based on existing values
         private void SetDefaults()
@@ -183,10 +213,7 @@ namespace BetterConsoleTables
             headerBottomIntersection = '┼';
             innerIntersection = '┼';
 
-            if (ConsoleAvailable && !Console.OutputEncoding.Equals(Encoding.UTF8))
-            {
-                Console.OutputEncoding = Encoding.UTF8;
-            }
+            TrySetUTF8Encoding();
         }
 
         private void SetUnicodeAlt()
@@ -214,10 +241,7 @@ namespace BetterConsoleTables
             headerBottomIntersection = '╬';
             innerIntersection = '╬';
 
-            if (ConsoleAvailable && !Console.OutputEncoding.Equals(Encoding.UTF8))
-            {
-                Console.OutputEncoding = Encoding.UTF8;
-            }
+            TrySetUTF8Encoding();
         }
 
         public static TableConfiguration Default()
@@ -254,10 +278,5 @@ namespace BetterConsoleTables
         {
             return new TableConfiguration(Style.UnicodeAlt);
         }
-        
-        /// <summary>
-        /// Set to false when console is not available to avoid exceptions.
-        /// </summary>
-        public static bool ConsoleAvailable { get; set; } = true;
     }
 }
