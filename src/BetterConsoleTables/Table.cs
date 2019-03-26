@@ -334,6 +334,8 @@ namespace BetterConsoleTables
         //Pads the row out to the edge of the console, if row is wider than console expand console window
         private string PadRow(string row)
         {
+            if (!TableConfiguration.ConsoleAvailable) return row;
+
             if(row.Length < Console.WindowWidth)
             {
                 return row.PadRight(Console.WindowWidth - 1);
