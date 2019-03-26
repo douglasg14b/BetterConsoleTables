@@ -2,15 +2,19 @@
 
   <PropertyGroup>
     <TargetFrameworks>net471;netstandard1.3;netstandard2.0</TargetFrameworks>
-    <PackageVersion>1.0.0</PackageVersion>
+    <PackageVersion>1.0.2</PackageVersion>
     <Authors>Douglas Gaskell</Authors>
     <Description>Better tables for your console application</Description>
     <PackageProjectUrl>https://github.com/douglasg14b/BetterConsoleTables</PackageProjectUrl>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <PackageReleaseNotes>First release</PackageReleaseNotes>
-    <Copyright>Copyright 2017 (c) Douglas Gaskell. All rights reserved.</Copyright>
+    <PackageReleaseNotes></PackageReleaseNotes>
+    <Copyright>Copyright 2019 (c) Douglas Gaskell. All rights reserved.</Copyright>
     <LicenceUrl>https://github.com/douglasg14b/BetterConsoleTables/LICENCE</LicenceUrl>
     <PackageTags>console table tables</PackageTags>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>1.0.2</Version>
+    <Product>Better Console Tables</Product>
+    <RepositoryUrl>https://github.com/douglasg14b/BetterConsoleTables</RepositoryUrl>
   </PropertyGroup>
 
    <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.3' ">
