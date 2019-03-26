@@ -183,7 +183,7 @@ namespace BetterConsoleTables
             headerBottomIntersection = '┼';
             innerIntersection = '┼';
 
-            if (!Console.OutputEncoding.Equals(Encoding.UTF8))
+            if (ConsoleAvailable && !Console.OutputEncoding.Equals(Encoding.UTF8))
             {
                 Console.OutputEncoding = Encoding.UTF8;
             }
@@ -214,7 +214,7 @@ namespace BetterConsoleTables
             headerBottomIntersection = '╬';
             innerIntersection = '╬';
 
-            if (!Console.OutputEncoding.Equals(Encoding.UTF8))
+            if (ConsoleAvailable && !Console.OutputEncoding.Equals(Encoding.UTF8))
             {
                 Console.OutputEncoding = Encoding.UTF8;
             }
@@ -254,5 +254,10 @@ namespace BetterConsoleTables
         {
             return new TableConfiguration(Style.UnicodeAlt);
         }
+        
+        /// <summary>
+        /// Set to false when console is not available to avoid exceptions.
+        /// </summary>
+        public static bool ConsoleAvailable { get; set; } = true;
     }
 }

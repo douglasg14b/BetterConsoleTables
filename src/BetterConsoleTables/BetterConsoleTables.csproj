@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard1.6</TargetFramework>
+    <TargetFrameworks>net471;netstandard1.3;netstandard2.0</TargetFrameworks>
     <PackageVersion>1.0.0</PackageVersion>
     <Authors>Douglas Gaskell</Authors>
     <Description>Better tables for your console application</Description>
@@ -12,15 +12,16 @@
     <LicenceUrl>https://github.com/douglasg14b/BetterConsoleTables/LICENCE</LicenceUrl>
     <PackageTags>console table tables</PackageTags>
   </PropertyGroup>
+
+   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.3' ">
+      <PackageReference Include="System.Reflection.TypeExtensions" Version="4.3.0" />
+   </ItemGroup>
   
-  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard1.6'">
-    <PackageReference Include="System.Reflection.TypeExtensions">
-      <Version>4.3.0</Version>
-    </PackageReference>
-  </ItemGroup>
-  
-  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <OutputType>Library</OutputType>
-  </PropertyGroup>
+   <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
+      <DefineConstants>$(DefineConstants);STANDARD;STANDARD20</DefineConstants>
+   </PropertyGroup>
+   <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.3' ">
+      <DefineConstants>$(DefineConstants);STANDARD;STANDARD13</DefineConstants>
+   </PropertyGroup>
 
 </Project>
