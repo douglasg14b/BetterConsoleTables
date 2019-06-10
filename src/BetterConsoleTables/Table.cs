@@ -423,9 +423,41 @@ namespace BetterConsoleTables
             for(int i = 0; i < data.Length; i++)
             {
                 string[] values = new string[properties.Length];
-                for(int j = 0; j < properties.Length; j++)
+
+                // Is null or default. Value type defualt is 0, reference types is null
+                // If the row is null, fill all row values with the default
+                if (EqualityComparer<T>.Default.Equals(data[i], default(T)))
                 {
-                    values[j] = properties[j].GetValue(data[i]).ToString();
+                    string elementValue = String.Empty;
+                    // Cannot ToString() null
+                    if (default(T) == null)
+                    {
+                        elementValue = "null";
+                    }
+                    else
+                    {
+                        elementValue = default(T).ToString();
+                    }
+                    for(int j = 0; j < properties.Length; j++)
+                    {
+                        values[j] = elementValue;
+                    }
+
+                    continue;
+                }
+
+
+                for (int j = 0; j < properties.Length; j++)
+                {
+                    object columnValue = properties[j].GetValue(data[i]);
+
+                    if (columnValue is null)
+                    {
+                        values[j] = "null";
+                        continue;
+                    }
+
+                    values[j] = columnValue.ToString();
                 }
                 output[i] = values;
             }

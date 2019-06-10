@@ -12,7 +12,7 @@
     <LicenceUrl>https://github.com/douglasg14b/BetterConsoleTables/LICENCE</LicenceUrl>
     <PackageTags>console table tables</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.0.2</Version>
+    <Version>1.0.3</Version>
     <Product>Better Console Tables</Product>
     <RepositoryUrl>https://github.com/douglasg14b/BetterConsoleTables</RepositoryUrl>
   </PropertyGroup>
