@@ -1,3 +1,5 @@
+![Nuget](https://img.shields.io/nuget/v/BetterConsoleTables.svg?style=flat-square)
+
 # BetterConsoleTables
 
 Faster, more configurable, and more robust console tables for C# console applications
