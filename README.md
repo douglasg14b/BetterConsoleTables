@@ -1,4 +1,4 @@
-![Nuget](https://img.shields.io/nuget/v/BetterConsoleTables.svg?style=flat-square)
+[![Nuget](https://img.shields.io/nuget/v/BetterConsoleTables.svg?style=flat-square)](https://www.nuget.org/packages/BetterConsoleTables)
 
 # BetterConsoleTables
 
