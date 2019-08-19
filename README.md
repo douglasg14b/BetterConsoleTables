@@ -83,7 +83,7 @@ static void Main(String[] args)
 ```
 #### Markdown
 ```cs
-table.Config = Config.Markdown();
+table.Config = TableConfiguration.Markdown();
 ```
 
 ```
@@ -96,7 +96,7 @@ table.Config = Config.Markdown();
 
 #### MySql
 ```cs
-table.Config = Config.MySql();
+table.Config = TableConfiguration.MySql();
 ```
 ```
 +----------------------+-------------+-------+
@@ -112,7 +112,7 @@ table.Config = Config.MySql();
 
 #### MySql Simple
 ```cs
-table.Config = Config.MySqlSimple();
+table.Config = TableConfiguration.MySqlSimple();
 ```
 ```
 +----------------------+-------------+-------+
@@ -126,7 +126,7 @@ table.Config = Config.MySqlSimple();
 
 #### Unicode
 ```cs
-table.Config = Config.Unicode();
+table.Config = TableConfiguration.Unicode();
 ```
 ```
 ┌──────────────────────┬─────────────┬───────┐
@@ -139,7 +139,7 @@ table.Config = Config.Unicode();
 ```
 #### Unicode Alt
 ```cs
- table.Config = Config.UnicodeAlt();
+ table.Config = TableConfiguration.UnicodeAlt();
  ```
 ```
 ╔══════════════════════╦═════════════╦═══════╗
