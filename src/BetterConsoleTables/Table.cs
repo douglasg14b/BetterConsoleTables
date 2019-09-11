@@ -115,7 +115,7 @@ namespace BetterConsoleTables
             if(m_rows.Count > 0 && LongestRow == m_columns.Count)
             {
                 m_columns.Add(title);
-                IncrimentRowElements(1);
+                IncrementRowElements(1);
             }
             else
             {
@@ -129,7 +129,7 @@ namespace BetterConsoleTables
             if (m_rows.Count > 0 && LongestRow == m_columns.Count)
             {
                 m_columns.AddRange(columns);
-                IncrimentRowElements(columns.Length);
+                IncrementRowElements(columns.Length);
             }
             else
             {
@@ -571,13 +571,13 @@ namespace BetterConsoleTables
         }
 
         //More expensive than using a list, but should rarely be needed
-        private void IncrimentRowElements(int incriments)
+        private void IncrementRowElements(int increments)
         {
             for(int i = 0; i < m_rows.Count; i++)
             {
                 object[] array = m_rows[i];
                 int length = array.Length;
-                Array.Resize(ref array, length + incriments);
+                Array.Resize(ref array, length + increments);
                 m_rows[i] = array;
                 for(int j = length; j < m_rows[i].Length; j++)
                 {
