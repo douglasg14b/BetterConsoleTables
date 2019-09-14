@@ -10,8 +10,8 @@ namespace BetterConsoleTables
     public class Table
     {
         //Expose interfaces over concrete classes, also CA2227
-        private List<object> m_columns;
-        public IReadOnlyList<object> Columns
+        private List<ColumnHeader> m_columns;
+        public IReadOnlyList<ColumnHeader> Columns
         {
             get
             {
@@ -52,7 +52,7 @@ namespace BetterConsoleTables
 
         public Table(TableConfiguration config)
         {
-            m_columns = new List<object>();
+            m_columns = new List<ColumnHeader>();
             m_rows = new List<object[]>();
             Config = config;
         }
@@ -65,7 +65,10 @@ namespace BetterConsoleTables
                 throw new ArgumentNullException(nameof(columns));
             }
 
-            m_columns.AddRange(columns);
+            foreach(var column in columns)
+            {
+                m_columns.Add(new ColumnHeader(column));
+            }
         }
 
         public Table(params object[] columns)
@@ -130,12 +133,12 @@ namespace BetterConsoleTables
         {
             if(m_rows.Count > 0 && LongestRow == m_columns.Count)
             {
-                m_columns.Add(title);
+                m_columns.Add(new ColumnHeader(title));
                 IncrementRowElements(1);
             }
             else
             {
-                m_columns.Add(title);
+                m_columns.Add(new ColumnHeader(title));
             }
             return this;
         }
@@ -147,15 +150,16 @@ namespace BetterConsoleTables
         /// <returns></returns>
         public Table AddColumns(params object[] columns)
         {
+            foreach(var column in columns)
+            {
+                AddColumn(column);
+            }
+
             if (m_rows.Count > 0 && LongestRow == m_columns.Count)
             {
-                m_columns.AddRange(columns);
                 IncrementRowElements(columns.Length);
             }
-            else
-            {
-                m_columns.AddRange(columns);
-            }
+
             return this;
         }
 
@@ -192,7 +196,7 @@ namespace BetterConsoleTables
         {
             StringBuilder builder = new StringBuilder();
 
-            string formattedHeaders = FormatRow(columnLengths, m_columns, Config.innerColumnDelimiter, Config.outerColumnDelimiter);
+            string formattedHeaders = FormatHeader(columnLengths, m_columns, Config.innerColumnDelimiter, Config.outerColumnDelimiter);
             string[] formattedRows = FormatRows(columnLengths, m_rows, Config.innerColumnDelimiter, Config.outerColumnDelimiter);
 
             string headerDivider = GenerateDivider(columnLengths, Config.headerBottomIntersection, Config.headerRowDivider, Config.outerLeftVerticalIntersection, Config.outerRightVerticalIntersection);
@@ -322,6 +326,19 @@ namespace BetterConsoleTables
             return PadRow(output);
         }
 
+        //TEMP FOR NOW
+        private string FormatHeader(int[] columnLengths, IList<ColumnHeader> values, char innerDelimiter, char outerDelimiter)
+        {
+            string output = String.Empty;
+            output = String.Concat(output, outerDelimiter, " ", values[0].ToString().PadRight(columnLengths[0]), " ");
+            for (int i = 1; i < m_columns.Count; i++)
+            {
+                output = String.Concat(output, innerDelimiter, " ", values[i].ToString().PadRight(columnLengths[i]), " ");
+            }
+            output = String.Concat(output, outerDelimiter);
+            return PadRow(output);
+        }
+
 
 
         private string GenerateDivider(int[] columnLengths, char delimiter, char divider)
@@ -432,7 +449,10 @@ namespace BetterConsoleTables
             PropertyInfo[] properties = typeof(T).GetProperties(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static);
             string[] columns = GetColumnNames(properties);
             string[][] data = GetRowsData(genericData, properties);
-            m_columns.AddRange(columns);
+            foreach(string column in columns)
+            {
+                m_columns.Add(new ColumnHeader(column));
+            }
             m_rows.AddRange(data);
         }
 
