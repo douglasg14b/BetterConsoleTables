@@ -11,7 +11,7 @@ namespace BetterConsoleTables
     {
         //Expose interfaces over concrete classes, also CA2227
         private List<object> m_columns;
-        public IList<object> Columns
+        public IReadOnlyList<object> Columns
         {
             get
             {
@@ -20,7 +20,7 @@ namespace BetterConsoleTables
         }
 
         private List<object[]> m_rows;
-        public IList<object[]> Rows
+        public IReadOnlyList<object[]> Rows
         {
             get
             {
