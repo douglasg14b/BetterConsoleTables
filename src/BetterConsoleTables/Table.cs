@@ -75,6 +75,12 @@ namespace BetterConsoleTables
 
         #region Public Method API
 
+        /// <summary>
+        /// Adds a row to the bottom of the list with the provided column values
+        /// Expected that the provided values count is <= the number of columns in the table
+        /// </summary>
+        /// <param name="values">The column values.</param>
+        /// <returns>This Table</returns>
         public Table AddRow(params object[] values)
         {
             if(values == null)
@@ -104,12 +110,22 @@ namespace BetterConsoleTables
             return this;
         }
 
+        /// <summary>
+        /// Adds an array of rows to the bottom of the list
+        /// </summary>
+        /// <param name="rows"></param>
+        /// <returns>This Table</returns>
         public Table AddRows(IEnumerable<object[]> rows)
         {
             m_rows.AddRange(rows);
             return this;
         }
 
+        /// <summary>
+        /// Adds a new column to the right of existing columns
+        /// </summary>
+        /// <param name="title"></param>
+        /// <returns>This Table</returns>
         public Table AddColumn(object title)
         {
             if(m_rows.Count > 0 && LongestRow == m_columns.Count)
@@ -124,6 +140,11 @@ namespace BetterConsoleTables
             return this;
         }
 
+        /// <summary>
+        /// Adds multiple columns to the table, to the right of any existing columns.
+        /// </summary>
+        /// <param name="columns"></param>
+        /// <returns></returns>
         public Table AddColumns(params object[] columns)
         {
             if (m_rows.Count > 0 && LongestRow == m_columns.Count)
@@ -138,6 +159,14 @@ namespace BetterConsoleTables
             return this;
         }
 
+        /// <summary>
+        /// Derrives the table from the provided types.
+        /// Columns are derived from Property Names
+        /// Rows are derived from Property Values
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="items"></param>
+        /// <returns></returns>
         public Table From<T>(IList<T> items)
         {
             T[] array = new T[items.Count];
