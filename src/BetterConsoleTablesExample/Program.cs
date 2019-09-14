@@ -3,6 +3,7 @@ using BetterConsoleTables;
 using System.Diagnostics;
 using System.Text;
 using System.Collections.Generic;
+using BetterConsoleTablesExample;
 
 namespace BetterConsoleTables_Example
 {
@@ -10,7 +11,8 @@ namespace BetterConsoleTables_Example
     {
         static void Main(string[] args)
         {
-            ShowExampleGeneratedTable();
+            PerformanceTest.Run();
+            //RunPerformanceTest();
             Console.ReadLine();
         }
 
@@ -214,10 +216,16 @@ namespace BetterConsoleTables_Example
 
                 string tableString = table.ToString();
 
-                total += stopwatch.ElapsedTicks;
-                Console.WriteLine(i);
+                total += stopwatch.Elapsed.Ticks;
+                if(i % 100 == 0 || i+1 == iterations)
+                {
+                    Console.WriteLine(i+1);
+                }              
             }
-            Console.WriteLine(total/ iterations);
+
+            long ticks = total / iterations;
+            Console.WriteLine();
+            Console.WriteLine($"{ticks}ticks or {ticks/10000f}ms per table");
         }
 
         private static void ShowExampleTables()
