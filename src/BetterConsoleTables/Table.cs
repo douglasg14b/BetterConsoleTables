@@ -70,7 +70,7 @@ namespace BetterConsoleTables
             m_columns.AddRange(columns);
         }
 
-        public Table(TableConfiguration config, params object[] columns)
+        public Table(TableConfiguration config, Alignment rowsAlignment = Alignment.Left, Alignment headerAlignment = Alignment.Left, params object[] columns)
             : this(config)
         {
             if (columns == null)
@@ -80,15 +80,15 @@ namespace BetterConsoleTables
 
             foreach(var column in columns)
             {
-                m_columns.Add(new ColumnHeader(column));
+                m_columns.Add(new ColumnHeader(column, rowsAlignment, headerAlignment));
             }
         }
 
         public Table(params ColumnHeader[] columns)
             : this(new TableConfiguration(), columns) { }
 
-        public Table(params object[] columns)
-            : this(new TableConfiguration(), columns){}
+        public Table(Alignment rowsAlignment = Alignment.Left, Alignment headerAlignment = Alignment.Left, params object[] columns)
+            : this(new TableConfiguration(), rowsAlignment, headerAlignment, columns) {}
 
         #endregion
 
@@ -140,9 +140,9 @@ namespace BetterConsoleTables
             return this;
         }
 
-        public Table AddColumn(string title, Alignment alignment = Alignment.Left)
+        public Table AddColumn(string title, Alignment rowsAlignment = Alignment.Left, Alignment headerAlignment = Alignment.Left)
         {
-            m_columns.Add(new ColumnHeader(title, alignment));
+            m_columns.Add(new ColumnHeader(title, rowsAlignment, headerAlignment));
 
             if (m_rows.Count > 0 && LongestRow == m_columns.Count)
             {
@@ -157,17 +157,17 @@ namespace BetterConsoleTables
         /// </summary>
         /// <param name="title"></param>
         /// <returns>This Table</returns>
-        public Table AddColumn(object title, Alignment alignment = Alignment.Left)
+        public Table AddColumn(object title, Alignment rowsAlignment = Alignment.Left, Alignment headerAlignment = Alignment.Left)
         {
-            return AddColumn(title.ToString(), alignment);
+            return AddColumn(title.ToString(), rowsAlignment, headerAlignment);
         }
 
-        public Table AddColumns(Alignment alignment = Alignment.Left, params string[] columns)
+        public Table AddColumns(Alignment rowsAlignment = Alignment.Left, Alignment headerAlignment = Alignment.Left, params string[] columns)
         {
             foreach (var column in columns)
             {
                 // Not calling AddColumn() to avoid multiple IncrementRowElements calls
-                m_columns.Add(new ColumnHeader(column, alignment));
+                m_columns.Add(new ColumnHeader(column, rowsAlignment, headerAlignment));
             }
 
             if (m_rows.Count > 0 && LongestRow == m_columns.Count)
@@ -183,12 +183,12 @@ namespace BetterConsoleTables
         /// </summary>
         /// <param name="columns"></param>
         /// <returns></returns>
-        public Table AddColumns(Alignment alignment = Alignment.Left, params object[] columns)
+        public Table AddColumns(Alignment rowsAlignment = Alignment.Left, Alignment headerAlignment = Alignment.Left, params object[] columns)
         {
             foreach (var column in columns)
             {
                 // Not calling AddColumn() to avoid multiple IncrementRowElements calls
-                m_columns.Add(new ColumnHeader(column, alignment));
+                m_columns.Add(new ColumnHeader(column, rowsAlignment, headerAlignment));
             }
 
             if (m_rows.Count > 0 && LongestRow == m_columns.Count)
@@ -364,6 +364,19 @@ namespace BetterConsoleTables
             return PadRow(output);
         }
 
+        //TEMP FOR NOW
+        private string FormatHeader(int[] columnLengths, IList<ColumnHeader> values, char innerDelimiter, char outerDelimiter)
+        {
+            string output = String.Empty;
+            output = String.Concat(output, outerDelimiter, " ", PadString(values[0].ToString(), columnLengths[0], m_columns[0].HeaderAlignment), " ");
+            for (int i = 1; i < m_columns.Count; i++)
+            {
+                output = String.Concat(output, innerDelimiter, " ", PadString(values[i].ToString(), columnLengths[i], m_columns[i].HeaderAlignment), " ");
+            }
+            output = String.Concat(output, outerDelimiter);
+            return PadRow(output);
+        }
+
         private string PadString(string value, int maxLength, Alignment alignment)
         {
             if(value.Length == maxLength)
@@ -384,18 +397,7 @@ namespace BetterConsoleTables
             }
         }
 
-        //TEMP FOR NOW
-        private string FormatHeader(int[] columnLengths, IList<ColumnHeader> values, char innerDelimiter, char outerDelimiter)
-        {
-            string output = String.Empty;
-            output = String.Concat(output, outerDelimiter, " ", values[0].ToString().PadRight(columnLengths[0]), " ");
-            for (int i = 1; i < m_columns.Count; i++)
-            {
-                output = String.Concat(output, innerDelimiter, " ", values[i].ToString().PadRight(columnLengths[i]), " ");
-            }
-            output = String.Concat(output, outerDelimiter);
-            return PadRow(output);
-        }
+
 
 
 
