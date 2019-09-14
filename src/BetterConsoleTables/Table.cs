@@ -90,7 +90,7 @@ namespace BetterConsoleTables
 
             if(Columns.Count == 0)
             {
-                //TODO: assign first row as columns by defualt later?
+                //TODO: assign first row as columns by default later?
                 throw new Exception("No columns exist, please add columns before adding rows");
             }
 
@@ -160,7 +160,7 @@ namespace BetterConsoleTables
         }
 
         /// <summary>
-        /// Derrives the table from the provided types.
+        /// Derives the table from the provided types.
         /// Columns are derived from Property Names
         /// Rows are derived from Property Values
         /// </summary>
@@ -453,7 +453,7 @@ namespace BetterConsoleTables
             {
                 string[] values = new string[properties.Length];
 
-                // Is null or default. Value type defualt is 0, reference types is null
+                // Is null or default. Value type default is 0, reference types is null
                 // If the row is null, fill all row values with the default
                 if (EqualityComparer<T>.Default.Equals(data[i], default(T)))
                 {
@@ -537,7 +537,7 @@ namespace BetterConsoleTables
                             {
                                 builder.AppendLine(text.Substring(lastsplit + 1, lastWhiteSpace - lastsplit - 1));
                             }
-                            lastsplit = lastWhiteSpace; //Split was performed at the last whitepsace
+                            lastsplit = lastWhiteSpace; //Split was performed at the last whitespace
                             lastWhiteSpace = i; //On a new whitespace right now, set that accordingly
                             lastSplitOnSpace = true;
                         }
