@@ -66,7 +66,74 @@ static void Main(String[] args)
 }
 ```
 
+#### Column Alignment
+
+```cs
+    ColumnHeader[] headers = new[]
+    {
+        new ColumnHeader("Left"),
+        new ColumnHeader("Left Header", Alignment.Right),
+        new ColumnHeader("Right Header", Alignment.Center, Alignment.Right),
+    };
+    Table table = new Table(headers);
+    
+    table.Config = TableConfiguration.MySqlSimple();
+    table.AddRow("1", "2", "3");
+    table.AddRow("Short", "item", "Here");
+    table.AddRow("Longer items go here", "Right Contents", "Centered Contents");
+
+    Console.Write(table.ToString());
+    Console.ReadKey();
+ ```
+
 ## Console Outputs
+
+#### Column & Row Alignment 1
+
+```cs
+ColumnHeader[] headers = new[]
+{
+    new ColumnHeader("Left"),
+    new ColumnHeader("Right", Alignment.Right, Alignment.Right),
+    new ColumnHeader("Center", Alignment.Center, Alignment.Center),
+};
+
+Table table = new Table(headers);
+```
+
+
+```
++----------------------+-------------+---------------------+
+| Left                 |       Right |        Center       |
++----------------------+-------------+---------------------+
+| 1                    |           2 |          3          |
+| Short                |        item |         Here        |
+| Longer items go here | stuff stuff | some centered thing |
++----------------------+-------------+---------------------+
+```
+
+#### Column & Row Alignment 2
+
+```cs
+ColumnHeader[] headers = new[]
+{
+    new ColumnHeader("Left"),
+    new ColumnHeader("Left Header", Alignment.Right),
+    new ColumnHeader("Right Header", Alignment.Center, Alignment.Right),
+};
+
+Table table = new Table(headers);
+```
+
+```
++----------------------+----------------+-------------------+
+| Left                 | Left Header    |      Right Header |
++----------------------+----------------+-------------------+
+| 1                    |              2 |         3         |
+| Short                |           item |        Here       |
+| Longer items go here | Right Contents | Centered Contents |
++----------------------+----------------+-------------------+
+```
 
 #### Default
 
