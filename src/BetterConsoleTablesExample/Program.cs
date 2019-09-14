@@ -3,6 +3,7 @@ using BetterConsoleTables;
 using System.Diagnostics;
 using System.Text;
 using System.Collections.Generic;
+using BetterConsoleTablesExample;
 
 namespace BetterConsoleTables_Example
 {
@@ -10,7 +11,9 @@ namespace BetterConsoleTables_Example
     {
         static void Main(string[] args)
         {
-            ShowExampleGeneratedTable();
+            //ShowAlignedTables();
+            //PerformanceTest.Run();
+            ShowExampleTables();
             Console.ReadLine();
         }
 
@@ -214,23 +217,74 @@ namespace BetterConsoleTables_Example
 
                 string tableString = table.ToString();
 
-                total += stopwatch.ElapsedTicks;
-                Console.WriteLine(i);
+                total += stopwatch.Elapsed.Ticks;
+                if(i % 100 == 0 || i+1 == iterations)
+                {
+                    Console.WriteLine(i+1);
+                }              
             }
-            Console.WriteLine(total/ iterations);
+
+            long ticks = total / iterations;
+            Console.WriteLine();
+            Console.WriteLine($"{ticks}ticks or {ticks/10000f}ms per table");
+        }
+
+        private static void ShowAlignedTables()
+        {
+            Console.WriteLine();
+            Table1();
+            Console.WriteLine();
+            Table2();
+            Console.WriteLine();
+
+            void Table1()
+            {
+                ColumnHeader[] headers = new[]
+                {
+                    new ColumnHeader("Left"),
+                    new ColumnHeader("Right", Alignment.Right, Alignment.Right),
+                    new ColumnHeader("Center", Alignment.Center, Alignment.Center),
+                };
+
+                Table table = new Table(headers);
+                table.Config = TableConfiguration.MySqlSimple();
+                table.AddRow("1", "2", "3");
+                table.AddRow("Short", "item", "Here");
+                table.AddRow("Longer items go here", "stuff stuff", "some centered thing");
+
+                Console.Write(table.ToString());
+            }
+
+            void Table2()
+            {
+                ColumnHeader[] headers = new[]
+                {
+                    new ColumnHeader("Left"),
+                    new ColumnHeader("Left Header", Alignment.Right),
+                    new ColumnHeader("Right Header", Alignment.Center, Alignment.Right),
+                };
+                Table table = new Table(headers);
+                table.Config = TableConfiguration.MySqlSimple();
+                table.AddRow("1", "2", "3");
+                table.AddRow("Short", "item", "Here");
+                table.AddRow("Longer items go here", "Right Contents", "Centered Contents");
+
+                Console.Write(table.ToString());
+            }
         }
 
         private static void ShowExampleTables()
         {
+            ShowAlignedTables();
+            Console.WriteLine();
+
             Table table = new Table("One", "Two", "Three");
             table.AddRow("1", "2", "3");
             table.AddRow("Short", "item", "Here");
             table.AddRow("Longer items go here", "stuff stuff", "stuff");
 
             table.Config = TableConfiguration.Default();
-            string test = String.Empty.PadRight(Console.WindowWidth, '-');
-            Console.Write(test);
-            Console.SetCursorPosition(0, 0);
+
             Console.Write(table.ToString());
             Console.WriteLine();
             table.Config = TableConfiguration.Markdown();

@@ -53,12 +53,12 @@ namespace BetterConsoleTables
         public bool hasInnerColumns = true;
 
         /// <summary>
-        /// Seperates each column of data inside the table
+        /// Separates each column of data inside the table
         /// </summary>
         public char innerColumnDelimiter = '|';
 
         /// <summary>
-        /// Seperates each column of data on the outsde of the table
+        /// Separates each column of data on the outside of the table
         /// </summary>
         public char outerColumnDelimiter = char.MinValue;
 
