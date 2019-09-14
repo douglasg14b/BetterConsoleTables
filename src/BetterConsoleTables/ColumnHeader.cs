@@ -8,17 +8,19 @@ namespace BetterConsoleTables
 {
     public struct ColumnHeader
     {
-        public ColumnHeader(string name, ColumnAlignment alignment = ColumnAlignment.Left)
+        public ColumnHeader(string name, Alignment rowsAlignment = Alignment.Left, Alignment headerAlignment = Alignment.Left)
         {
             Title = name;
-            Alignment = alignment;
+            RowsAlignment = rowsAlignment;
+            HeaderAlignment = headerAlignment;
         }
 
-        public ColumnHeader(object name, ColumnAlignment alignment = ColumnAlignment.Left)
-            :this(name.ToString(), alignment){ }
+        public ColumnHeader(object name, Alignment rowsAlignment = Alignment.Left, Alignment headerAlignment = Alignment.Left)
+            :this(name.ToString(), rowsAlignment, headerAlignment) { }
 
         public string Title { get; }
-        public ColumnAlignment Alignment { get; }
+        public Alignment RowsAlignment { get; }
+        public Alignment HeaderAlignment { get; }
 
         public override string ToString()
         {

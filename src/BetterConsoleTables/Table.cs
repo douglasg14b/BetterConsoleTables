@@ -140,7 +140,7 @@ namespace BetterConsoleTables
             return this;
         }
 
-        public Table AddColumn(string title, ColumnAlignment alignment = ColumnAlignment.Left)
+        public Table AddColumn(string title, Alignment alignment = Alignment.Left)
         {
             m_columns.Add(new ColumnHeader(title, alignment));
 
@@ -157,12 +157,12 @@ namespace BetterConsoleTables
         /// </summary>
         /// <param name="title"></param>
         /// <returns>This Table</returns>
-        public Table AddColumn(object title, ColumnAlignment alignment = ColumnAlignment.Left)
+        public Table AddColumn(object title, Alignment alignment = Alignment.Left)
         {
             return AddColumn(title.ToString(), alignment);
         }
 
-        public Table AddColumns(ColumnAlignment alignment = ColumnAlignment.Left, params string[] columns)
+        public Table AddColumns(Alignment alignment = Alignment.Left, params string[] columns)
         {
             foreach (var column in columns)
             {
@@ -183,7 +183,7 @@ namespace BetterConsoleTables
         /// </summary>
         /// <param name="columns"></param>
         /// <returns></returns>
-        public Table AddColumns(ColumnAlignment alignment = ColumnAlignment.Left, params object[] columns)
+        public Table AddColumns(Alignment alignment = Alignment.Left, params object[] columns)
         {
             foreach (var column in columns)
             {
@@ -353,18 +353,18 @@ namespace BetterConsoleTables
         private string FormatRow(int[] columnLengths, IList<object> values, char innerDelimiter, char outerDelimiter)
         {
             string output = String.Empty;
-            output = String.Concat(output, outerDelimiter, " ", PadString(values[0].ToString(), columnLengths[0], m_columns[0].Alignment), " ");
+            output = String.Concat(output, outerDelimiter, " ", PadString(values[0].ToString(), columnLengths[0], m_columns[0].RowsAlignment), " ");
 
             for (int i = 1; i < m_columns.Count; i++)
             {
-                output = String.Concat(output, innerDelimiter, " ", PadString(values[i].ToString(), columnLengths[i], m_columns[i].Alignment), " ");
+                output = String.Concat(output, innerDelimiter, " ", PadString(values[i].ToString(), columnLengths[i], m_columns[i].RowsAlignment), " ");
             }
 
             output = String.Concat(output, outerDelimiter);
             return PadRow(output);
         }
 
-        private string PadString(string value, int maxLength, ColumnAlignment alignment)
+        private string PadString(string value, int maxLength, Alignment alignment)
         {
             if(value.Length == maxLength)
             {
@@ -373,11 +373,11 @@ namespace BetterConsoleTables
 
             switch(alignment)
             {
-                case ColumnAlignment.Left:
+                case Alignment.Left:
                     return value.PadRight(maxLength, paddingChar);
-                case ColumnAlignment.Right:
+                case Alignment.Right:
                     return value.PadLeft(maxLength, paddingChar);
-                case ColumnAlignment.Center:
+                case Alignment.Center:
                     return value.PadLeftAndRight(maxLength, paddingChar);
                 default:
                     throw new NotSupportedException();

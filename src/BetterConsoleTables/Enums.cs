@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BetterConsoleTables
 {
-    public enum ColumnAlignment
+    public enum Alignment
     {
         Left = 0,
         Right = 1,
