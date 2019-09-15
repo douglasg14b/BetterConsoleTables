@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BetterConsoleTables.Configuration;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
