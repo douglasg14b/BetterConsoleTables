@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Text;
 using System.Collections.Generic;
 using BetterConsoleTablesExample;
+using BetterConsoleTables.Models;
 
 namespace BetterConsoleTables_Example
 {
