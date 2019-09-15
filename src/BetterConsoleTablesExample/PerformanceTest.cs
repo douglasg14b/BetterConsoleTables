@@ -1,4 +1,5 @@
 ﻿using BetterConsoleTables;
+using BetterConsoleTables.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
