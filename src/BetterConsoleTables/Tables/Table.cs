@@ -8,7 +8,7 @@ using System.Text;
 
 namespace BetterConsoleTables
 {
-    public class Table : TableBase<ColumnHeader, object>
+    public class Table : TableBase<Table, ColumnHeader, object>
     {
 
         #region Constructors
@@ -63,7 +63,7 @@ namespace BetterConsoleTables
         /// </summary>
         /// <param name="values">The column values.</param>
         /// <returns>This Table</returns>
-        public Table AddRow(params object[] values)
+        public override Table AddRow(params object[] values)
         {
             if (values == null)
             {
@@ -97,10 +97,15 @@ namespace BetterConsoleTables
         /// </summary>
         /// <param name="rows"></param>
         /// <returns>This Table</returns>
-        public Table AddRows(IEnumerable<object[]> rows)
+        public override Table AddRows(IEnumerable<object[]> rows)
         {
             m_rows.AddRange(rows);
             return this;
+        }
+
+        public override Table AddColumn(string title)
+        {
+            return AddColumn(title, Alignment.Left, Alignment.Left);
         }
 
         public Table AddColumn(string title, Alignment rowsAlignment = Alignment.Left, Alignment headerAlignment = Alignment.Left)
@@ -191,7 +196,7 @@ namespace BetterConsoleTables
             return ToString(columnLengths);
         }
 
-        public string ToString(int[] columnLengths)
+        public override string ToString(int[] columnLengths)
         {
             StringBuilder builder = new StringBuilder();
 
