@@ -37,10 +37,11 @@ namespace BetterConsoleTables
             }
         }
 
-
-        public abstract TTable AddRow(params string[] values);
-        public abstract TTable AddRows(IEnumerable<string[]> values);
         public abstract TTable AddColumn(string value);
+
+        public abstract TTable AddRow(params object[] values);
+        public abstract TTable AddRows(IEnumerable<object[]> values);
+        
 
 
         protected string PadString(string value, int maxLength, Alignment alignment)
@@ -141,11 +142,12 @@ namespace BetterConsoleTables
             throw new NotImplementedException();
         }
 
-        private void ProcessReflectionData<T>(T[] genericData)
+        protected void ProcessReflectionData<T>(T[] genericData)
         {
             PropertyInfo[] properties = typeof(T).GetProperties(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static);
             string[] columns = GetColumnNames(properties);
-            string[][] data = GetRowsData(genericData, properties);
+            object[][] data = GetRowsData2(genericData, properties);
+
             foreach (string column in columns)
             {
                 AddColumn(column);
@@ -163,6 +165,53 @@ namespace BetterConsoleTables
             return output;
         }
 
+        private object[][] GetRowsData2<T>(T[] data, PropertyInfo[] properties)
+        {
+            object[][] output = new object[data.Length][];
+            for (int i = 0; i < data.Length; i++)
+            {
+                object[] values = new object[properties.Length];
+
+                // Is null or default. Value type default is 0, reference types is null
+                // If the row is null, fill all row values with the default
+                if (EqualityComparer<T>.Default.Equals(data[i], default(T)))
+                {
+                    object elementValue = String.Empty;
+                    // Cannot ToString() null
+                    if (default(T) == null)
+                    {
+                        elementValue = "null";
+                    }
+                    else
+                    {
+                        elementValue = default(T);
+                    }
+                    for (int j = 0; j < properties.Length; j++)
+                    {
+                        values[j] = elementValue;
+                    }
+
+                    continue;
+                }
+
+                for (int j = 0; j < properties.Length; j++)
+                {
+                    object columnValue = properties[j].GetValue(data[i]);
+
+                    if (columnValue is null)
+                    {
+                        values[j] = "null";
+                        continue;
+                    }
+
+                    values[j] = columnValue;
+                }
+                output[i] = values;
+            }
+            return output;
+        }
+
+        [Obsolete]
         private string[][] GetRowsData<T>(T[] data, PropertyInfo[] properties)
         {
             string[][] output = new string[data.Length][];
