@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace BetterConsoleTables
 {
-    public abstract class TableBase<THeader, TRow>
+    public abstract class TableBase<TTable, THeader, TRow>
     {
         protected const char paddingChar = ' ';
 
@@ -35,6 +36,11 @@ namespace BetterConsoleTables
                 return max;
             }
         }
+
+
+        public abstract TTable AddRow(params string[] values);
+        public abstract TTable AddRows(IEnumerable<string[]> values);
+        public abstract TTable AddColumn(string value);
 
 
         protected string PadString(string value, int maxLength, Alignment alignment)
@@ -133,6 +139,75 @@ namespace BetterConsoleTables
         protected string WrapText(string text, int maxWidth)
         {
             throw new NotImplementedException();
+        }
+
+        private void ProcessReflectionData<T>(T[] genericData)
+        {
+            PropertyInfo[] properties = typeof(T).GetProperties(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static);
+            string[] columns = GetColumnNames(properties);
+            string[][] data = GetRowsData(genericData, properties);
+            foreach (string column in columns)
+            {
+                AddColumn(column);
+            }
+            AddRows(data);
+        }
+
+        private string[] GetColumnNames(PropertyInfo[] properties)
+        {
+            string[] output = new string[properties.Length];
+            for (int i = 0; i < properties.Length; i++)
+            {
+                output[i] = properties[i].Name;
+            }
+            return output;
+        }
+
+        private string[][] GetRowsData<T>(T[] data, PropertyInfo[] properties)
+        {
+            string[][] output = new string[data.Length][];
+            for (int i = 0; i < data.Length; i++)
+            {
+                string[] values = new string[properties.Length];
+
+                // Is null or default. Value type default is 0, reference types is null
+                // If the row is null, fill all row values with the default
+                if (EqualityComparer<T>.Default.Equals(data[i], default(T)))
+                {
+                    string elementValue = String.Empty;
+                    // Cannot ToString() null
+                    if (default(T) == null)
+                    {
+                        elementValue = "null";
+                    }
+                    else
+                    {
+                        elementValue = default(T).ToString();
+                    }
+                    for (int j = 0; j < properties.Length; j++)
+                    {
+                        values[j] = elementValue;
+                    }
+
+                    continue;
+                }
+
+
+                for (int j = 0; j < properties.Length; j++)
+                {
+                    object columnValue = properties[j].GetValue(data[i]);
+
+                    if (columnValue is null)
+                    {
+                        values[j] = "null";
+                        continue;
+                    }
+
+                    values[j] = columnValue.ToString();
+                }
+                output[i] = values;
+            }
+            return output;
         }
     }
 }
