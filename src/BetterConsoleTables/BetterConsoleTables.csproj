@@ -22,10 +22,6 @@
    <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.3' ">
       <PackageReference Include="System.Reflection.TypeExtensions" Version="4.3.0" />
    </ItemGroup>
-
-   <ItemGroup>
-     <Folder Include="Configuration\" />
-   </ItemGroup>
   
    <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
       <DefineConstants>$(DefineConstants);STANDARD;STANDARD20</DefineConstants>

@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using Clawfoot.Extensions;
 
 namespace BetterConsoleTables
 {
@@ -142,7 +143,7 @@ namespace BetterConsoleTables
 
         protected string WrapText(string text, int maxWidth)
         {
-            throw new NotImplementedException();
+            return text.Wrap(maxWidth);
         }
 
         protected void ProcessReflectionData<T>(T[] genericData)
