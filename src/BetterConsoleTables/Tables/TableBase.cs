@@ -35,6 +35,8 @@ namespace BetterConsoleTables
                 return max;
             }
         }
+
+
         protected string PadString(string value, int maxLength, Alignment alignment)
         {
             if (value.Length == maxLength)

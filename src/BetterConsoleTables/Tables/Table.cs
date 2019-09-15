@@ -8,46 +8,8 @@ using System.Text;
 
 namespace BetterConsoleTables
 {
-    public class Table
+    public class Table : TableBase<ColumnHeader, object>
     {
-        private const char paddingChar = ' ';
-
-        //Expose interfaces over concrete classes, also CA2227
-        private List<ColumnHeader> m_headers;
-        public IReadOnlyList<ColumnHeader> Headers
-        {
-            get
-            {
-                return m_headers;
-            }
-        }
-
-        private List<object[]> m_rows;
-        public IReadOnlyList<object[]> Rows
-        {
-            get
-            {
-                return m_rows;
-            }
-        }
-
-        /// <summary>
-        /// Gets the row with the greatest number of elements
-        /// </summary>
-        public int LongestRow
-        {
-            get
-            {
-                int max = 0;
-                for (int i = 0; i < m_rows.Count; i++)
-                {
-                    max = m_rows[i].Length > max ? m_rows[i].Length : max;
-                }
-                return max;
-            }
-        }
-
-        public TableConfiguration Config { get; set; }
 
         #region Constructors
 
@@ -378,27 +340,6 @@ namespace BetterConsoleTables
             return PadRow(output);
         }
 
-        private string PadString(string value, int maxLength, Alignment alignment)
-        {
-            if (value.Length == maxLength)
-            {
-                return value;
-            }
-
-            switch (alignment)
-            {
-                case Alignment.Left:
-                    return value.PadRight(maxLength, paddingChar);
-                case Alignment.Right:
-                    return value.PadLeft(maxLength, paddingChar);
-                case Alignment.Center:
-                    return value.PadLeftAndRight(maxLength, paddingChar);
-                default:
-                    throw new NotSupportedException();
-            }
-        }
-
-
 
 
 
@@ -455,37 +396,6 @@ namespace BetterConsoleTables
             }
             output = String.Concat(output, right);
             return PadRow(output);
-        }
-
-        //Pads the row out to the edge of the console, if row is wider than console expand console window
-        private string PadRow(string row)
-        {
-            //Cannot pad out rows if there is no console
-            if (!TableConfiguration.ConsoleAvailable)
-            {
-                return row;
-            }
-
-            try
-            {
-                if (row.Length < Console.WindowWidth)
-                {
-                    return row.PadRight(Console.WindowWidth - 1);
-                }
-                else
-                {
-                    if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-                    {
-                        Console.WindowWidth = row.Length + 1;
-                    }
-                    return row;
-                }
-            }
-            catch (IOException ex) //If a console is not available an IOException is thrown
-            {
-                TableConfiguration.ConsoleAvailable = false;
-                return row;
-            }
         }
 
         //Potentially will be unused.
@@ -575,136 +485,6 @@ namespace BetterConsoleTables
         }
 
         #endregion 
-
-        //Unused, will require re-thinking how tables are generated
-        //Singe pass, performant line wrapper
-        private string WrapText(string text)
-        {
-            int limit = 20;
-            StringBuilder builder = new StringBuilder();
-
-            int lastsplit = 0;
-            int lastWhiteSpace = 0;
-            bool lastSplitOnSpace = false;
-            for (int i = 0; i < text.Length; i++)
-            {
-                if (Char.IsWhiteSpace(text[i]))
-                {
-                    if (!(i - lastsplit < limit && i < text.Length))
-                    {
-                        if (i - lastsplit == limit)
-                        {
-                            if (builder.Length == 0)
-                            {
-                                builder.AppendLine(text.Substring(lastsplit, i - lastsplit));
-                            }
-                            else
-                            {
-                                builder.AppendLine(text.Substring(lastsplit + 1, i - lastsplit - 1));
-                            }
-
-                            lastsplit = i;
-                            lastWhiteSpace = i;
-                            lastSplitOnSpace = true;
-                        }
-                        //Current length is over limit, new whitespace found, size of next split area is less than limit, then split on last found white space
-                        else if (i - lastsplit > limit && lastsplit != lastWhiteSpace && lastWhiteSpace - lastsplit - 1 <= limit)
-                        {
-                            if (builder.Length == 0)
-                            {
-                                builder.AppendLine(text.Substring(lastsplit, lastWhiteSpace - lastsplit));
-                            }
-                            else
-                            {
-                                builder.AppendLine(text.Substring(lastsplit + 1, lastWhiteSpace - lastsplit - 1));
-                            }
-                            lastsplit = lastWhiteSpace; //Split was performed at the last whitespace
-                            lastWhiteSpace = i; //On a new whitespace right now, set that accordingly
-                            lastSplitOnSpace = true;
-                        }
-                        //Last whitespace and last split are in the same location, and text is longer than limit. Means single word is longer than limit, then split inside word at limit
-                        else
-                        {
-                            if (Char.IsWhiteSpace(text[lastsplit])) //Last split was a whitespace, skip forward 1 char to skip whitespace
-                            {
-                                builder.AppendLine(text.Substring(lastsplit + 1, limit));
-                                lastsplit += limit + 1;
-                            }
-                            else
-                            {
-                                builder.AppendLine(text.Substring(lastsplit, limit));
-                                lastsplit += limit;
-                            }
-                            lastWhiteSpace = i; //On a new whitespace right now, set that accordingly
-                            lastSplitOnSpace = false;
-                            continue;
-                        }
-                    }
-                    else
-                    {
-                        lastWhiteSpace = i;
-                    }
-
-                    if (i + 1 != text.Length && Char.IsWhiteSpace(text[i + 1])) //If next char is whitespace, move forward till no more white space
-                    {
-                        i++;
-                        for (; i < text.Length; i++)
-                        {
-                            if (Char.IsWhiteSpace(text[i]))
-                            {
-                                continue;
-                            }
-                            else
-                            {
-                                i--; //Current character isn't whitespace, go back a character
-                                lastWhiteSpace = i;
-                                lastsplit = i;
-                                break;
-                            }
-                        }
-                    }
-                }
-
-                if (i + 1 == text.Length)
-                {
-                    if (lastSplitOnSpace) //split was done on a space, skip forward one to skip excess space
-                    {
-                        builder.AppendLine(text.Substring(lastsplit + 1, i - lastsplit));
-                    }
-                    else //Split wasn't done on a space
-                    {
-                        builder.AppendLine(text.Substring(lastsplit, i - lastsplit + 1));
-                    }
-                }
-            }
-            return builder.ToString();
-        }
-
-        //More expensive than using a list, but should rarely be needed
-        private void IncrementRowElements(int increments)
-        {
-            for (int i = 0; i < m_rows.Count; i++)
-            {
-                object[] array = m_rows[i];
-                int length = array.Length;
-                Array.Resize(ref array, length + increments);
-                m_rows[i] = array;
-                for (int j = length; j < m_rows[i].Length; j++)
-                {
-                    m_rows[i][j] = String.Empty;
-                }
-            }
-        }
-
-        private void ResizeRow(ref object[] row, int newSize)
-        {
-            int length = row.Length;
-            Array.Resize(ref row, newSize);
-            for (int i = length; i < row.Length; i++)
-            {
-                row[i] = String.Empty;
-            }
-        }
 
     }
 
