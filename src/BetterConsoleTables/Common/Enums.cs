@@ -12,4 +12,10 @@ namespace BetterConsoleTables
         Right = 1,
         Center = 2
     }
+
+    public enum ColorPlane
+    {
+        Foreground = 38,
+        Background = 48
+    }
 }
