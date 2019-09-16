@@ -7,22 +7,22 @@ using System.Threading.Tasks;
 
 namespace BetterConsoleTables.Models
 {
-    public class TableCell<TValue>
+    public class Cell<TValue>
     {
-        public TableCell(TValue value, TableCellConfig config)
+        public Cell(TValue value, TableCellConfig config)
         {
             Value = value.ToString();
             Config = config;
         }
 
-        public TableCell(TValue value) :this(value, new TableCellConfig()) { }
+        public Cell(TValue value) :this(value, new TableCellConfig()) { }
 
 
         public string Value { get; set; }
         public TableCellConfig Config { get; set; }
     }
 
-    public class TableCell : TableCell<string>
+    public class TableCell : Cell<string>
     {
         public TableCell(string value, TableCellConfig config)
             :base(value, config) {}
