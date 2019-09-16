@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BetterConsoleTables.Configuration;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,17 +12,14 @@ namespace BetterConsoleTables.Models
         public TableCell(TValue value, TableCellConfig config)
         {
             Value = value.ToString();
-            Color = config.Color;
-            Alignment = config.Alignment;
+            Config = config;
         }
 
         public TableCell(TValue value) :this(value, new TableCellConfig()) { }
 
-        public string Value { get; set; }
-        public ConsoleColor Color { get; set; }
-        public Alignment Alignment { get; set; }
 
-        public int Rows { get; } //Will fill out later
+        public string Value { get; set; }
+        public TableCellConfig Config { get; set; }
     }
 
     public class TableCell : TableCell<string>
