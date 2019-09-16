@@ -9,6 +9,9 @@ namespace BetterConsoleTables.Configuration
 {
     public class TableCellConfig
     {
+
+        public TableCellConfig() { }
+
         /// <summary>
         /// Creates a TableCellConfig with the default Foreground Color of LightGrey
         /// </summary>
