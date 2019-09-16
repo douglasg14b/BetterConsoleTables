@@ -14,16 +14,16 @@ namespace BetterConsoleTables
 
         #region Constructors
 
-        public Table() : this(new TableConfiguration()) { }
+        public Table() : this(new TableConfig()) { }
 
-        public Table(TableConfiguration config)
+        public Table(TableConfig config)
         {
             m_headers = new List<ColumnHeader>();
             m_rows = new List<object[]>();
             Config = config;
         }
 
-        public Table(TableConfiguration config, params ColumnHeader[] columns)
+        public Table(TableConfig config, params ColumnHeader[] columns)
             : this(config)
         {
             if (columns == null)
@@ -34,7 +34,7 @@ namespace BetterConsoleTables
             m_headers.AddRange(columns);
         }
 
-        public Table(TableConfiguration config, Alignment rowsAlignment = Alignment.Left, Alignment headerAlignment = Alignment.Left, params object[] columns)
+        public Table(TableConfig config, Alignment rowsAlignment = Alignment.Left, Alignment headerAlignment = Alignment.Left, params object[] columns)
             : this(config)
         {
             if (columns == null)
@@ -49,10 +49,10 @@ namespace BetterConsoleTables
         }
 
         public Table(params ColumnHeader[] columns)
-            : this(new TableConfiguration(), columns) { }
+            : this(new TableConfig(), columns) { }
 
         public Table(Alignment rowsAlignment = Alignment.Left, Alignment headerAlignment = Alignment.Left, params object[] columns)
-            : this(new TableConfiguration(), rowsAlignment, headerAlignment, columns) { }
+            : this(new TableConfig(), rowsAlignment, headerAlignment, columns) { }
 
         #endregion
 

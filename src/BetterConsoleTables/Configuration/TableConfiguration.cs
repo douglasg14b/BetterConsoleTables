@@ -6,10 +6,10 @@ using System.Text;
 
 namespace BetterConsoleTables.Configuration
 {
-    public class TableConfiguration
+    public class TableConfig
     {
-        public TableConfiguration() { }
-        public TableConfiguration(Style style)
+        public TableConfig() { }
+        public TableConfig(Style style)
         {
             switch (style)
             {
@@ -244,39 +244,39 @@ namespace BetterConsoleTables.Configuration
             TrySetUTF8Encoding();
         }
 
-        public static TableConfiguration Default()
+        public static TableConfig Default()
         {
-            return new TableConfiguration(Style.Default);
+            return new TableConfig(Style.Default);
         }
 
-        public static TableConfiguration Markdown()
+        public static TableConfig Markdown()
         {
-            return new TableConfiguration(Style.Markdown);
+            return new TableConfig(Style.Markdown);
         }
 
-        public static TableConfiguration Simple()
+        public static TableConfig Simple()
         {
-            return new TableConfiguration(Style.Simple);
+            return new TableConfig(Style.Simple);
         }
 
-        public static TableConfiguration MySql()
+        public static TableConfig MySql()
         {
-            return new TableConfiguration(Style.MySql);
+            return new TableConfig(Style.MySql);
         }
 
-        public static TableConfiguration MySqlSimple()
+        public static TableConfig MySqlSimple()
         {
-            return new TableConfiguration(Style.MySqlSimple);
+            return new TableConfig(Style.MySqlSimple);
         }
 
-        public static TableConfiguration Unicode()
+        public static TableConfig Unicode()
         {
-            return new TableConfiguration(Style.Unicode);
+            return new TableConfig(Style.Unicode);
         }
 
-        public static TableConfiguration UnicodeAlt()
+        public static TableConfig UnicodeAlt()
         {
-            return new TableConfiguration(Style.UnicodeAlt);
+            return new TableConfig(Style.UnicodeAlt);
         }
     }
 }

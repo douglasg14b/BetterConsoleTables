@@ -21,7 +21,7 @@ namespace BetterConsoleTables
         protected List<TRow[]> m_rows;
         public IReadOnlyList<TRow[]> Rows => m_rows;
 
-        public TableConfiguration Config { get; set; }
+        public TableConfig Config { get; set; }
 
         /// <summary>
         /// Gets the row with the greatest number of elements
@@ -76,7 +76,7 @@ namespace BetterConsoleTables
         protected string PadRow(string row)
         {
             //No need to, and cannot pad out rows if there is no console
-            if (!TableConfiguration.ConsoleAvailable)
+            if (!TableConfig.ConsoleAvailable)
             {
                 return row;
             }
@@ -98,7 +98,7 @@ namespace BetterConsoleTables
             }
             catch (IOException ex) //If a console is not available an IOException is thrown
             {
-                TableConfiguration.ConsoleAvailable = false;
+                TableConfig.ConsoleAvailable = false;
                 return row;
             }
         }

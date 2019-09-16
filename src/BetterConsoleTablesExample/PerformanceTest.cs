@@ -18,7 +18,7 @@ namespace BetterConsoleTablesExample
             Clock.BenchmarkTime(() =>
             {
                 Table table = new Table("One", "Two", "Three");
-                table.Config = TableConfiguration.Unicode();
+                table.Config = TableConfig.Unicode();
                 table.AddRow("1", "2", "3");
                 table.AddRow("Short", "item", "Here");
                 table.AddRow("Longer items go here", "stuff", "stuff");
