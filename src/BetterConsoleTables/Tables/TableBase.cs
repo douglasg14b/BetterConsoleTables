@@ -39,7 +39,7 @@ namespace BetterConsoleTables
             }
         }
 
-        public abstract TTable AddColumn(string value);
+        public abstract TTable AddHeader(string value);
 
         public abstract TTable AddRow(params object[] values);
         public abstract TTable AddRows(IEnumerable<object[]> values);
@@ -149,17 +149,17 @@ namespace BetterConsoleTables
         protected void ProcessReflectionData<T>(T[] genericData)
         {
             PropertyInfo[] properties = typeof(T).GetProperties(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static);
-            string[] columns = GetColumnNames(properties);
-            object[][] data = GetRowsData2(genericData, properties);
+            string[] columns = GetReflectionHeaders(properties);
+            object[][] data = GetReflectionRowsData(genericData, properties);
 
             foreach (string column in columns)
             {
-                AddColumn(column);
+                AddHeader(column);
             }
             AddRows(data);
         }
 
-        private string[] GetColumnNames(PropertyInfo[] properties)
+        private string[] GetReflectionHeaders(PropertyInfo[] properties)
         {
             string[] output = new string[properties.Length];
             for (int i = 0; i < properties.Length; i++)
@@ -169,7 +169,7 @@ namespace BetterConsoleTables
             return output;
         }
 
-        private object[][] GetRowsData2<T>(T[] data, PropertyInfo[] properties)
+        private object[][] GetReflectionRowsData<T>(T[] data, PropertyInfo[] properties)
         {
             object[][] output = new object[data.Length][];
             for (int i = 0; i < data.Length; i++)
@@ -209,54 +209,6 @@ namespace BetterConsoleTables
                     }
 
                     values[j] = columnValue;
-                }
-                output[i] = values;
-            }
-            return output;
-        }
-
-        [Obsolete]
-        private string[][] GetRowsData<T>(T[] data, PropertyInfo[] properties)
-        {
-            string[][] output = new string[data.Length][];
-            for (int i = 0; i < data.Length; i++)
-            {
-                string[] values = new string[properties.Length];
-
-                // Is null or default. Value type default is 0, reference types is null
-                // If the row is null, fill all row values with the default
-                if (EqualityComparer<T>.Default.Equals(data[i], default(T)))
-                {
-                    string elementValue = String.Empty;
-                    // Cannot ToString() null
-                    if (default(T) == null)
-                    {
-                        elementValue = "null";
-                    }
-                    else
-                    {
-                        elementValue = default(T).ToString();
-                    }
-                    for (int j = 0; j < properties.Length; j++)
-                    {
-                        values[j] = elementValue;
-                    }
-
-                    continue;
-                }
-
-
-                for (int j = 0; j < properties.Length; j++)
-                {
-                    object columnValue = properties[j].GetValue(data[i]);
-
-                    if (columnValue is null)
-                    {
-                        values[j] = "null";
-                        continue;
-                    }
-
-                    values[j] = columnValue.ToString();
                 }
                 output[i] = values;
             }

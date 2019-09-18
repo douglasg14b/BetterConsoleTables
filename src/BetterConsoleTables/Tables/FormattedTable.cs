@@ -1,4 +1,5 @@
-﻿using BetterConsoleTables.Models;
+﻿using BetterConsoleTables.Configuration;
+using BetterConsoleTables.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,11 @@ namespace BetterConsoleTables
 {
     public class FormattedTable : TableBase<FormattedTable, TableCell, TableCell>
     {
-        public override FormattedTable AddColumn(string value)
+        public List<TableCellConfig[]> ConfigMatrix;
+
+
+
+        public override FormattedTable AddHeader(string value)
         {
             throw new NotImplementedException();
         }
