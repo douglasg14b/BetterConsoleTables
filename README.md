@@ -75,12 +75,11 @@ static void Main(String[] args)
         new ColumnHeader("Left Header", Alignment.Right),
         new ColumnHeader("Right Header", Alignment.Center, Alignment.Right),
     };
-    Table table = new Table(headers);
-    
-    table.Config = TableConfiguration.MySqlSimple();
-    table.AddRow("1", "2", "3");
-    table.AddRow("Short", "item", "Here");
-    table.AddRow("Longer items go here", "Right Contents", "Centered Contents");
+    Table table = new Table(headers)
+        .AddRow("1", "2", "3")
+        .AddRow("Short", "item", "Here")
+        .AddRow("Longer items go here", "Right Contents", "Centered Contents");
+    table.Config = TableConfiguration.MySqlSimple(); // Sets table formatting
 
     Console.Write(table.ToString());
     Console.ReadKey();
