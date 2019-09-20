@@ -475,7 +475,7 @@ namespace BetterConsoleTables
                 {
                     if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
                     {
-                        Console.WindowWidth = row.Length + 1;
+                        Console.WindowWidth = Math.Min(row.Length + 1, Console.LargestWindowWidth - 1);
                     }
                     return row;
                 }
