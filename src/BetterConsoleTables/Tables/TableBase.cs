@@ -12,15 +12,15 @@ using BetterConsoleTables.Models;
 
 namespace BetterConsoleTables
 {
-    public abstract class TableBase<TTable, THeader, TRow>
+    public abstract class TableBase<TTable, THeader, TModel>
     {
         protected const char paddingChar = ' ';
 
         protected List<THeader> m_headers;
         public IReadOnlyList<THeader> Headers => m_headers;
 
-        protected List<TRow[]> m_rows;
-        public IReadOnlyList<TRow[]> Rows => m_rows;
+        protected List<TModel[]> m_rows;
+        public IReadOnlyList<TModel[]> Rows => m_rows;
 
         public TableConfig Config { get; set; }
 
@@ -41,10 +41,15 @@ namespace BetterConsoleTables
         }
 
         public abstract TTable AddColumn(Column header);
-        public abstract TTable AddRow(params object[] values);
-        public abstract TTable AddRows(IEnumerable<object[]> values);
+        public abstract TTable AddRow(params TModel[] values);
+        public abstract TTable AddRows(IEnumerable<TModel[]> values);
         public abstract string ToString(int[] columnWidths);
 
+        #region TableFormatters
+
+        #endregion
+
+        #region Helpers
 
         protected string PadString(string value, int maxLength, Alignment alignment)
         {
@@ -110,7 +115,7 @@ namespace BetterConsoleTables
         {
             for (int i = 0; i < m_rows.Count; i++)
             {
-                TRow[] array = m_rows[i];
+                TModel[] array = m_rows[i];
                 int length = array.Length;
 
                 Array.Resize(ref array, length + increments);
@@ -118,7 +123,7 @@ namespace BetterConsoleTables
                 m_rows[i] = array;
                 for (int j = length; j < m_rows[i].Length; j++)
                 {
-                    m_rows[i][j] = default(TRow);
+                    m_rows[i][j] = default(TModel);
                 }
             }
         }
@@ -129,13 +134,13 @@ namespace BetterConsoleTables
         /// </summary>
         /// <param name="row"></param>
         /// <param name="newSize"></param>
-        protected void ResizeRow(ref TRow[] row, int newSize)
+        protected void ResizeRow(ref TModel[] row, int newSize)
         {
             int length = row.Length;
             Array.Resize(ref row, newSize);
             for (int i = length; i < row.Length; i++)
             {
-                row[i] = default(TRow);
+                row[i] = default(TModel);
             }
         }
 
@@ -143,6 +148,10 @@ namespace BetterConsoleTables
         {
             return text.Wrap(maxWidth);
         }
+
+        #endregion
+
+        #region Reflection
 
         protected void ProcessReflectionData<T>(T[] genericData)
         {
@@ -212,5 +221,7 @@ namespace BetterConsoleTables
             }
             return output;
         }
+
+        #endregion
     }
 }

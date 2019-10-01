@@ -8,23 +8,23 @@ using System.Threading.Tasks;
 
 namespace BetterConsoleTables
 {
-    public class FormattedTable : TableBase<FormattedTable, TableCell, TableCell>
+    public class FormattedTable<TModel> : TableBase<FormattedTable<TModel>, TableCell, TableCell>
     {
         public List<TableCellConfig[]> ConfigMatrix;
 
 
 
-        public override FormattedTable AddColumn(string headerValue)
+        public override FormattedTable<TModel> AddColumn(Column column)
         {
             throw new NotImplementedException();
         }
 
-        public override FormattedTable AddRow(params object[] values)
+        public override FormattedTable<TModel> AddRow(params TableCell[] values)
         {
             throw new NotImplementedException();
         }
 
-        public override FormattedTable AddRows(IEnumerable<object[]> values)
+        public override FormattedTable<TModel> AddRows(IEnumerable<TableCell[]> values)
         {
             throw new NotImplementedException();
         }

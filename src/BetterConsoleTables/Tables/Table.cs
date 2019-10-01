@@ -9,7 +9,19 @@ using System.Text;
 
 namespace BetterConsoleTables
 {
-    public class Table : TableBase<Table, Column, object>
+    public class Table : Table<object>
+    {
+        public Table() : base() { }
+        public Table(TableConfig config) : base(config) { }
+        public Table(TableConfig config, params Column[] columns) : base(config, columns) { }
+        public Table(TableConfig config, Alignment rowsAlignment = Alignment.Left, Alignment headerAlignment = Alignment.Left, params object[] columns)
+            : base(config, rowsAlignment, headerAlignment, columns) { }
+        public Table(params Column[] columns) : base(columns) { }
+        public Table(Alignment rowsAlignment = Alignment.Left, Alignment headerAlignment = Alignment.Left, params object[] columns)
+            : base(rowsAlignment, headerAlignment, columns) { }
+    }
+
+    public class Table<TModel> : TableBase<Table<TModel>, Column, TModel> where TModel : new()
     {
 
         #region Constructors
@@ -19,7 +31,7 @@ namespace BetterConsoleTables
         public Table(TableConfig config)
         {
             m_headers = new List<Column>();
-            m_rows = new List<object[]>();
+            m_rows = new List<TModel[]>();
             Config = config;
         }
 
@@ -48,6 +60,7 @@ namespace BetterConsoleTables
             }
         }
 
+
         public Table(params Column[] columns)
             : this(new TableConfig(), columns) { }
 
@@ -64,7 +77,7 @@ namespace BetterConsoleTables
         /// </summary>
         /// <param name="values">The column values.</param>
         /// <returns>This Table</returns>
-        public override Table AddRow(params object[] values)
+        public override Table<TModel> AddRow(params TModel[] values)
         {
             if (values == null)
             {
@@ -98,13 +111,13 @@ namespace BetterConsoleTables
         /// </summary>
         /// <param name="rows"></param>
         /// <returns>This Table</returns>
-        public override Table AddRows(IEnumerable<object[]> rows)
+        public override Table<TModel> AddRows(IEnumerable<TModel[]> rows)
         {
             m_rows.AddRange(rows);
             return this;
         }
 
-        public override Table AddColumn(Column column)
+        public override Table<TModel> AddColumn(Column column)
         {
             m_headers.Add(column);
             if (m_rows.Count > 0 && LongestRow == m_headers.Count)
@@ -114,7 +127,7 @@ namespace BetterConsoleTables
             return this;
         }
 
-        public Table AddColumn(string title, Alignment rowsAlignment = Alignment.Left, Alignment headerAlignment = Alignment.Left)
+        public Table<TModel> AddColumn(string title, Alignment rowsAlignment = Alignment.Left, Alignment headerAlignment = Alignment.Left)
         {
             return AddColumn(new Column(title, rowsAlignment, headerAlignment));
         }
@@ -124,12 +137,12 @@ namespace BetterConsoleTables
         /// </summary>
         /// <param name="title"></param>
         /// <returns>This Table</returns>
-        public Table AddColumn(object title, Alignment rowsAlignment = Alignment.Left, Alignment headerAlignment = Alignment.Left)
+        public Table<TModel> AddColumn(object title, Alignment rowsAlignment = Alignment.Left, Alignment headerAlignment = Alignment.Left)
         {
             return AddColumn(title.ToString(), rowsAlignment, headerAlignment);
         }
 
-        public Table AddColumns(Alignment rowsAlignment = Alignment.Left, Alignment headerAlignment = Alignment.Left, params string[] columns)
+        public Table<TModel> AddColumns(Alignment rowsAlignment = Alignment.Left, Alignment headerAlignment = Alignment.Left, params string[] columns)
         {
             foreach (var column in columns)
             {
@@ -150,7 +163,7 @@ namespace BetterConsoleTables
         /// </summary>
         /// <param name="columns"></param>
         /// <returns></returns>
-        public Table AddColumns(Alignment rowsAlignment = Alignment.Left, Alignment headerAlignment = Alignment.Left, params object[] columns)
+        public Table<TModel> AddColumns(Alignment rowsAlignment = Alignment.Left, Alignment headerAlignment = Alignment.Left, params object[] columns)
         {
             foreach (var column in columns)
             {
@@ -174,9 +187,9 @@ namespace BetterConsoleTables
         /// <typeparam name="T"></typeparam>
         /// <param name="items"></param>
         /// <returns></returns>
-        public Table From<T>(IList<T> items)
+        public Table<TModel> From(IList<TModel> items)
         {
-            T[] array = new T[items.Count];
+            TModel[] array = new TModel[items.Count];
             items.CopyTo(array, 0);
             ProcessReflectionData(array);
             return this;
@@ -261,7 +274,7 @@ namespace BetterConsoleTables
             return lengths;
         }
 
-        private string[] FormatRows(int[] columnLengths, IList<object[]> values)
+        private string[] FormatRows(int[] columnLengths, IList<TModel[]> values)
         {
             string[] output = new string[values.Count];
             for (int i = 0; i < values.Count; i++)
@@ -271,7 +284,7 @@ namespace BetterConsoleTables
             return output;
         }
 
-        private string[] FormatRows(int[] columnLengths, IList<object[]> values, char innerDelimiter, char outerDelimiter)
+        private string[] FormatRows(int[] columnLengths, IList<TModel[]> values, char innerDelimiter, char outerDelimiter)
         {
             string[] output = new string[values.Count];
             for (int i = 0; i < values.Count; i++)
@@ -284,7 +297,7 @@ namespace BetterConsoleTables
         /// <summary>
         /// Formats a row with the default delimiter fields
         /// </summary>
-        private string FormatRow(int[] columnLengths, IList<object> values)
+        private string FormatRow(int[] columnLengths, IList<TModel> values)
         {
             string output = String.Empty;
 
@@ -305,7 +318,7 @@ namespace BetterConsoleTables
             return PadRow(output);
         }
 
-        private string FormatRow(int[] columnLengths, IList<object> values, char delimiter)
+        private string FormatRow(int[] columnLengths, IList<TModel> values, char delimiter)
         {
             string output = String.Empty;
 
@@ -317,7 +330,7 @@ namespace BetterConsoleTables
             return PadRow(output);
         }
 
-        private string FormatRow(int[] columnLengths, IList<object> values, char innerDelimiter, char outerDelimiter)
+        private string FormatRow(int[] columnLengths, IList<TModel> values, char innerDelimiter, char outerDelimiter)
         {
             string output = String.Empty;
             output = String.Concat(output, outerDelimiter, " ", PadString(values[0].ToString(), columnLengths[0], m_headers[0].RowsAlignment), " ");
@@ -419,7 +432,7 @@ namespace BetterConsoleTables
 
         #region Reflection 
 
-        private void ProcessReflectionData<T>(T[] genericData)
+        /*private void ProcessReflectionData<T>(T[] genericData)
         {
             PropertyInfo[] properties = typeof(T).GetProperties(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static);
             string[] columns = GetColumnNames(properties);
@@ -487,8 +500,15 @@ namespace BetterConsoleTables
             }
             return output;
         }
-
+        */
         #endregion 
+
+        // Static Constructors
+
+        /*public static Table From<T>(IList<T> items)
+        {
+
+        }*/
 
     }
 
