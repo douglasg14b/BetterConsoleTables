@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace BetterConsoleTables.Models
 {
+    /// <summary>
+    /// Config container used for adding or modifying columns
+    /// The actual headers are stored as <see cref="TableCell"/>
+    /// </summary>
     public struct Column
     {
         public Column(string name, Alignment rowsAlignment = Alignment.Left, Alignment headerAlignment = Alignment.Left)

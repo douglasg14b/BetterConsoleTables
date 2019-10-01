@@ -104,21 +104,19 @@ namespace BetterConsoleTables
             return this;
         }
 
-        public override Table AddColumn(string title)
+        public override Table AddColumn(Column column)
         {
-            return AddColumn(title, Alignment.Left, Alignment.Left);
-        }
-
-        public Table AddColumn(string title, Alignment rowsAlignment = Alignment.Left, Alignment headerAlignment = Alignment.Left)
-        {
-            m_headers.Add(new Column(title, rowsAlignment, headerAlignment));
-
+            m_headers.Add(column);
             if (m_rows.Count > 0 && LongestRow == m_headers.Count)
             {
                 IncrementRowElements(1);
             }
-
             return this;
+        }
+
+        public Table AddColumn(string title, Alignment rowsAlignment = Alignment.Left, Alignment headerAlignment = Alignment.Left)
+        {
+            return AddColumn(new Column(title, rowsAlignment, headerAlignment));
         }
 
         /// <summary>

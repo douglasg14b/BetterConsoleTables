@@ -8,6 +8,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using Clawfoot.Extensions;
+using BetterConsoleTables.Models;
 
 namespace BetterConsoleTables
 {
@@ -39,7 +40,7 @@ namespace BetterConsoleTables
             }
         }
 
-        public abstract TTable AddColumn(string headerValue);
+        public abstract TTable AddColumn(Column header);
         public abstract TTable AddRow(params object[] values);
         public abstract TTable AddRows(IEnumerable<object[]> values);
         public abstract string ToString(int[] columnWidths);
