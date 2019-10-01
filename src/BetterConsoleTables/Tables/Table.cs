@@ -9,7 +9,7 @@ using System.Text;
 
 namespace BetterConsoleTables
 {
-    public class Table : TableBase<Table, Header, object>
+    public class Table : TableBase<Table, Column, object>
     {
 
         #region Constructors
@@ -18,12 +18,12 @@ namespace BetterConsoleTables
 
         public Table(TableConfig config)
         {
-            m_headers = new List<Header>();
+            m_headers = new List<Column>();
             m_rows = new List<object[]>();
             Config = config;
         }
 
-        public Table(TableConfig config, params Header[] columns)
+        public Table(TableConfig config, params Column[] columns)
             : this(config)
         {
             if (columns == null)
@@ -44,11 +44,11 @@ namespace BetterConsoleTables
 
             foreach (var column in columns)
             {
-                m_headers.Add(new Header(column, rowsAlignment, headerAlignment));
+                m_headers.Add(new Column(column, rowsAlignment, headerAlignment));
             }
         }
 
-        public Table(params Header[] columns)
+        public Table(params Column[] columns)
             : this(new TableConfig(), columns) { }
 
         public Table(Alignment rowsAlignment = Alignment.Left, Alignment headerAlignment = Alignment.Left, params object[] columns)
@@ -111,7 +111,7 @@ namespace BetterConsoleTables
 
         public Table AddColumn(string title, Alignment rowsAlignment = Alignment.Left, Alignment headerAlignment = Alignment.Left)
         {
-            m_headers.Add(new Header(title, rowsAlignment, headerAlignment));
+            m_headers.Add(new Column(title, rowsAlignment, headerAlignment));
 
             if (m_rows.Count > 0 && LongestRow == m_headers.Count)
             {
@@ -136,7 +136,7 @@ namespace BetterConsoleTables
             foreach (var column in columns)
             {
                 // Not calling AddColumn() to avoid multiple IncrementRowElements calls
-                m_headers.Add(new Header(column, rowsAlignment, headerAlignment));
+                m_headers.Add(new Column(column, rowsAlignment, headerAlignment));
             }
 
             if (m_rows.Count > 0 && LongestRow == m_headers.Count)
@@ -157,7 +157,7 @@ namespace BetterConsoleTables
             foreach (var column in columns)
             {
                 // Not calling AddColumn() to avoid multiple IncrementRowElements calls
-                m_headers.Add(new Header(column, rowsAlignment, headerAlignment));
+                m_headers.Add(new Column(column, rowsAlignment, headerAlignment));
             }
 
             if (m_rows.Count > 0 && LongestRow == m_headers.Count)
@@ -334,7 +334,7 @@ namespace BetterConsoleTables
         }
 
         //TEMP FOR NOW
-        private string FormatHeader(int[] columnLengths, IList<Header> values, char innerDelimiter, char outerDelimiter)
+        private string FormatHeader(int[] columnLengths, IList<Column> values, char innerDelimiter, char outerDelimiter)
         {
             string output = String.Empty;
             output = String.Concat(output, outerDelimiter, " ", PadString(values[0].ToString(), columnLengths[0], m_headers[0].HeaderAlignment), " ");
@@ -428,7 +428,7 @@ namespace BetterConsoleTables
             string[][] data = GetRowsData(genericData, properties);
             foreach (string column in columns)
             {
-                m_headers.Add(new Header(column));
+                m_headers.Add(new Column(column));
             }
             m_rows.AddRange(data);
         }

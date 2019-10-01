@@ -6,16 +6,16 @@ using System.Threading.Tasks;
 
 namespace BetterConsoleTables.Models
 {
-    public struct Header
+    public struct Column
     {
-        public Header(string name, Alignment rowsAlignment = Alignment.Left, Alignment headerAlignment = Alignment.Left)
+        public Column(string name, Alignment rowsAlignment = Alignment.Left, Alignment headerAlignment = Alignment.Left)
         {
             Title = name;
             RowsAlignment = rowsAlignment;
             HeaderAlignment = headerAlignment;
         }
 
-        public Header(object name, Alignment rowsAlignment = Alignment.Left, Alignment headerAlignment = Alignment.Left)
+        public Column(object name, Alignment rowsAlignment = Alignment.Left, Alignment headerAlignment = Alignment.Left)
             :this(name.ToString(), rowsAlignment, headerAlignment) { }
 
         public string Title { get; }
@@ -27,6 +27,6 @@ namespace BetterConsoleTables.Models
             return Title;
         }
 
-        public static implicit operator Header(string value) => new Header(value);
+        public static implicit operator Column(string value) => new Column(value);
     }
 }
