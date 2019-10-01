@@ -104,7 +104,7 @@ namespace BetterConsoleTables
             return this;
         }
 
-        public override Table AddHeader(string title)
+        public override Table AddColumn(string title)
         {
             return AddColumn(title, Alignment.Left, Alignment.Left);
         }

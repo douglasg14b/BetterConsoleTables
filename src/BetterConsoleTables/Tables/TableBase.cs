@@ -39,13 +39,10 @@ namespace BetterConsoleTables
             }
         }
 
-        public abstract TTable AddHeader(string value);
-
+        public abstract TTable AddColumn(string headerValue);
         public abstract TTable AddRow(params object[] values);
         public abstract TTable AddRows(IEnumerable<object[]> values);
-
         public abstract string ToString(int[] columnWidths);
-
 
 
         protected string PadString(string value, int maxLength, Alignment alignment)
@@ -154,7 +151,7 @@ namespace BetterConsoleTables
 
             foreach (string column in columns)
             {
-                AddHeader(column);
+                AddColumn(column);
             }
             AddRows(data);
         }

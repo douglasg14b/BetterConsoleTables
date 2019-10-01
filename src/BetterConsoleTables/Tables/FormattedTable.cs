@@ -14,7 +14,7 @@ namespace BetterConsoleTables
 
 
 
-        public override FormattedTable AddHeader(string value)
+        public override FormattedTable AddColumn(string headerValue)
         {
             throw new NotImplementedException();
         }
