@@ -40,6 +40,11 @@ namespace BetterConsoleTables.Configuration
         /// </summary>
         public static bool ConsoleAvailable { get; set; } = true;
 
+        /// <summary>
+        /// Expands the width of the console if the table is larger than the window
+        /// </summary>
+        public bool ExpandConsole { get; set; } = true;
+
         //Unused
         public bool wrapText = false;
         public int textWrapLimit = 25;

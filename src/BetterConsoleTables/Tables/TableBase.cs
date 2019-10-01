@@ -87,7 +87,7 @@ namespace BetterConsoleTables
                 }
                 else
                 {
-                    if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                    if (Config.ExpandConsole && RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
                     {
                         Console.WindowWidth = row.Length + 1;
                     }
