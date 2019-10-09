@@ -140,11 +140,32 @@ namespace BetterConsoleTables
 
         #region Table Generation
 
+
+        internal protected int[] GetColumnLengths(Column[] columns)
+        {
+            int[] lengths = new int[columns.Length];
+            for(int i = 0; i < columns.Length; i++)
+            {
+                int max = columns[i].Title.Length;
+                for (int j = 0; j < m_rows.Count; j++)
+                {
+                    int length = m_rows[j][i].ToString().Length;
+                    if (length > max)
+                    {
+                        max = length;
+                    }
+                }
+                lengths[i] = max;
+            }
+
+            return lengths;
+        }
+
         /// <summary>
         /// Gets the widths of each of the columns of the table
+        /// by iterating through each row and determining the width of the longest value
         /// </summary>
-        /// <returns></returns>
-        internal int[] GetColumnLengths()
+        internal protected int[] GetColumnLengths()
         {
             int[] lengths = new int[m_headers.Count];
             for (int i = 0; i < m_headers.Count; i++)
