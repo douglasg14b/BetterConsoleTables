@@ -166,7 +166,7 @@ namespace BetterConsoleTables
 
             Alignment[] columnAlignments = m_headers.Select(x => x.RowsAlignment).ToArray();
 
-            string formattedHeaders = FormatHeader(columnLengths, m_headers, Config.innerColumnDelimiter, Config.outerColumnDelimiter);
+            string formattedHeaders = FormatHeader(m_headers, columnLengths, Config.innerColumnDelimiter, Config.outerColumnDelimiter);
             string[] formattedRows = FormatRows(m_rows, columnLengths, columnAlignments, Config.innerColumnDelimiter, Config.outerColumnDelimiter);
 
             string headerDivider = GenerateDivider(columnLengths, Config.headerBottomIntersection, Config.headerRowDivider, Config.outerLeftVerticalIntersection, Config.outerRightVerticalIntersection);
@@ -279,7 +279,7 @@ namespace BetterConsoleTables
 
 
         //TEMP FOR NOW
-        private string FormatHeader(int[] columnLengths, IList<Column> values, char innerDelimiter, char outerDelimiter)
+        private string FormatHeader(IList<Column> values, int[] columnLengths, char innerDelimiter, char outerDelimiter)
         {
             string output = String.Empty;
             output = String.Concat(output, outerDelimiter, " ", PadString(values[0].ToString(), columnLengths[0], m_headers[0].HeaderAlignment), " ");
