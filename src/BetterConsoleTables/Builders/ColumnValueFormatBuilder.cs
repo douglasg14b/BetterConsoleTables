@@ -19,10 +19,13 @@ namespace BetterConsoleTables.Builders
             this.instance = instance;
         }
 
-        public FormattedColumn GetColumn() => instance.GetColumn();
+        public Column GetColumn() => instance.GetColumn();
         public IColumnValueFormatBuilder WithRowsFormat() => instance.WithRowsFormat();
         public IColumnValueFormatBuilder WithHeaderFormat() => instance.WithHeaderFormat();
         public IColumnValueFormatBuilder WithRowsFormat(ValueFormat format) => instance.WithRowsFormat(format);
-        public IColumnValueFormatBuilder WithHeaderFormat(ValueFormat format) => instance.WithHeaderFormat(format);       
+        public IColumnValueFormatBuilder WithHeaderFormat(ValueFormat format) => instance.WithHeaderFormat(format);
+
+        public IColumnBuilder WithHeaderAlignment(Alignment alignment) => instance.WithHeaderAlignment(alignment);
+        public IColumnBuilder WithRowsAlignment(Alignment alignment) => instance.WithRowsAlignment(alignment);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using BetterConsoleTables.Common;
+using BetterConsoleTables.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

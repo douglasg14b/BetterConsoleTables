@@ -9,6 +9,6 @@ namespace BetterConsoleTables.Builders.Interfaces
 {
     public interface IColumnValueFormatBuilder : IValueFormatBuilder<IColumnValueFormatBuilder>, IColumnHeaderBuilder, IColumnRowsBuilder
     {
-        FormattedColumn GetColumn();
+        Column GetColumn();
     }
 }

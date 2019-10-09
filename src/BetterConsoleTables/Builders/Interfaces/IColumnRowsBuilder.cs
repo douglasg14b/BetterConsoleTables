@@ -11,5 +11,7 @@ namespace BetterConsoleTables.Builders.Interfaces
     {
         IColumnValueFormatBuilder WithRowsFormat();
         IColumnValueFormatBuilder WithRowsFormat(ValueFormat format);
+
+        IColumnBuilder WithRowsAlignment(Alignment alignment);
     }
 }

@@ -1,4 +1,5 @@
-﻿using BetterConsoleTables.Configuration;
+﻿using BetterConsoleTables.Builders;
+using BetterConsoleTables.Configuration;
 using BetterConsoleTables.Models;
 using System;
 using System.Collections.Generic;
@@ -52,9 +53,9 @@ namespace BetterConsoleTables
                 throw new ArgumentNullException(nameof(columns));
             }
 
-            foreach (var column in columns)
+            foreach (var columnItem in columns)
             {
-                m_headers.Add(new Column(column, rowsAlignment, headerAlignment));
+                m_headers.Add(Column.Simple(columnItem, rowsAlignment, headerAlignment));
             }
         }
 
@@ -130,7 +131,7 @@ namespace BetterConsoleTables
 
         public Table AddColumn(string title, Alignment rowsAlignment = Alignment.Left, Alignment headerAlignment = Alignment.Left)
         {
-            return AddColumn(new Column(title, rowsAlignment, headerAlignment));
+            return AddColumn(Column.Simple(title, rowsAlignment, headerAlignment));
         }
 
         /// <summary>
@@ -148,7 +149,7 @@ namespace BetterConsoleTables
             foreach (var column in columns)
             {
                 // Not calling AddColumn() to avoid multiple IncrementRowElements calls
-                m_headers.Add(new Column(column, rowsAlignment, headerAlignment));
+                m_headers.Add(Column.Simple(column, rowsAlignment, headerAlignment));
             }
 
             if (m_rows.Count > 0 && LongestRow == m_headers.Count)
@@ -169,7 +170,7 @@ namespace BetterConsoleTables
             foreach (var column in columns)
             {
                 // Not calling AddColumn() to avoid multiple IncrementRowElements calls
-                m_headers.Add(new Column(column, rowsAlignment, headerAlignment));
+                m_headers.Add(Column.Simple(column, rowsAlignment, headerAlignment));
             }
 
             if (m_rows.Count > 0 && LongestRow == m_headers.Count)
