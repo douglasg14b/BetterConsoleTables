@@ -8,7 +8,6 @@ namespace BetterConsoleTables.Models
 {
     /// <summary>
     /// Config container used for adding or modifying columns
-    /// The actual headers are stored as <see cref="TableCell"/>
     /// </summary>
     public struct Column
     {

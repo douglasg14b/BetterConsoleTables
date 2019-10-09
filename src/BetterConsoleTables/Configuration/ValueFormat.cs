@@ -7,32 +7,31 @@ using System.Threading.Tasks;
 
 namespace BetterConsoleTables.Configuration
 {
-    public class TableCellConfig
+    public class ValueFormat
     {
 
-        public TableCellConfig() { }
+        public ValueFormat() { }
 
         /// <summary>
         /// Creates a TableCellConfig with the default Foreground Color of LightGrey
         /// </summary>
         /// <param name="alignment"></param>
         /// <param name="plane"></param>
-        public TableCellConfig(Alignment alignment = Alignment.Left, ColorPlane plane = ColorPlane.Foreground)
+        public ValueFormat(Alignment alignment = Alignment.Left)
         {
             ForegoundColor = Constants.DefaultForegoundColor;
             BackgroundColor = Constants.DefaultBackgroundColor;
             Alignment = alignment;
-            Plane = plane;
         }
 
-        public TableCellConfig(Color foregroundColor, Alignment alignment = Constants.DefaultAlignment, ColorPlane plane = ColorPlane.Foreground)
-            :this(alignment, plane)
+        public ValueFormat(Color foregroundColor, Alignment alignment = Constants.DefaultAlignment)
+            :this(alignment)
         {
             ForegoundColor = foregroundColor;
         }
 
-        public TableCellConfig(Color foregroundColor, Color backgroundColor, Alignment alignment = Constants.DefaultAlignment, ColorPlane plane = ColorPlane.Foreground)
-            : this(foregroundColor, alignment, plane)
+        public ValueFormat(Color foregroundColor, Color backgroundColor, Alignment alignment = Constants.DefaultAlignment)
+            : this(foregroundColor, alignment)
         {
             BackgroundColor = backgroundColor;
         }
@@ -40,7 +39,6 @@ namespace BetterConsoleTables.Configuration
         public Color ForegoundColor { get; set; }
         public Color BackgroundColor { get; set; }
         public Alignment Alignment { get; set; }
-        public ColorPlane Plane { get; set; }
     }
 
     /*public class TableCellConfigBuilder
