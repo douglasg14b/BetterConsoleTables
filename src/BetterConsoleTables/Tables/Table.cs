@@ -10,7 +10,7 @@ using System.Text;
 
 namespace BetterConsoleTables
 {
-   public class Table<TModel> : TableBase<Table, Column, TModel>
+   /*public class Table<TModel> : TableBase<Table, Column, TModel>
     {
         public Table() : base() { }
         public Table(TableConfig config) : base(config) { }
@@ -20,9 +20,9 @@ namespace BetterConsoleTables
         public Table(params Column[] columns) : base(columns) { }
         public Table(Alignment rowsAlignment = Alignment.Left, Alignment headerAlignment = Alignment.Left, params object[] columns)
             : base(rowsAlignment, headerAlignment, columns) { }
-    }
+    }*/
 
-    public class Table : TableBase<Table, Column>
+    public class Table : TableBase<Table, Column, string>
     {
 
         #region Constructors
@@ -82,6 +82,44 @@ namespace BetterConsoleTables
         #endregion
 
         #region Public Method API
+
+        /// <summary>
+        /// Adds a row to the bottom of the list with the provided column values
+        /// Expected that the provided values count is <= the number of columns in the table
+        /// Converts the <param name="values"> to strings via ToString()
+        /// </summary>
+        /// <param name="values">The column values.</param>
+        /// <returns>This Table</returns>
+        public override Table AddRow(params object[] rowValues)
+        {
+            if (rowValues is null) throw new ArgumentNullException(nameof(rowValues), "Cannot add a null row to a table");
+
+            string[] stringValues = new string[rowValues.Length];
+            for (int i = 0; i < rowValues.Length; i++)
+            {
+                stringValues[i] = rowValues.ToString();
+            }
+            return AddRow(stringValues);
+        }
+
+        /// <summary>
+        /// Adds an array of rows to the bottom of the list
+        /// Converts the provided objects to strings via ToString()
+        /// </summary>
+        /// <param name="rows"></param>
+        /// <returns>This Table</returns>
+        public override Table AddRows(IEnumerable<object[]> rows)
+        {
+            if (rows is null) throw new ArgumentNullException(nameof(rows), "Cannot add null rows to a table");
+            if (!rows.Any()) throw new ArgumentException("Cannot add an empty collection of rows to a table", nameof(rows));
+
+            foreach (object[] row in rows)
+            {
+                AddRow(row);
+            }
+            return this;
+        }
+
 
         public override Table AddColumn(Column column)
         {
@@ -219,9 +257,6 @@ namespace BetterConsoleTables
         }
 
         #endregion
-
-
-
 
     }
 

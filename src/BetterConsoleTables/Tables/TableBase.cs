@@ -13,7 +13,7 @@ using BetterConsoleTables.Models;
 namespace BetterConsoleTables
 {
     // Table class that uses a Type as its rows. Each column is a property on TModel
-    public abstract class TableBase<TTable, THeader, TModel> : TableBase<TTable, THeader>
+    /*public abstract class TableBase<TTable, THeader, TModel> : TableBase<TTable, THeader>
         where TTable : TableBase<TTable, THeader, TModel>
     {
         protected List<TModel> m_typedRows;
@@ -21,19 +21,20 @@ namespace BetterConsoleTables
 
         public abstract TTable AddRow(TModel rowModel);
         public abstract TTable AddRows(IEnumerable<TModel> rowValues);
-    }
+    }*/
 
-    // Table class that uses strings as it's row items. Each row is a string[]
-    public abstract class TableBase<TTable, THeader>
-        where TTable: TableBase<TTable, THeader>
+
+    // Table class that has individual row items of type TCell
+    public abstract class TableBase<TTable, THeader, TCell>
+        where TTable: TableBase<TTable, THeader, TCell>
     {
         protected const char paddingChar = ' ';
         protected List<THeader> m_headers;
-        protected List<string[]> m_rows;
+        protected List<TCell[]> m_rows;
         
 
         public IReadOnlyList<THeader> Headers => m_headers;
-        public IReadOnlyList<string[]> Rows => m_rows;
+        public IReadOnlyList<TCell[]> Rows => m_rows;
         
         public TableConfig Config { get; set; }
 
@@ -61,7 +62,7 @@ namespace BetterConsoleTables
         /// </summary>
         /// <param name="values">The column values.</param>
         /// <returns>This Table</returns>
-        public virtual TTable AddRow(params string[] rowValues)
+        public virtual TTable AddRow(params TCell[] rowValues)
         {
             if (rowValues is null) throw new ArgumentNullException(nameof(rowValues), "Cannot add a null row to a table");
             if (rowValues.Length == 0) throw new ArgumentException("Cannot add row with a length of 0 to a table", nameof(rowValues));
@@ -81,30 +82,13 @@ namespace BetterConsoleTables
 
             return (TTable)this;
         }
-        /// <summary>
-        /// Adds a row to the bottom of the list with the provided column values
-        /// Expected that the provided values count is <= the number of columns in the table
-        /// Converts the <param name="values"> to strings via ToString()
-        /// </summary>
-        /// <param name="values">The column values.</param>
-        /// <returns>This Table</returns>
-        public virtual TTable AddRow(params object[] rowValues)
-        {
-            if (rowValues is null) throw new ArgumentNullException(nameof(rowValues), "Cannot add a null row to a table");
 
-            string[] stringValues = new string[rowValues.Length];
-            for(int i = 0; i < rowValues.Length; i++)
-            {
-                stringValues[i] = rowValues.ToString();
-            }
-            return AddRow(stringValues);
-        }
         /// <summary>
         /// Adds an array of rows to the bottom of the list
         /// </summary>
         /// <param name="rows"></param>
         /// <returns>This Table</returns>
-        public virtual TTable AddRows(IEnumerable<string[]> rows)
+        public virtual TTable AddRows(IEnumerable<TCell[]> rows)
         {
             if (rows is null) throw new ArgumentNullException(nameof(rows), "Cannot add null rows to a table");
             if (!rows.Any()) throw new ArgumentException("Cannot add an empty collection of rows to a table", nameof(rows));
@@ -116,23 +100,21 @@ namespace BetterConsoleTables
 
             return (TTable)this;
         }
+
+        /// <summary>
+        /// Adds a row to the bottom of the list with the provided column values
+        /// Expected that the provided values count is <= the number of columns in the table
+        /// </summary>
+        /// <param name="values">The column values.</param>
+        /// <returns>This Table</returns>
+        public abstract TTable AddRow(params object[] rowValues);
+
         /// <summary>
         /// Adds an array of rows to the bottom of the list
-        /// Converts the provided objects to strings via ToString()
         /// </summary>
         /// <param name="rows"></param>
         /// <returns>This Table</returns>
-        public virtual TTable AddRows(IEnumerable<object[]> rows)
-        {
-            if (rows is null) throw new ArgumentNullException(nameof(rows), "Cannot add null rows to a table");
-            if (!rows.Any()) throw new ArgumentException("Cannot add an empty collection of rows to a table", nameof(rows));
-
-            foreach(object[] row in rows)
-            {
-                AddRow(row);
-            }
-            return (TTable)this;
-        }
+        public abstract TTable AddRows(IEnumerable<object[]> rows);
 
 
         public abstract string ToString(int[] columnWidths);
@@ -215,7 +197,7 @@ namespace BetterConsoleTables
         /// <param name="innerDelimiter">The column delimiters for the inside of the table</param>
         /// <param name="outerDelimiter">The column delimiters for the outside edges of the table</param>
         /// <returns></returns>
-        protected string[] FormatDataRows(IList<string[]> values, int[] columnLengths, Alignment[] columnAlignments, char innerDelimiter, char outerDelimiter)
+        protected string[] FormatDataRows(IList<TCell[]> values, int[] columnLengths, Alignment[] columnAlignments, char innerDelimiter, char outerDelimiter)
         {
             string[] output = new string[values.Count];
             for (int i = 0; i < values.Count; i++)
@@ -234,7 +216,7 @@ namespace BetterConsoleTables
         /// <param name="innerDelimiter">The column delimiters for the inside of the table</param>
         /// <param name="outerDelimiter">The column delimiters for the outside edges of the table</param>
         /// <returns></returns>
-        protected string FormatDataRow(IList<string> values, int[] columnLengths, Alignment[] columnAlignments, char innerDelimiter, char outerDelimiter)
+        protected string FormatDataRow(IList<TCell> values, int[] columnLengths, Alignment[] columnAlignments, char innerDelimiter, char outerDelimiter)
         {
             string output = String.Empty;
             output = String.Concat(output, outerDelimiter, " ", PadString(values[0].ToString(), columnLengths[0], columnAlignments[0]), " ");
@@ -319,7 +301,7 @@ namespace BetterConsoleTables
         {
             for (int i = 0; i < m_rows.Count; i++)
             {
-                string[] array = m_rows[i];
+                TCell[] array = m_rows[i];
                 int length = array.Length;
 
                 Array.Resize(ref array, length + increments);
@@ -327,7 +309,7 @@ namespace BetterConsoleTables
                 m_rows[i] = array;
                 for (int j = length; j < m_rows[i].Length; j++)
                 {
-                    m_rows[i][j] = default(string);
+                    m_rows[i][j] = default(TCell);
                 }
             }
         }
@@ -338,13 +320,13 @@ namespace BetterConsoleTables
         /// </summary>
         /// <param name="row"></param>
         /// <param name="newSize"></param>
-        protected virtual void ResizeRow(ref string[] row, int newSize)
+        protected virtual void ResizeRow(ref TCell[] row, int newSize)
         {
             int length = row.Length;
             Array.Resize(ref row, newSize);
             for (int i = length; i < row.Length; i++)
             {
-                row[i] = default(string);
+                row[i] = default(TCell);
             }
         }
 
