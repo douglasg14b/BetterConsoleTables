@@ -209,57 +209,6 @@ namespace BetterConsoleTables
 
         #region Generation Utility
 
-
-        private string[] FormatRows(int[] columnLengths, IList<string[]> values)
-        {
-            string[] output = new string[values.Count];
-            for (int i = 0; i < values.Count; i++)
-            {
-                output[i] = FormatRow(columnLengths, values[i]);
-            }
-            return output;
-        }
-
-
-
-        /// <summary>
-        /// Formats a row with the default delimiter fields
-        /// </summary>
-        private string FormatRow(int[] columnLengths, IList<string> values)
-        {
-            string output = String.Empty;
-
-            if (Config.hasOuterColumns)
-            {
-                output = String.Concat(output, Config.innerColumnDelimiter, " ", values[0].ToString().PadRight(columnLengths[0]), " ");
-            }
-            else
-            {
-                output = String.Concat(output, " ", values[0].ToString().PadRight(columnLengths[0]), " ");
-            }
-
-            for (int i = 1; i < m_headers.Count; i++)
-            {
-                output = String.Concat(output, Config.innerColumnDelimiter, " ", values[i].ToString().PadRight(columnLengths[i]), " ");
-            }
-            output = String.Concat(output, Config.innerColumnDelimiter);
-            return PadRowInConsole(output);
-        }
-
-        private string FormatRow(int[] columnLengths, IList<string> values, char delimiter)
-        {
-            string output = String.Empty;
-
-            for (int i = 0; i < m_headers.Count; i++)
-            {
-                output = String.Concat(output, delimiter, " ", values[i].ToString().PadRight(columnLengths[i]), " ");
-            }
-            output = String.Concat(output, delimiter);
-            return PadRowInConsole(output);
-        }
-
-
-
         //TEMP FOR NOW
         private string FormatHeader(IList<Column> values, int[] columnLengths, char innerDelimiter, char outerDelimiter)
         {
