@@ -136,6 +136,7 @@ namespace BetterConsoleTables
 
 
         public abstract string ToString(int[] columnWidths);
+        public override abstract string ToString();
 
         #region TableFormatters
 
@@ -143,6 +144,9 @@ namespace BetterConsoleTables
 
         #region Helpers
 
+        /// <summary>
+        /// Pads a string to the max length following the provided alignment
+        /// </summary>
         protected string PadString(string value, int maxLength, Alignment alignment)
         {
             if (value.Length == maxLength)
@@ -245,18 +249,34 @@ namespace BetterConsoleTables
 
         #region Reflection
 
-        // Note: Doesn't grab the reflection data at this time
-        /*protected void ProcessReflectionData(IEnumerable<TModel> genericData)
+        /// <summary>
+        /// Erases existing table data and derives the table from the provided types.
+        /// Headers are derived from Property Names
+        /// Rows are derived from Property Values
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="items"></param>
+        /// <returns></returns>
+        public TTable From<T>(T[] items)
         {
-            PropertyInfo[] properties = typeof(TModel).GetProperties(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static);
+            m_rows.Clear();
+            m_headers.Clear();
+
+            ProcessReflectionData(items);
+            return (TTable)this;
+        }
+
+        protected void ProcessReflectionData<T>(T[] genericData)
+        {
+            PropertyInfo[] properties = typeof(T).GetProperties(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static);
             string[] columns = GetReflectionHeaders(properties);
-            //object[][] data = GetReflectionRowsData(genericData, properties);
+            object[][] data = GetReflectionRowsData<T>(genericData, properties);
 
             foreach (string column in columns)
             {
                 AddColumn(column);
             }
-            AddRows(genericData);
+            AddRows(data);
         }
 
         private string[] GetReflectionHeaders(PropertyInfo[] properties)
@@ -313,7 +333,7 @@ namespace BetterConsoleTables
                 output[i] = values;
             }
             return output;
-        }*/
+        }
 
         #endregion
     }
