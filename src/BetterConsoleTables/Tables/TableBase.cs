@@ -32,10 +32,17 @@ namespace BetterConsoleTables
         protected List<THeader> m_headers;
         protected List<TCell[]> m_rows;
         
+        public TableBase() :this(new TableConfig()) { }
+
+        public TableBase(TableConfig config)
+        {
+            Config = config;
+            m_headers = new List<THeader>();
+            m_rows = new List<TCell[]>();
+        }
 
         public IReadOnlyList<THeader> Headers => m_headers;
         public IReadOnlyList<TCell[]> Rows => m_rows;
-        
         public TableConfig Config { get; set; }
 
         /// <summary>

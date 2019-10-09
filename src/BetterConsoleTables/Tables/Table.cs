@@ -27,14 +27,11 @@ namespace BetterConsoleTables
 
         #region Constructors
 
-        public Table() : this(new TableConfig()) { }
+        public Table() 
+            : base() { }
 
         public Table(TableConfig config)
-        {
-            m_headers = new List<Column>();
-            m_rows = new List<string[]>();
-            Config = config;
-        }
+            : base(config) { }
 
         public Table(TableConfig config, params Column[] columns)
             : this(config)
