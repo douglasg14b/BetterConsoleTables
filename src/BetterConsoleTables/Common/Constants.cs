@@ -9,7 +9,7 @@ namespace BetterConsoleTables
 {
     public static class Constants
     {
-        public static readonly Color DefaultForegoundColor = Color.LightGray;
+        public static readonly Color DefaultForegroundColor = Color.LightGray;
         public static readonly Color DefaultBackgroundColor = Color.Black;
 
         public const Alignment DefaultAlignment = Alignment.Left;

@@ -16,7 +16,7 @@ namespace BetterConsoleTables.Builders.Interfaces
 
     public interface IValueFormatBuilder<TBuilder>
     {
-        TBuilder WithForegoundColor(Color color);
+        TBuilder WithForegroundColor(Color color);
         TBuilder WithBackgroundColor(Color color);
         TBuilder WithAlignment(Alignment alignment);
     }

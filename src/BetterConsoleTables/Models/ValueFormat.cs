@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace BetterConsoleTables.Models
 {
+    /// <summary>
+    /// The Format configuration that will be applied to a table cell or column
+    /// </summary>
     public class ValueFormat
     {
         public ValueFormat() { }
@@ -15,17 +18,17 @@ namespace BetterConsoleTables.Models
         public ValueFormat(Alignment alignment = Constants.DefaultAlignment, Color foregroundColor = default, Color backgroundColor = default)
         {
             Alignment = alignment;
-            ForegoundColor = foregroundColor == default ? Constants.DefaultForegoundColor : foregroundColor;
-            BackgroundColor = backgroundColor == default ? Constants.DefaultForegoundColor : backgroundColor;
+            ForegroundColor = foregroundColor == default ? Constants.DefaultForegroundColor : foregroundColor;
+            BackgroundColor = backgroundColor == default ? Constants.DefaultForegroundColor : backgroundColor;
         }
 
-        public Color ForegoundColor { get; set; } = Constants.DefaultForegoundColor;
+        public Color ForegroundColor { get; set; } = Constants.DefaultForegroundColor;
         public Color BackgroundColor { get; set; } = Constants.DefaultBackgroundColor;
         public Alignment Alignment { get; set; } = Constants.DefaultAlignment;
 
-        public ValueFormat WithForegoundColor(Color color)
+        public ValueFormat WithForegroundColor(Color color)
         {
-            ForegoundColor = color;
+            ForegroundColor = color;
             return this;
         }
         public ValueFormat WithBackgroundColor(Color color)

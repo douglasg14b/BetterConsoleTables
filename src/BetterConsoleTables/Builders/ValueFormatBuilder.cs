@@ -43,9 +43,9 @@ namespace BetterConsoleTables.Builders
             return (TBuilder)(IValueFormatBuilder<TBuilder>)this;
         }
 
-        public TBuilder WithForegoundColor(Color color)
+        public TBuilder WithForegroundColor(Color color)
         {
-            format.ForegoundColor = color;
+            format.ForegroundColor = color;
             return (TBuilder)(IValueFormatBuilder<TBuilder>)this;
         }
     }
