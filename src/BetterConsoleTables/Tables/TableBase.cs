@@ -215,7 +215,7 @@ namespace BetterConsoleTables
         /// <param name="innerDelimiter">The column delimiters for the inside of the table</param>
         /// <param name="outerDelimiter">The column delimiters for the outside edges of the table</param>
         /// <returns></returns>
-        protected string[] FormatRows(IList<string[]> values, int[] columnLengths, Alignment[] columnAlignments, char innerDelimiter, char outerDelimiter)
+        protected string[] FormatDataRows(IList<string[]> values, int[] columnLengths, Alignment[] columnAlignments, char innerDelimiter, char outerDelimiter)
         {
             string[] output = new string[values.Count];
             for (int i = 0; i < values.Count; i++)

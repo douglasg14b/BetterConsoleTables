@@ -156,7 +156,7 @@ namespace BetterConsoleTables
         /// </summary>
         public override string ToString()
         {
-            int[] columnLengths = GetColumnLengths();
+            int[] columnLengths = GetColumnLengths(m_headers.ToArray());
             return ToString(columnLengths);
         }
 
@@ -167,7 +167,7 @@ namespace BetterConsoleTables
             Alignment[] columnAlignments = m_headers.Select(x => x.RowsAlignment).ToArray();
 
             string formattedHeaders = FormatHeader(m_headers, columnLengths, Config.innerColumnDelimiter, Config.outerColumnDelimiter);
-            string[] formattedRows = FormatRows(m_rows, columnLengths, columnAlignments, Config.innerColumnDelimiter, Config.outerColumnDelimiter);
+            string[] formattedRows = FormatDataRows(m_rows, columnLengths, columnAlignments, Config.innerColumnDelimiter, Config.outerColumnDelimiter);
 
             string headerDivider = GenerateDivider(columnLengths, Config.headerBottomIntersection, Config.headerRowDivider, Config.outerLeftVerticalIntersection, Config.outerRightVerticalIntersection);
             string innerDivider = GenerateDivider(columnLengths, Config.innerIntersection, Config.innerRowDivider, Config.outerLeftVerticalIntersection, Config.outerRightVerticalIntersection);
@@ -204,10 +204,6 @@ namespace BetterConsoleTables
 
             return builder.ToString();
         }
-
-        #endregion
-
-        #region Generation Utility
 
         //TEMP FOR NOW
         private string FormatHeader(IList<Column> values, int[] columnLengths, char innerDelimiter, char outerDelimiter)
