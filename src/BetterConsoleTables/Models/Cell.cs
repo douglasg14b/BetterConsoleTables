@@ -9,17 +9,17 @@ namespace BetterConsoleTables.Models
 {
     public class Cell<TValue>
     {
-        public Cell(TValue value, ValueFormat config)
+        public Cell(TValue value)
+            : this(value, new ValueFormat()) { }
+
+        public Cell(TValue value, ValueFormat format)
         {
             Value = value.ToString();
-            Config = config;
+            Format = format;
         }
 
-        public Cell(TValue value) :this(value, new ValueFormat()) { }
-
-
         public string Value { get; set; }
-        public ValueFormat Config { get; set; }
+        public ValueFormat Format { get; set; }
     }
 
     public class TableCell : Cell<string>
