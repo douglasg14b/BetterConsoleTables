@@ -138,7 +138,30 @@ namespace BetterConsoleTables
         public abstract string ToString(int[] columnWidths);
         public override abstract string ToString();
 
-        #region TableFormatters
+        #region Table Generation
+
+        /// <summary>
+        /// Gets the widths of each of the columns of the table
+        /// </summary>
+        /// <returns></returns>
+        internal int[] GetColumnLengths()
+        {
+            int[] lengths = new int[m_headers.Count];
+            for (int i = 0; i < m_headers.Count; i++)
+            {
+                int max = m_headers[i].ToString().Length;
+                for (int j = 0; j < m_rows.Count; j++)
+                {
+                    int length = m_rows[j][i].ToString().Length;
+                    if (length > max)
+                    {
+                        max = length;
+                    }
+                }
+                lengths[i] = max;
+            }
+            return lengths;
+        }
 
         /// <summary>
         /// Generates a horizontal dividing row between content rows

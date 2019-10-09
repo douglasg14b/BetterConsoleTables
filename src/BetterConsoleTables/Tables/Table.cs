@@ -209,24 +209,6 @@ namespace BetterConsoleTables
 
         #region Generation Utility
 
-        internal int[] GetColumnLengths()
-        {
-            int[] lengths = new int[m_headers.Count];
-            for (int i = 0; i < m_headers.Count; i++)
-            {
-                int max = m_headers[i].ToString().Length;
-                for (int j = 0; j < m_rows.Count; j++)
-                {
-                    int length = m_rows[j][i].ToString().Length;
-                    if (length > max)
-                    {
-                        max = length;
-                    }
-                }
-                lengths[i] = max;
-            }
-            return lengths;
-        }
 
         private string[] FormatRows(int[] columnLengths, IList<string[]> values)
         {
