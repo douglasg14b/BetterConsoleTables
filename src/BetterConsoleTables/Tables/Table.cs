@@ -9,7 +9,7 @@ using System.Text;
 
 namespace BetterConsoleTables
 {
-   /* public class Table : Table<object>
+   public class Table<TModel> : TableBase<Table, Column, TModel>
     {
         public Table() : base() { }
         public Table(TableConfig config) : base(config) { }
@@ -19,23 +19,7 @@ namespace BetterConsoleTables
         public Table(params Column[] columns) : base(columns) { }
         public Table(Alignment rowsAlignment = Alignment.Left, Alignment headerAlignment = Alignment.Left, params object[] columns)
             : base(rowsAlignment, headerAlignment, columns) { }
-
-        /// <summary>
-        /// Derives the table from the provided types.
-        /// Columns are derived from Property Names
-        /// Rows are derived from Property Values
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="items"></param>
-        /// <returns></returns>
-        public Table<object> From(IList<object> items)
-        {
-            object[] array = new object[items.Count];
-            items.CopyTo(array, 0);
-            ProcessReflectionData(array);
-            return this;
-        }
-    }*/
+    }
 
     public class Table : TableBase<Table, Column>
     {
@@ -95,10 +79,6 @@ namespace BetterConsoleTables
         }
 
         #endregion
-
-        
-
-
 
         #region Public Method API
 
@@ -301,6 +281,14 @@ namespace BetterConsoleTables
             return PadRowInConsole(output);
         }
 
+        /// <summary>
+        /// Creates a table row with appropriate formatting
+        /// </summary>
+        /// <param name="columnLengths">The max width of each column</param>
+        /// <param name="values">The values for each column</param>
+        /// <param name="innerDelimiter">The column delimiters for the inside of the table</param>
+        /// <param name="outerDelimiter">The column delimiters for the outside edges of the table</param>
+        /// <returns></returns>
         private string FormatRow(int[] columnLengths, IList<string> values, char innerDelimiter, char outerDelimiter)
         {
             string output = String.Empty;
@@ -326,77 +314,6 @@ namespace BetterConsoleTables
             }
             output = String.Concat(output, outerDelimiter);
             return PadRowInConsole(output);
-        }
-
-
-
-
-        private string GenerateDivider(int[] columnLengths, char delimiter, char divider)
-        {
-            string output = String.Empty;
-            for (int i = 0; i < m_headers.Count; i++)
-            {
-                output = String.Concat(output, delimiter, String.Empty.PadRight(columnLengths[i] + 2, divider)); //+2 for the 2 spaces around the delimiters
-            }
-            output = String.Concat(output, delimiter);
-            return PadRowInConsole(output);
-        }
-
-
-        /// <summary>
-        /// Generates a dividing row between content
-        /// </summary>
-        /// <param name="columnLengths">The width of each of the columns</param>
-        /// <param name="innerDelimiter">The inner intersection divider</param>
-        /// <param name="divider">The horizontal divider</param>
-        /// <param name="outerDelimiter">The left and right outer edge character</param>
-        /// <returns></returns>  
-        private string GenerateDivider(int[] columnLengths, char innerDelimiter, char divider, char outerDelimiter)
-        {
-            string output = String.Empty;
-
-            output = String.Concat(output, outerDelimiter, String.Empty.PadRight(columnLengths[0] + 2, divider));
-            for (int i = 1; i < m_headers.Count; i++)
-            {
-                output = String.Concat(output, innerDelimiter, String.Empty.PadRight(columnLengths[i] + 2, divider)); //+2 for the 2 spaces around the delimiters
-            }
-            output = String.Concat(output, outerDelimiter);
-            return PadRowInConsole(output);
-        }
-
-        /// <summary>
-        /// Generates a dividing row between content rows
-        /// </summary>
-        /// <param name="columnLengths">The width of each of the columns</param>
-        /// <param name="innerDelimiter">The inner intersection divider</param>
-        /// <param name="divider">The horizontal divider</param>
-        /// <param name="left">The left outer edge character</param>
-        /// <param name="right">The right outer edge character</param>
-        /// <returns></returns>
-        private string GenerateDivider(int[] columnLengths, char innerDelimiter, char divider, char left, char right)
-        {
-            string output = String.Empty;
-
-            output = String.Concat(output, left, String.Empty.PadRight(columnLengths[0] + 2, divider));
-            for (int i = 1; i < m_headers.Count; i++)
-            {
-                output = String.Concat(output, innerDelimiter, String.Empty.PadRight(columnLengths[i] + 2, divider)); //+2 for the 2 spaces around the delimiters
-            }
-            output = String.Concat(output, right);
-            return PadRowInConsole(output);
-        }
-
-        //Potentially will be unused.
-        private string GetColumnsFormat(int[] columnLengths, char delimiter = '|')
-        {
-            string delmiterStr = delimiter == char.MinValue ? string.Empty : delimiter.ToString();
-            string format = String.Empty;
-            for (int i = 0; i < m_headers.Count; i++)
-            {
-                format = String.Concat(format, " ", delmiterStr, " {", i, ",-", columnLengths[i], "}");
-            }
-            format = String.Concat(" ", delmiterStr);
-            return format;
         }
 
         #endregion

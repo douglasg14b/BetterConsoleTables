@@ -140,6 +140,28 @@ namespace BetterConsoleTables
 
         #region TableFormatters
 
+        /// <summary>
+        /// Generates a horizontal dividing row between content rows
+        /// </summary>
+        /// <param name="columnLengths">The width of each of the columns</param>
+        /// <param name="innerDelimiter">The inner intersection divider where vertical and horizontal lines meet</param>
+        /// <param name="divider">The horizontal divider</param>
+        /// <param name="left">The left outer edge character</param>
+        /// <param name="right">The right outer edge character</param>
+        /// <returns></returns>
+        protected string GenerateDivider(int[] columnLengths, char innerDelimiter, char divider, char left, char right)
+        {
+            string output = String.Empty;
+
+            output = String.Concat(output, left, String.Empty.PadRight(columnLengths[0] + 2, divider));
+            for (int i = 1; i < m_headers.Count; i++)
+            {
+                output = String.Concat(output, innerDelimiter, String.Empty.PadRight(columnLengths[i] + 2, divider)); //+2 for the 2 spaces around the delimiters
+            }
+            output = String.Concat(output, right);
+            return PadRowInConsole(output);
+        }
+
         #endregion
 
         #region Helpers
