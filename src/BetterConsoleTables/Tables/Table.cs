@@ -9,7 +9,7 @@ using System.Text;
 
 namespace BetterConsoleTables
 {
-    public class Table : Table<object>
+   /* public class Table : Table<object>
     {
         public Table() : base() { }
         public Table(TableConfig config) : base(config) { }
@@ -19,9 +19,25 @@ namespace BetterConsoleTables
         public Table(params Column[] columns) : base(columns) { }
         public Table(Alignment rowsAlignment = Alignment.Left, Alignment headerAlignment = Alignment.Left, params object[] columns)
             : base(rowsAlignment, headerAlignment, columns) { }
-    }
 
-    public class Table<TModel> : TableBase<Table<TModel>, Column, TModel> where TModel : new()
+        /// <summary>
+        /// Derives the table from the provided types.
+        /// Columns are derived from Property Names
+        /// Rows are derived from Property Values
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="items"></param>
+        /// <returns></returns>
+        public Table<object> From(IList<object> items)
+        {
+            object[] array = new object[items.Count];
+            items.CopyTo(array, 0);
+            ProcessReflectionData(array);
+            return this;
+        }
+    }*/
+
+    public class Table : TableBase<Table, Column>
     {
 
         #region Constructors
@@ -31,7 +47,7 @@ namespace BetterConsoleTables
         public Table(TableConfig config)
         {
             m_headers = new List<Column>();
-            m_rows = new List<TModel[]>();
+            m_rows = new List<string[]>();
             Config = config;
         }
 
@@ -67,57 +83,26 @@ namespace BetterConsoleTables
         public Table(Alignment rowsAlignment = Alignment.Left, Alignment headerAlignment = Alignment.Left, params object[] columns)
             : this(new TableConfig(), rowsAlignment, headerAlignment, columns) { }
 
+
+        // -------------------------------
+        // ----- Static Constructors -----
+
+        public static Table From<T>(T[] items, Column[] columns)
+        {
+            Table table = new Table(columns);
+            table.ProcessReflectionData(items);
+            return table;
+        }
+
         #endregion
+
+        
+
+
 
         #region Public Method API
 
-        /// <summary>
-        /// Adds a row to the bottom of the list with the provided column values
-        /// Expected that the provided values count is <= the number of columns in the table
-        /// </summary>
-        /// <param name="values">The column values.</param>
-        /// <returns>This Table</returns>
-        public override Table<TModel> AddRow(params TModel[] values)
-        {
-            if (values == null)
-            {
-                throw new ArgumentNullException(nameof(values));
-            }
-
-            if (Headers.Count == 0)
-            {
-                //TODO: assign first row as columns by default later?
-                throw new Exception("No columns exist, please add columns before adding rows");
-            }
-
-            if (values.Length > Headers.Count)
-            {
-                throw new Exception(
-                    $"The number columns in the row ({values.Length}) is greater than the number of columns in the table ({m_headers.Count}");
-            }
-
-            if (values.Length < Headers.Count)
-            {
-                ResizeRow(ref values, Headers.Count);
-            }
-
-            m_rows.Add(values);
-
-            return this;
-        }
-
-        /// <summary>
-        /// Adds an array of rows to the bottom of the list
-        /// </summary>
-        /// <param name="rows"></param>
-        /// <returns>This Table</returns>
-        public override Table<TModel> AddRows(IEnumerable<TModel[]> rows)
-        {
-            m_rows.AddRange(rows);
-            return this;
-        }
-
-        public override Table<TModel> AddColumn(Column column)
+        public override Table AddColumn(Column column)
         {
             m_headers.Add(column);
             if (m_rows.Count > 0 && LongestRow == m_headers.Count)
@@ -127,7 +112,7 @@ namespace BetterConsoleTables
             return this;
         }
 
-        public Table<TModel> AddColumn(string title, Alignment rowsAlignment = Alignment.Left, Alignment headerAlignment = Alignment.Left)
+        public Table AddColumn(string title, Alignment rowsAlignment = Alignment.Left, Alignment headerAlignment = Alignment.Left)
         {
             return AddColumn(new Column(title, rowsAlignment, headerAlignment));
         }
@@ -137,12 +122,12 @@ namespace BetterConsoleTables
         /// </summary>
         /// <param name="title"></param>
         /// <returns>This Table</returns>
-        public Table<TModel> AddColumn(object title, Alignment rowsAlignment = Alignment.Left, Alignment headerAlignment = Alignment.Left)
+        public Table AddColumn(object title, Alignment rowsAlignment = Alignment.Left, Alignment headerAlignment = Alignment.Left)
         {
             return AddColumn(title.ToString(), rowsAlignment, headerAlignment);
         }
 
-        public Table<TModel> AddColumns(Alignment rowsAlignment = Alignment.Left, Alignment headerAlignment = Alignment.Left, params string[] columns)
+        public Table AddColumns(Alignment rowsAlignment = Alignment.Left, Alignment headerAlignment = Alignment.Left, params string[] columns)
         {
             foreach (var column in columns)
             {
@@ -163,7 +148,7 @@ namespace BetterConsoleTables
         /// </summary>
         /// <param name="columns"></param>
         /// <returns></returns>
-        public Table<TModel> AddColumns(Alignment rowsAlignment = Alignment.Left, Alignment headerAlignment = Alignment.Left, params object[] columns)
+        public Table AddColumns(Alignment rowsAlignment = Alignment.Left, Alignment headerAlignment = Alignment.Left, params object[] columns)
         {
             foreach (var column in columns)
             {
@@ -179,21 +164,7 @@ namespace BetterConsoleTables
             return this;
         }
 
-        /// <summary>
-        /// Derives the table from the provided types.
-        /// Columns are derived from Property Names
-        /// Rows are derived from Property Values
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="items"></param>
-        /// <returns></returns>
-        public Table<TModel> From(IList<TModel> items)
-        {
-            TModel[] array = new TModel[items.Count];
-            items.CopyTo(array, 0);
-            ProcessReflectionData(array);
-            return this;
-        }
+
 
         #endregion
 
@@ -274,7 +245,7 @@ namespace BetterConsoleTables
             return lengths;
         }
 
-        private string[] FormatRows(int[] columnLengths, IList<TModel[]> values)
+        private string[] FormatRows(int[] columnLengths, IList<string[]> values)
         {
             string[] output = new string[values.Count];
             for (int i = 0; i < values.Count; i++)
@@ -284,7 +255,7 @@ namespace BetterConsoleTables
             return output;
         }
 
-        private string[] FormatRows(int[] columnLengths, IList<TModel[]> values, char innerDelimiter, char outerDelimiter)
+        private string[] FormatRows(int[] columnLengths, IList<string[]> values, char innerDelimiter, char outerDelimiter)
         {
             string[] output = new string[values.Count];
             for (int i = 0; i < values.Count; i++)
@@ -297,7 +268,7 @@ namespace BetterConsoleTables
         /// <summary>
         /// Formats a row with the default delimiter fields
         /// </summary>
-        private string FormatRow(int[] columnLengths, IList<TModel> values)
+        private string FormatRow(int[] columnLengths, IList<string> values)
         {
             string output = String.Empty;
 
@@ -315,10 +286,10 @@ namespace BetterConsoleTables
                 output = String.Concat(output, Config.innerColumnDelimiter, " ", values[i].ToString().PadRight(columnLengths[i]), " ");
             }
             output = String.Concat(output, Config.innerColumnDelimiter);
-            return PadRow(output);
+            return PadRowInConsole(output);
         }
 
-        private string FormatRow(int[] columnLengths, IList<TModel> values, char delimiter)
+        private string FormatRow(int[] columnLengths, IList<string> values, char delimiter)
         {
             string output = String.Empty;
 
@@ -327,10 +298,10 @@ namespace BetterConsoleTables
                 output = String.Concat(output, delimiter, " ", values[i].ToString().PadRight(columnLengths[i]), " ");
             }
             output = String.Concat(output, delimiter);
-            return PadRow(output);
+            return PadRowInConsole(output);
         }
 
-        private string FormatRow(int[] columnLengths, IList<TModel> values, char innerDelimiter, char outerDelimiter)
+        private string FormatRow(int[] columnLengths, IList<string> values, char innerDelimiter, char outerDelimiter)
         {
             string output = String.Empty;
             output = String.Concat(output, outerDelimiter, " ", PadString(values[0].ToString(), columnLengths[0], m_headers[0].RowsAlignment), " ");
@@ -341,7 +312,7 @@ namespace BetterConsoleTables
             }
 
             output = String.Concat(output, outerDelimiter);
-            return PadRow(output);
+            return PadRowInConsole(output);
         }
 
         //TEMP FOR NOW
@@ -354,7 +325,7 @@ namespace BetterConsoleTables
                 output = String.Concat(output, innerDelimiter, " ", PadString(values[i].ToString(), columnLengths[i], m_headers[i].HeaderAlignment), " ");
             }
             output = String.Concat(output, outerDelimiter);
-            return PadRow(output);
+            return PadRowInConsole(output);
         }
 
 
@@ -368,7 +339,7 @@ namespace BetterConsoleTables
                 output = String.Concat(output, delimiter, String.Empty.PadRight(columnLengths[i] + 2, divider)); //+2 for the 2 spaces around the delimiters
             }
             output = String.Concat(output, delimiter);
-            return PadRow(output);
+            return PadRowInConsole(output);
         }
 
 
@@ -390,7 +361,7 @@ namespace BetterConsoleTables
                 output = String.Concat(output, innerDelimiter, String.Empty.PadRight(columnLengths[i] + 2, divider)); //+2 for the 2 spaces around the delimiters
             }
             output = String.Concat(output, outerDelimiter);
-            return PadRow(output);
+            return PadRowInConsole(output);
         }
 
         /// <summary>
@@ -412,7 +383,7 @@ namespace BetterConsoleTables
                 output = String.Concat(output, innerDelimiter, String.Empty.PadRight(columnLengths[i] + 2, divider)); //+2 for the 2 spaces around the delimiters
             }
             output = String.Concat(output, right);
-            return PadRow(output);
+            return PadRowInConsole(output);
         }
 
         //Potentially will be unused.
@@ -430,85 +401,8 @@ namespace BetterConsoleTables
 
         #endregion
 
-        #region Reflection 
-
-        /*private void ProcessReflectionData<T>(T[] genericData)
-        {
-            PropertyInfo[] properties = typeof(T).GetProperties(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static);
-            string[] columns = GetColumnNames(properties);
-            string[][] data = GetRowsData(genericData, properties);
-            foreach (string column in columns)
-            {
-                m_headers.Add(new Column(column));
-            }
-            m_rows.AddRange(data);
-        }
-
-        private string[] GetColumnNames(PropertyInfo[] properties)
-        {
-            string[] output = new string[properties.Length];
-            for (int i = 0; i < properties.Length; i++)
-            {
-                output[i] = properties[i].Name;
-            }
-            return output;
-        }
-
-        private string[][] GetRowsData<T>(T[] data, PropertyInfo[] properties)
-        {
-            string[][] output = new string[data.Length][];
-            for (int i = 0; i < data.Length; i++)
-            {
-                string[] values = new string[properties.Length];
-
-                // Is null or default. Value type default is 0, reference types is null
-                // If the row is null, fill all row values with the default
-                if (EqualityComparer<T>.Default.Equals(data[i], default(T)))
-                {
-                    string elementValue = String.Empty;
-                    // Cannot ToString() null
-                    if (default(T) == null)
-                    {
-                        elementValue = "null";
-                    }
-                    else
-                    {
-                        elementValue = default(T).ToString();
-                    }
-                    for (int j = 0; j < properties.Length; j++)
-                    {
-                        values[j] = elementValue;
-                    }
-
-                    continue;
-                }
 
 
-                for (int j = 0; j < properties.Length; j++)
-                {
-                    object columnValue = properties[j].GetValue(data[i]);
-
-                    if (columnValue is null)
-                    {
-                        values[j] = "null";
-                        continue;
-                    }
-
-                    values[j] = columnValue.ToString();
-                }
-                output[i] = values;
-            }
-            return output;
-        }
-        */
-        #endregion 
-
-        // Static Constructors
-
-        /*public static Table From<T>(IList<T> items)
-        {
-
-        }*/
 
     }
 
