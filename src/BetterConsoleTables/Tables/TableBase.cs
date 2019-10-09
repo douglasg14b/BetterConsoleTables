@@ -162,6 +162,48 @@ namespace BetterConsoleTables
             return PadRowInConsole(output);
         }
 
+        /// <summary>
+        /// Creates multiple table rows out of the provided column data with column delimiters
+        /// </summary>
+        /// <param name="values">The values for each column</param>
+        /// <param name="columnLengths">The max width of each column</param>
+        /// <param name="columnAlignments">The text orientation of each column</param>
+        /// <param name="innerDelimiter">The column delimiters for the inside of the table</param>
+        /// <param name="outerDelimiter">The column delimiters for the outside edges of the table</param>
+        /// <returns></returns>
+        protected string[] FormatRows(IList<string[]> values, int[] columnLengths, Alignment[] columnAlignments, char innerDelimiter, char outerDelimiter)
+        {
+            string[] output = new string[values.Count];
+            for (int i = 0; i < values.Count; i++)
+            {
+                output[i] = FormatDataRow(values[i], columnLengths, columnAlignments, innerDelimiter, outerDelimiter);
+            }
+            return output;
+        }
+
+        /// <summary>
+        /// Creates a table row out of the provided column data with column delimiters
+        /// </summary>
+        /// <param name="values">The values for each column</param>
+        /// <param name="columnLengths">The max width of each column</param>
+        /// <param name="columnAlignments">The text orientation of each column</param>
+        /// <param name="innerDelimiter">The column delimiters for the inside of the table</param>
+        /// <param name="outerDelimiter">The column delimiters for the outside edges of the table</param>
+        /// <returns></returns>
+        protected string FormatDataRow(IList<string> values, int[] columnLengths, Alignment[] columnAlignments, char innerDelimiter, char outerDelimiter)
+        {
+            string output = String.Empty;
+            output = String.Concat(output, outerDelimiter, " ", PadString(values[0].ToString(), columnLengths[0], columnAlignments[0]), " ");
+
+            for (int i = 1; i < m_headers.Count; i++)
+            {
+                output = String.Concat(output, innerDelimiter, " ", PadString(values[i].ToString(), columnLengths[i], columnAlignments[i]), " ");
+            }
+
+            output = String.Concat(output, outerDelimiter);
+            return PadRowInConsole(output);
+        }
+
         #endregion
 
         #region Helpers

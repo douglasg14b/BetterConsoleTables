@@ -3,6 +3,7 @@ using BetterConsoleTables.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -163,8 +164,10 @@ namespace BetterConsoleTables
         {
             StringBuilder builder = new StringBuilder();
 
+            Alignment[] columnAlignments = m_headers.Select(x => x.RowsAlignment).ToArray();
+
             string formattedHeaders = FormatHeader(columnLengths, m_headers, Config.innerColumnDelimiter, Config.outerColumnDelimiter);
-            string[] formattedRows = FormatRows(columnLengths, m_rows, Config.innerColumnDelimiter, Config.outerColumnDelimiter);
+            string[] formattedRows = FormatRows(m_rows, columnLengths, columnAlignments, Config.innerColumnDelimiter, Config.outerColumnDelimiter);
 
             string headerDivider = GenerateDivider(columnLengths, Config.headerBottomIntersection, Config.headerRowDivider, Config.outerLeftVerticalIntersection, Config.outerRightVerticalIntersection);
             string innerDivider = GenerateDivider(columnLengths, Config.innerIntersection, Config.innerRowDivider, Config.outerLeftVerticalIntersection, Config.outerRightVerticalIntersection);
@@ -235,15 +238,7 @@ namespace BetterConsoleTables
             return output;
         }
 
-        private string[] FormatRows(int[] columnLengths, IList<string[]> values, char innerDelimiter, char outerDelimiter)
-        {
-            string[] output = new string[values.Count];
-            for (int i = 0; i < values.Count; i++)
-            {
-                output[i] = FormatRow(columnLengths, values[i], innerDelimiter, outerDelimiter);
-            }
-            return output;
-        }
+
 
         /// <summary>
         /// Formats a row with the default delimiter fields
@@ -281,27 +276,7 @@ namespace BetterConsoleTables
             return PadRowInConsole(output);
         }
 
-        /// <summary>
-        /// Creates a table row with appropriate formatting
-        /// </summary>
-        /// <param name="columnLengths">The max width of each column</param>
-        /// <param name="values">The values for each column</param>
-        /// <param name="innerDelimiter">The column delimiters for the inside of the table</param>
-        /// <param name="outerDelimiter">The column delimiters for the outside edges of the table</param>
-        /// <returns></returns>
-        private string FormatRow(int[] columnLengths, IList<string> values, char innerDelimiter, char outerDelimiter)
-        {
-            string output = String.Empty;
-            output = String.Concat(output, outerDelimiter, " ", PadString(values[0].ToString(), columnLengths[0], m_headers[0].RowsAlignment), " ");
 
-            for (int i = 1; i < m_headers.Count; i++)
-            {
-                output = String.Concat(output, innerDelimiter, " ", PadString(values[i].ToString(), columnLengths[i], m_headers[i].RowsAlignment), " ");
-            }
-
-            output = String.Concat(output, outerDelimiter);
-            return PadRowInConsole(output);
-        }
 
         //TEMP FOR NOW
         private string FormatHeader(int[] columnLengths, IList<Column> values, char innerDelimiter, char outerDelimiter)
