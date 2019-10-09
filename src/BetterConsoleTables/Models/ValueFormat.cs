@@ -1,11 +1,12 @@
-﻿using System;
+﻿using BetterConsoleTables.Common;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BetterConsoleTables.Configuration
+namespace BetterConsoleTables.Models
 {
     public class ValueFormat
     {
@@ -21,13 +22,28 @@ namespace BetterConsoleTables.Configuration
         public Color ForegoundColor { get; set; } = Constants.DefaultForegoundColor;
         public Color BackgroundColor { get; set; } = Constants.DefaultBackgroundColor;
         public Alignment Alignment { get; set; } = Constants.DefaultAlignment;
+
+        public ValueFormat WithForegoundColor(Color color)
+        {
+            ForegoundColor = color;
+            return this;
+        }
+        public ValueFormat WithBackgroundColor(Color color)
+        {
+            BackgroundColor = color;
+            return this;
+        }
+        public ValueFormat WithAlignment(Alignment alignment)
+        {
+            Alignment = alignment;
+            return this;
+        }
+
+        public static ValueFormat Default()
+        {
+            return new ValueFormat();
+        }
     }
 
-    /*public class ValueFormatBuilder
-    {
-        public TableCellConfigBuilder With(Action<ValueFormat> action)
-        {
-            With(x => x.Alignment = Alignment.Center);
-        }
-    }*/
+
 }
