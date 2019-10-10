@@ -26,21 +26,9 @@ namespace BetterConsoleTables.Models
         public Color BackgroundColor { get; set; } = Constants.DefaultBackgroundColor;
         public Alignment Alignment { get; set; } = Constants.DefaultAlignment;
 
-        public ValueFormat WithForegroundColor(Color color)
-        {
-            ForegroundColor = color;
-            return this;
-        }
-        public ValueFormat WithBackgroundColor(Color color)
-        {
-            BackgroundColor = color;
-            return this;
-        }
-        public ValueFormat WithAlignment(Alignment alignment)
-        {
-            Alignment = alignment;
-            return this;
-        }
+        public bool DefaultColors => DefaultForeground && DefaultBackground;
+        public bool DefaultForeground => ForegroundColor == Constants.DefaultBackgroundColor;
+        public bool DefaultBackground => BackgroundColor == Constants.DefaultBackgroundColor;
 
         public static ValueFormat Default()
         {

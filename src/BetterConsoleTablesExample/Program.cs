@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using BetterConsoleTablesExample;
 using BetterConsoleTables.Models;
 using BetterConsoleTables.Configuration;
+using System.Drawing;
+using BetterConsoleTables.Builders;
 
 namespace BetterConsoleTables_Example
 {
@@ -212,7 +214,7 @@ namespace BetterConsoleTables_Example
                 stopwatch.Restart();
 
                 Table table = new Table("One", "Two", "Three");
-                table.Config = TableConfiguration.Unicode();
+                table.Config = TableConfig.Unicode();
                 table.AddRow("1", "2", "3");
                 table.AddRow("Short", "item", "Here");
                 table.AddRow("Longer items go here", "stuff", "stuff");
@@ -231,6 +233,59 @@ namespace BetterConsoleTables_Example
             Console.WriteLine($"{ticks}ticks or {ticks/10000f}ms per table");
         }
 
+        private static void ShowColoredHeaders()
+        {
+            Console.WriteLine();
+            Table1();
+            Console.WriteLine();
+            Table2();
+
+            void Table1()
+            {
+                //THis throws Exception
+                return;
+                Column[] headers = new[]
+                {
+                    new ColumnBuilder("Colors!").WithHeaderFormat().WithForegroundColor(Color.BlueViolet).GetColumn(),
+                    new ColumnBuilder("Right").WithHeaderFormat().WithForegroundColor(Color.Green).GetColumn(),
+                    new ColumnBuilder("Center!").WithHeaderFormat().WithForegroundColor(Color.Firebrick).GetColumn(),
+                };
+
+                Table table = new Table(headers);
+                table.Config = TableConfig.MySqlSimple();
+                table.AddRow(Color.Gray.ToString(), "2", "3");
+                table.AddRow("Hello", "2", "3");
+                table.AddRow("Hello World!", "item", "Here");
+                table.AddRow("Longer items go here", "stuff stuff", "some centered thing");
+
+                Console.Write(table.ToString());
+            }
+
+            void Table2()
+            {
+                Table table = new Table()
+                    .AddColumn(new ColumnBuilder("Colors!").WithHeaderFormat().WithForegroundColor(Color.BlueViolet).GetColumn())
+                    .AddColumn(new ColumnBuilder("Right")
+                                    .WithHeaderFormat()
+                                        .WithForegroundColor(Color.Green)
+                                        .WithAlignment(Alignment.Right)
+                                    .GetColumn())
+                    .AddColumn(new ColumnBuilder("Center!")
+                                    .WithHeaderFormat()
+                                        .WithForegroundColor(Color.Firebrick)
+                                        .WithAlignment(Alignment.Center)
+                                    .GetColumn());
+
+                table.Config = TableConfig.MySqlSimple();
+                table.AddRow(Color.Gray.ToString(), "2", "3");
+                table.AddRow("Hello", "2", "3");
+                table.AddRow("Hello World!", "item", "Here");
+                table.AddRow("Longer items go here", "stuff stuff", "some centered thing");
+
+                Console.Write(table.ToString());
+            }
+        }
+
         private static void ShowAlignedTables()
         {
             Console.WriteLine();
@@ -241,17 +296,20 @@ namespace BetterConsoleTables_Example
 
             void Table1()
             {
-                ColumnHeader[] headers = new[]
+                Column[] headers = new[]
                 {
-                    new ColumnHeader("Left"),
-                    new ColumnHeader("Right", Alignment.Right, Alignment.Right),
-                    new ColumnHeader("Center", Alignment.Center, Alignment.Center),
+                    Column.Simple("Left"),
+                    Column.Simple("Right", Alignment.Right, Alignment.Right),
+                    Column.Simple("Center", Alignment.Center, Alignment.Center),
                 };
 
+                var test = Color.Gray;
+
                 Table table = new Table(headers);
-                table.Config = TableConfiguration.MySqlSimple();
-                table.AddRow("1", "2", "3");
-                table.AddRow("Short", "item", "Here");
+                table.Config = TableConfig.MySqlSimple();
+                table.AddRow(Color.Gray.ToString(), "2", "3");
+                table.AddRow("Hello".WithColor(Color.LightGray, ColorPlane.Foreground), "2".WithColor(Color.Red, ColorPlane.Foreground), "3");
+                table.AddRow("\u001b[48;2;55;90;150mHello World!\u001b[0m", "item", "Here");
                 table.AddRow("Longer items go here", "stuff stuff", "some centered thing");
 
                 Console.Write(table.ToString());
@@ -259,14 +317,14 @@ namespace BetterConsoleTables_Example
 
             void Table2()
             {
-                ColumnHeader[] headers = new[]
+                Column[] headers = new[]
                 {
-                    new ColumnHeader("Left"),
-                    new ColumnHeader("Left Header", Alignment.Right),
-                    new ColumnHeader("Right Header", Alignment.Center, Alignment.Right),
+                    Column.Simple("Left"),
+                    Column.Simple("Left Header", Alignment.Right),
+                    Column.Simple("Right Header", Alignment.Center, Alignment.Right),
                 };
                 Table table = new Table(headers);
-                table.Config = TableConfiguration.MySqlSimple();
+                table.Config = TableConfig.MySqlSimple();
                 table.AddRow("1", "2", "3");
                 table.AddRow("Short", "item", "Here");
                 table.AddRow("Longer items go here", "Right Contents", "Centered Contents");
@@ -277,6 +335,7 @@ namespace BetterConsoleTables_Example
 
         private static void ShowExampleTables()
         {
+            ShowColoredHeaders();
             ShowAlignedTables();
             Console.WriteLine();
 
@@ -285,23 +344,23 @@ namespace BetterConsoleTables_Example
             table.AddRow("Short", "item", "Here");
             table.AddRow("Longer items go here", "stuff stuff", "stuff");
 
-            table.Config = TableConfiguration.Default();
+            table.Config = TableConfig.Default();
 
             Console.Write(table.ToString());
             Console.WriteLine();
-            table.Config = TableConfiguration.Markdown();
+            table.Config = TableConfig.Markdown();
             Console.Write(table.ToString());
             Console.WriteLine();
-            table.Config = TableConfiguration.MySql();
+            table.Config = TableConfig.MySql();
             Console.Write(table.ToString());
             Console.WriteLine();
-            table.Config = TableConfiguration.MySqlSimple();
+            table.Config = TableConfig.MySqlSimple();
             Console.Write(table.ToString());
             Console.WriteLine();
-            table.Config = TableConfiguration.Unicode();
+            table.Config = TableConfig.Unicode();
             Console.Write(table.ToString());
             Console.WriteLine();
-            table.Config = TableConfiguration.UnicodeAlt();
+            table.Config = TableConfig.UnicodeAlt();
             Console.Write(table.ToString());
             Console.WriteLine();
         }
@@ -309,13 +368,13 @@ namespace BetterConsoleTables_Example
         private static void ShowExmapleMultiTable()
         {
             Table table = new Table("One", "Two", "Three");
-            table.Config = TableConfiguration.Default();
+            table.Config = TableConfig.Default();
             table.AddRow("1", "2", "3");
             table.AddRow("Short", "item", "Here");
             table.AddRow("Longer items go here", "stuff stuff", "stuff");
 
             Table table2 = new Table("One", "Two", "Three", "Four");
-            table2.Config = TableConfiguration.UnicodeAlt();
+            table2.Config = TableConfig.UnicodeAlt();
             table2.AddRow("One", "Two", "Three");
             table2.AddRow("Short", "item", "Here", "A fourth column!!!");
             table2.AddRow("stuff", "longer stuff", "even longer stuff in this cell");
@@ -332,7 +391,7 @@ namespace BetterConsoleTables_Example
             {
                 objects[i] = new DataStuff(random);
             }
-            Table table = new Table(TableConfiguration.MySql());
+            Table table = new Table(TableConfig.MySql());
             table.From<DataStuff>(objects);
 
             Console.Write(table.ToString());

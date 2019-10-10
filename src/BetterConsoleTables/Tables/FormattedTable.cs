@@ -8,28 +8,36 @@ using System.Threading.Tasks;
 
 namespace BetterConsoleTables
 {
-    public class FormattedTable<TModel> : TableBase<FormattedTable<TModel>, TableCell, TableCell>
+    public class FormattedTable : TableBase<FormattedTable, TableCell, TableCell>
     {
-        public List<TableCellConfig[]> ConfigMatrix;
+        public List<ValueFormat[]> ConfigMatrix;
 
-
-
-        public override FormattedTable<TModel> AddColumn(Column column)
+        public override FormattedTable AddColumn(Column header)
         {
             throw new NotImplementedException();
         }
 
-        public override FormattedTable<TModel> AddRow(params TableCell[] values)
+        public override FormattedTable AddColumn(object title, Alignment rowsAlignment = Alignment.Left, Alignment headerAlignment = Alignment.Left)
         {
             throw new NotImplementedException();
         }
 
-        public override FormattedTable<TModel> AddRows(IEnumerable<TableCell[]> values)
+        public override FormattedTable AddRow(params object[] rowValues)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override FormattedTable AddRows(IEnumerable<object[]> rows)
         {
             throw new NotImplementedException();
         }
 
         public override string ToString(int[] columnWidths)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override string ToString()
         {
             throw new NotImplementedException();
         }

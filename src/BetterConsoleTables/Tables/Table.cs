@@ -28,11 +28,22 @@ namespace BetterConsoleTables
 
         #region Constructors
 
+        private void Create()
+        {
+            m_cellFormats = new List<List<ValueFormat>>();
+        }
+
         public Table() 
-            : base() { }
+            : base()
+        {
+            Create();
+        }
 
         public Table(TableConfig config)
-            : base(config) { }
+            : base(config)
+        {
+            Create();
+        }
 
         public Table(TableConfig config, params Column[] columns)
             : this(config)
@@ -79,6 +90,17 @@ namespace BetterConsoleTables
 
         #endregion
 
+        private List<List<ValueFormat>> m_cellFormats { get; set; }
+
+        private void AddFormatRow(int length)
+        {
+            var formatRow = new List<ValueFormat>(length);
+            for(int i = 0; i < length; i++)
+            {
+                formatRow.Add(m_headers[i].RowsFormat);
+            }
+        }
+
         #region Public Method API
 
         /// <summary>
@@ -91,6 +113,8 @@ namespace BetterConsoleTables
         public override Table AddRow(params object[] rowValues)
         {
             if (rowValues is null) throw new ArgumentNullException(nameof(rowValues), "Cannot add a null row to a table");
+
+            AddFormatRow(rowValues.Length);
 
             string[] stringValues = new string[rowValues.Length];
             for (int i = 0; i < rowValues.Length; i++)
@@ -118,10 +142,15 @@ namespace BetterConsoleTables
             return this;
         }
 
-
         public override Table AddColumn(Column column)
         {
+            if (m_cellFormats.Count == 0)
+            {
+                m_cellFormats.Add(new List<ValueFormat>());
+            }
+
             m_headers.Add(column);
+            m_cellFormats[0].Add(column.HeaderFormat);
             if (m_rows.Count > 0 && LongestRow == m_headers.Count)
             {
                 IncrementRowElements(1);
@@ -139,7 +168,7 @@ namespace BetterConsoleTables
         /// </summary>
         /// <param name="title"></param>
         /// <returns>This Table</returns>
-        public Table AddColumn(object title, Alignment rowsAlignment = Alignment.Left, Alignment headerAlignment = Alignment.Left)
+        public override Table AddColumn(object title, Alignment rowsAlignment = Alignment.Left, Alignment headerAlignment = Alignment.Left)
         {
             return AddColumn(title.ToString(), rowsAlignment, headerAlignment);
         }
@@ -201,8 +230,18 @@ namespace BetterConsoleTables
             StringBuilder builder = new StringBuilder();
 
             Alignment[] columnAlignments = m_headers.Select(x => x.RowsAlignment).ToArray();
+            string formattedHeaders;
 
-            string formattedHeaders = FormatHeader(m_headers, columnLengths, Config.innerColumnDelimiter, Config.outerColumnDelimiter);
+            //Temp?
+            if (m_cellFormats.Count > 0)
+            {
+                formattedHeaders = FormatHeader2(m_headers.Select(x => x.Title).ToList(), m_cellFormats[0], columnLengths, ref Config.innerColumnDelimiter, ref Config.outerColumnDelimiter);
+            }
+            else
+            {
+                formattedHeaders = FormatHeader(m_headers, columnLengths, Config.innerColumnDelimiter, Config.outerColumnDelimiter);
+            }
+
             string[] formattedRows = FormatDataRows(m_rows, columnLengths, columnAlignments, Config.innerColumnDelimiter, Config.outerColumnDelimiter);
 
             string headerDivider = GenerateDivider(columnLengths, Config.headerBottomIntersection, Config.headerRowDivider, Config.outerLeftVerticalIntersection, Config.outerRightVerticalIntersection);
@@ -252,6 +291,35 @@ namespace BetterConsoleTables
             }
             output = String.Concat(output, outerDelimiter);
             return PadRowInConsole(output);
+        }
+
+        //TEMP FOR NOW
+        private string FormatHeader2(IList<string> values, IList<ValueFormat> formats, int[] columnLengths, ref char innerDelimiter, ref char outerDelimiter)
+        {
+            string output = String.Empty;
+            int rowWidth = 0; //Will be used for padding
+
+            for (int i = 0; i < m_headers.Count; i++)
+            {
+                ref char delimiter = ref (i == 0 ? ref outerDelimiter : ref innerDelimiter);
+                string paddedValue = PadString(values[i], columnLengths[i], formats[i].Alignment);
+                rowWidth += 1 + 1 + paddedValue.Length + 1; // delimiter, space, value, space
+
+                if (!formats[i].DefaultForeground)
+                {
+                    paddedValue = paddedValue.WithForegroundColor(formats[i].ForegroundColor);
+                }
+
+                if (!formats[i].DefaultBackground)
+                {
+                    paddedValue = paddedValue.WithBackgroundColor(formats[i].BackgroundColor);
+                }
+
+                output = String.Concat(output, delimiter, " ", paddedValue, " ");
+            }
+            output = String.Concat(output, outerDelimiter);
+            //return PadRowInConsole(output); //Need to only pad the ACTUAL string length, not the one with variations baked in
+            return output;
         }
 
         #endregion

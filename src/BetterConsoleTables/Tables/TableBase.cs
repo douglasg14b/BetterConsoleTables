@@ -62,6 +62,7 @@ namespace BetterConsoleTables
         }
 
         public abstract TTable AddColumn(Column header);
+        public abstract TTable AddColumn(object title, Alignment rowsAlignment = Alignment.Left, Alignment headerAlignment = Alignment.Left);
 
         /// <summary>
         /// Adds a row to the bottom of the list with the provided column values
