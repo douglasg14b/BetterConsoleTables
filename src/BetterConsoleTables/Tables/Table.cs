@@ -318,14 +318,9 @@ namespace BetterConsoleTables
                     paddedValue = paddedValue.WithBackgroundColor(formats[i].BackgroundColor);
                 }
 
-                if (formats[i].Bold)
+                if(formats[i].Formats != FormatType.None)
                 {
-                    paddedValue = paddedValue.Bold();
-                }
-
-                if (formats[i].Underline)
-                {
-                    paddedValue = paddedValue.Underline();
+                    paddedValue = paddedValue.AddFormatting(formats[i].Formats);
                 }
 
                 output = String.Concat(output, delimiter, " ", paddedValue, " ");
