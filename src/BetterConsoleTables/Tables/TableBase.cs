@@ -139,7 +139,7 @@ namespace BetterConsoleTables
                 int max = columns[i].Title.Length;
                 for (int j = 0; j < m_rows.Count; j++)
                 {
-                    int length = m_rows[j][i].ToString().Length;
+                    int length = m_rows[j][i]?.ToString()?.Length ?? 0;
                     if (length > max)
                     {
                         max = length;
@@ -332,9 +332,18 @@ namespace BetterConsoleTables
         {
             int length = row.Length;
             Array.Resize(ref row, newSize);
+            Type cellType = typeof(TCell);
+
             for (int i = length; i < row.Length; i++)
             {
-                row[i] = default(TCell);
+                if(cellType == typeof(string))
+                {
+                    row[i] = (TCell)(object)String.Empty;
+                }
+                else
+                {
+                    row[i] = default(TCell);
+                }
             }
         }
 
