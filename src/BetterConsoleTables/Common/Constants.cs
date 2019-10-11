@@ -16,7 +16,25 @@ namespace BetterConsoleTables
         public const ColorPlane DefaultColorPlane = ColorPlane.Foreground;
 
         public const string AnsiEsc = "\u001b";
-        public static readonly string DefaultColorCode = AnsiEsc + "[0m";
+        public static readonly string AnsiReset = AnsiEsc + "[0m";
+        public static readonly string AnsiNoUnderline = AnsiEsc + "[24m";
+        public static readonly string AnsiBoldOff = AnsiEsc + "[22m";
+        public static readonly string AnsiNormalColor = AnsiEsc + "[22m";
+        public static readonly string AnsiBlinkStop = AnsiEsc + "[25m";
+        public static readonly string AnsiNotCrossedOut = AnsiEsc + "[29m";
+
+        public static readonly string AnsiBold = AnsiEsc + "[1m{0}" + AnsiReset;      
+        public static readonly string AnsiUnderline = AnsiEsc + "[4m{0}" + AnsiNoUnderline;
+        public static readonly string AnsiReversedColors = AnsiEsc + "[7m{0}" + AnsiReset;
+        public static readonly string AnsiCrossedOut = AnsiEsc + "[9m{0}" + AnsiReset; // Not W
+
+
+        public static readonly string AnsiBlink = AnsiEsc + "[5m{0}" + AnsiReset; // Not on Windows Console. Not When unfocused
+        public static readonly string AnsiOverline = AnsiEsc + "[53m{0}" + AnsiReset; // Not W
+        public static readonly string AnsiItalic = AnsiEsc + "[3m{0}" + AnsiReset; // Not W
+
+
+
 
         /// <summary>
         /// {0): Plane
@@ -26,6 +44,8 @@ namespace BetterConsoleTables
         /// </summary>
         public static readonly string ColorFormat = AnsiEsc + "[{0};2;{1};{2};{3}m";
 
+        
+
         /// <summary>
         /// {0): Plane
         /// {1}: R
@@ -33,7 +53,7 @@ namespace BetterConsoleTables
         /// {3}: B
         /// {4}: String Value
         /// </summary>
-        public static readonly string FullColorFormat = ColorFormat + "{4}" + DefaultColorCode;
+        public static readonly string FullColorFormat = ColorFormat + "{4}" + AnsiReset;
 
         /// <summary>
         /// {0): Plane
@@ -46,7 +66,7 @@ namespace BetterConsoleTables
         /// {1}: Color Number
         /// {3}: String Value
         /// </summary>
-        public static readonly string SimpleFullColorFormat = SimpleColorFormat + "{2}" + DefaultColorCode;
+        public static readonly string SimpleFullColorFormat = SimpleColorFormat + "{2}" + AnsiReset;
         
 
     }
