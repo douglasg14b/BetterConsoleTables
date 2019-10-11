@@ -9,6 +9,11 @@ namespace BetterConsoleTables
 {
     public static class Extensions
     {
+        public static string AddFormatting(this string value, FormatType formats)
+        {
+            throw new NotImplementedException();
+        }
+
         public static string Bold(this string value)
         {
             return string.Format(Constants.AnsiBold, value);
