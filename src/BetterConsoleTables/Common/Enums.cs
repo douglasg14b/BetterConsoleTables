@@ -22,6 +22,7 @@ namespace BetterConsoleTables
     [Flags]
     public enum FormatType
     {
+        None = 0,
         Bold = 1,
         Italic = 2,
         Underline = 4,
@@ -33,6 +34,7 @@ namespace BetterConsoleTables
     [Flags]
     internal enum AllFormatType
     {
+        None = 0,
         Bold = 1,
         Italic = 2,
         Underline = 4,
@@ -46,6 +48,7 @@ namespace BetterConsoleTables
     [Flags]
     internal enum ColorFormatType
     {
+        None = 0,
         Foreground = 64,
         Background = 128
     }
