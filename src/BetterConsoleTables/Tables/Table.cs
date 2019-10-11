@@ -1,4 +1,5 @@
 ﻿using BetterConsoleTables.Builders;
+using BetterConsoleTables.Common;
 using BetterConsoleTables.Configuration;
 using BetterConsoleTables.Models;
 using System;
@@ -31,6 +32,7 @@ namespace BetterConsoleTables
         private void Create()
         {
             m_cellFormats = new List<List<ValueFormat>>();
+            _ = PlatformInfo.HasFormattingSupport; //TODO: TEMP
         }
 
         public Table() 
@@ -151,6 +153,7 @@ namespace BetterConsoleTables
 
             m_headers.Add(column);
             m_cellFormats[0].Add(column.HeaderFormat);
+
             if (m_rows.Count > 0 && LongestRow == m_headers.Count)
             {
                 IncrementRowElements(1);
@@ -313,6 +316,16 @@ namespace BetterConsoleTables
                 if (!formats[i].DefaultBackground)
                 {
                     paddedValue = paddedValue.WithBackgroundColor(formats[i].BackgroundColor);
+                }
+
+                if (formats[i].Bold)
+                {
+                    paddedValue = paddedValue.Bold();
+                }
+
+                if (formats[i].Underline)
+                {
+                    paddedValue = paddedValue.Underline();
                 }
 
                 output = String.Concat(output, delimiter, " ", paddedValue, " ");
