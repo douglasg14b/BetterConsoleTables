@@ -49,9 +49,9 @@ namespace BetterConsoleTables.Builders
             return (TBuilder)(IValueFormatBuilder<TBuilder>)this;
         }
 
-        public TBuilder WithFormats(FormatType formats)
+        public TBuilder WithFormatting(FormatType formats)
         {
-            format.Formats = formats;
+            format.OtherFormatting = formats;
             return (TBuilder)(IValueFormatBuilder<TBuilder>)this;
         }
     }

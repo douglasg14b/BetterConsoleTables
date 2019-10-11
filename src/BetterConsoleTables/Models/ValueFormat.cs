@@ -18,18 +18,18 @@ namespace BetterConsoleTables.Models
         public ValueFormat(Alignment alignment = Constants.DefaultAlignment, 
             Color foregroundColor = default, 
             Color backgroundColor = default,
-            FormatType formats = FormatType.None)
+            FormatType otherFormatting = FormatType.None)
         {
             Alignment = alignment;
             ForegroundColor = foregroundColor == default ? Constants.DefaultForegroundColor : foregroundColor;
             BackgroundColor = backgroundColor == default ? Constants.DefaultForegroundColor : backgroundColor;
-            Formats = formats;
+            OtherFormatting = otherFormatting;
         }
 
         public Color ForegroundColor { get; set; } = Constants.DefaultForegroundColor;
         public Color BackgroundColor { get; set; } = Constants.DefaultBackgroundColor;
         public Alignment Alignment { get; set; } = Constants.DefaultAlignment;
-        public FormatType Formats { get; set; } = FormatType.None;
+        public FormatType OtherFormatting { get; set; } = FormatType.None;
 
 
         public bool DefaultColors => DefaultForeground && DefaultBackground;

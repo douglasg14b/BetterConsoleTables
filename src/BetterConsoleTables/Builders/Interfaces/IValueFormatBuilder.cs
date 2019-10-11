@@ -19,6 +19,6 @@ namespace BetterConsoleTables.Builders.Interfaces
         TBuilder WithForegroundColor(Color color);
         TBuilder WithBackgroundColor(Color color);
         TBuilder WithAlignment(Alignment alignment);
-        TBuilder WithFormats(FormatType formats);
+        TBuilder WithFormatting(FormatType formats);
     }
 }

@@ -52,6 +52,4 @@ namespace BetterConsoleTables
         Foreground = 64,
         Background = 128
     }
-
-
 }
