@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net471;netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>net471;netstandard2.0;netcoreapp2.2;netcoreapp3.0</TargetFrameworks>
     <PackageVersion>1.1.0</PackageVersion>
     <Authors>Douglas Gaskell</Authors>
     <Description>Better tables for your console application</Description>
@@ -11,7 +11,7 @@
     <Copyright>Copyright 2019 (c) Douglas Gaskell. All rights reserved.</Copyright>
     <PackageTags>console table tables</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.1.0</Version>
+    <Version>2.0.0</Version>
     <Product>Better Console Tables</Product>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryUrl>https://github.com/douglasg14b/BetterConsoleTables</RepositoryUrl>
