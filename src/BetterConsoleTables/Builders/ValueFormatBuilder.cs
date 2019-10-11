@@ -48,5 +48,17 @@ namespace BetterConsoleTables.Builders
             format.ForegroundColor = color;
             return (TBuilder)(IValueFormatBuilder<TBuilder>)this;
         }
+
+        public TBuilder Bold()
+        {
+            format.Bold = true;
+            return (TBuilder)(IValueFormatBuilder<TBuilder>)this;
+        }
+
+        public TBuilder Underline()
+        {
+            format.Underline = true;
+            return (TBuilder)(IValueFormatBuilder<TBuilder>)this;
+        }
     }
 }
