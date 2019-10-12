@@ -308,20 +308,7 @@ namespace BetterConsoleTables
                 string paddedValue = PadString(values[i], columnLengths[i], formats[i].Alignment);
                 rowWidth += 1 + 1 + paddedValue.Length + 1; // delimiter, space, value, space
 
-                if (!formats[i].DefaultForeground)
-                {
-                    paddedValue = paddedValue.WithForegroundColor(formats[i].ForegroundColor);
-                }
-
-                if (!formats[i].DefaultBackground)
-                {
-                    paddedValue = paddedValue.WithBackgroundColor(formats[i].BackgroundColor);
-                }
-
-                if(formats[i].FontStyle != FontStyle.None)
-                {
-                    paddedValue = paddedValue.AddFormatting(formats[i].FontStyle);
-                }
+                paddedValue = paddedValue.SetStyle(formats[i]);
 
                 output = String.Concat(output, delimiter, " ", paddedValue, " ");
             }
