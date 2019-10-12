@@ -1,7 +1,12 @@
-﻿using System;
+﻿using BetterConsoleTables.Models;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+#if NETCOREAPP3_0
+using System.Runtime.Intrinsics.X86;
+#endif
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,21 +14,143 @@ namespace BetterConsoleTables
 {
     public static class Extensions
     {
+
+        internal static FormatType Merge(this FontStyle style, ColorFormatType colorFormat)
+        {
+            return (FormatType)((int)style | (int)colorFormat);
+        }
+
+        public static uint BitCount(this FontStyle styles)
+        {
+#if NETCOREAPP3_0
+            return Popcnt.PopCount((uint)styles);
+#else
+            uint count = 0;
+            while (styles != 0)
+            {
+                count++;
+                styles &= (styles - 1);
+            }
+            return count;
+#endif
+        }
+
+        public static string[] GetFontStyleCodes(this FontStyle styles, int extraSize = 0) // Extra size is for this being used in a format with a value
+        {
+            uint styleCount = styles.BitCount();
+            string[] styleCodes = new string[styleCount + extraSize];
+
+            // Unrolled loop, for questionable performance gains...
+            int i = 0;
+            if(FontStyle.Blink == (styles & FontStyle.Blink))
+                styleCodes[i++] = Ansi.FontStyleLookup[FontStyle.Blink];
+
+            if (FontStyle.Bold == (styles & FontStyle.Bold))
+                styleCodes[i++] = Ansi.FontStyleLookup[FontStyle.Bold];
+
+            if (FontStyle.CrossedOut == (styles & FontStyle.CrossedOut))
+                styleCodes[i++] = Ansi.FontStyleLookup[FontStyle.CrossedOut];
+
+            if (FontStyle.Italic == (styles & FontStyle.Italic))
+                styleCodes[i++] = Ansi.FontStyleLookup[FontStyle.Italic];
+
+            if (FontStyle.Overline == (styles & FontStyle.Overline))
+                styleCodes[i++] = Ansi.FontStyleLookup[FontStyle.Overline];
+
+            if (FontStyle.Underline == (styles & FontStyle.Underline))
+                styleCodes[i++] = Ansi.FontStyleLookup[FontStyle.Underline];
+
+
+            return styleCodes;
+        }
+
+
+        public static string GetFormatCodes(this FontStyle style)
+        {
+            FormatType formats = FormatType.BackgroundColor;
+            FormatType combined = (FormatType)((int)formats | (int)style);
+            return combined.ToString();
+        }
+
+        // Extra size is if the caller needs extra array items to put strings into for String.Format
+        public static string[] GetAnsiCodes(this ValueFormat format, int extraArraySize = 0) 
+        {
+            var styles = format.FontStyle;
+            int colorCodeCount = 0;
+            int styleCount = (int)format.FontStyle.BitCount();
+
+            if (!format.DefaultForeground)
+                colorCodeCount += 5; // # of codes that go into setting RGB color
+            if (!format.DefaultBackground)
+                colorCodeCount += 5;
+
+            string[] ansiCodes = new string[styleCount + colorCodeCount + extraArraySize];
+
+            // Unrolled loop, for questionable performance gains...
+            int i = 0;
+            if (FontStyle.Blink == (styles & FontStyle.Blink))
+                ansiCodes[i++] = Ansi.FontStyleLookup[FontStyle.Blink];
+
+            if (FontStyle.Bold == (styles & FontStyle.Bold))
+                ansiCodes[i++] = Ansi.FontStyleLookup[FontStyle.Bold];
+
+            if (FontStyle.CrossedOut == (styles & FontStyle.CrossedOut))
+                ansiCodes[i++] = Ansi.FontStyleLookup[FontStyle.CrossedOut];
+
+            if (FontStyle.Italic == (styles & FontStyle.Italic))
+                ansiCodes[i++] = Ansi.FontStyleLookup[FontStyle.Italic];
+
+            if (FontStyle.Overline == (styles & FontStyle.Overline))
+                ansiCodes[i++] = Ansi.FontStyleLookup[FontStyle.Overline];
+
+            if (FontStyle.Underline == (styles & FontStyle.Underline))
+                ansiCodes[i++] = Ansi.FontStyleLookup[FontStyle.Underline];
+
+            if (!format.DefaultForeground)
+            {
+                ansiCodes[i++] = Ansi.Codes.Foreground;
+                ansiCodes[i++] = Ansi.Codes.ColorRgb;
+                ansiCodes[i++] = format.ForegroundColor.R.ToString();
+                ansiCodes[i++] = format.ForegroundColor.G.ToString();
+                ansiCodes[i++] = format.ForegroundColor.B.ToString();
+            }
+
+            if (!format.DefaultBackground)
+            {
+                ansiCodes[i++] = Ansi.Codes.Background;
+                ansiCodes[i++] = Ansi.Codes.ColorRgb;
+                ansiCodes[i++] = format.BackgroundColor.R.ToString();
+                ansiCodes[i++] = format.BackgroundColor.G.ToString();
+                ansiCodes[i++] = format.BackgroundColor.B.ToString();
+            }
+
+            return ansiCodes;
+        }
+
+
         /// <summary>
         /// Adds non-color, flag-based, formatting to a string
         /// </summary>
         /// <param name="value"></param>
         /// <param name="formats"></param>
         /// <returns></returns>
-        public static string AddFormatting(this string value, FontStyle formats)
+        public static string SetStyle(this string value, FontStyle formats)
         {
-            if (formats.HasFlag(FontStyle.Bold))
-            {
-                return value.Bold();
-            }
-            return value;
-            //throw new NotImplementedException();
+            string[] styleCodes = formats.GetFontStyleCodes(1); // Add 1 to end of styles for value
+            styleCodes[styleCodes.Length - 1] = value;
+
+            return String.Format(Ansi.FormatStrings[styleCodes.Length - 1], styleCodes);
         }
+
+        public static string SetStyle(this string value, ValueFormat format)
+        {
+            string[] ansiCodes = format.GetAnsiCodes(1);
+            ansiCodes[ansiCodes.Length - 1] = value;
+
+            return String.Format(Ansi.FormatStrings[ansiCodes.Length - 1], ansiCodes);
+        }
+
+
 
         public static string Bold(this string value)
         {
