@@ -26,21 +26,21 @@ namespace BetterConsoleTables
         Bold = 1,
         Italic = 2,
         Underline = 4,
-        Overline = 8,
+        Blink = 8,
         CrossedOut = 16,
-        Blink = 32
+        Overline = 32       
     }
 
     [Flags]
-    internal enum AllFormatType
+    internal enum FormatType
     {
         None = 0,
         Bold = 1,
         Italic = 2,
         Underline = 4,
-        Overline = 8,
+        Blink = 8,
         CrossedOut = 16,
-        Blink = 32,
+        Overline = 32,
         ForegroundColor = 64,
         BackgroundColor = 128
     }
