@@ -35,7 +35,8 @@ namespace BetterConsoleTables
 #endif
         }
 
-        public static string[] GetFontStyleCodes(this FontStyle styles, int extraSize = 0) // Extra size is for this being used in a format with a value
+        // Extra size is for this being used in a format with a value
+        public static string[] GetAnsiCodes(this FontStyle styles, int extraSize = 0)
         {
             uint styleCount = styles.BitCount();
             string[] styleCodes = new string[styleCount + extraSize];
@@ -62,14 +63,6 @@ namespace BetterConsoleTables
 
 
             return styleCodes;
-        }
-
-
-        public static string GetFormatCodes(this FontStyle style)
-        {
-            FormatType formats = FormatType.BackgroundColor;
-            FormatType combined = (FormatType)((int)formats | (int)style);
-            return combined.ToString();
         }
 
         // Extra size is if the caller needs extra array items to put strings into for String.Format
@@ -136,12 +129,18 @@ namespace BetterConsoleTables
         /// <returns></returns>
         public static string SetStyle(this string value, FontStyle formats)
         {
-            string[] styleCodes = formats.GetFontStyleCodes(1); // Add 1 to end of styles for value
+            string[] styleCodes = formats.GetAnsiCodes(1); // Add 1 to end of styles for value
             styleCodes[styleCodes.Length - 1] = value;
 
             return String.Format(Ansi.FormatStrings[styleCodes.Length - 1], styleCodes);
         }
 
+        /// <summary>
+        /// Adds all the formatting in <param name="format"/> to the provided string
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="format"></param>
+        /// <returns></returns>
         public static string SetStyle(this string value, ValueFormat format)
         {
             string[] ansiCodes = format.GetAnsiCodes(1);
