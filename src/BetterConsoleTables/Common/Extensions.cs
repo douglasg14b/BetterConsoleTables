@@ -9,9 +9,20 @@ namespace BetterConsoleTables
 {
     public static class Extensions
     {
-        public static string AddFormatting(this string value, FormatType formats)
+        /// <summary>
+        /// Adds non-color, flag-based, formatting to a string
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="formats"></param>
+        /// <returns></returns>
+        public static string AddFormatting(this string value, FontStyle formats)
         {
-            throw new NotImplementedException();
+            if (formats.HasFlag(FontStyle.Bold))
+            {
+                return value.Bold();
+            }
+            return value;
+            //throw new NotImplementedException();
         }
 
         public static string Bold(this string value)

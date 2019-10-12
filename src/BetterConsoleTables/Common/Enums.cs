@@ -20,7 +20,7 @@ namespace BetterConsoleTables
     }
 
     [Flags]
-    public enum FormatType
+    public enum FontStyle
     {
         None = 0,
         Bold = 1,
