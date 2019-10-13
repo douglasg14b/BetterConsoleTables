@@ -6,13 +6,6 @@ using System.Threading.Tasks;
 
 namespace BetterConsole.Core
 {
-    public enum Alignment
-    {
-        Left = 0,
-        Right = 1,
-        Center = 2
-    }
-
     public enum ColorPlane
     {
         Foreground = 38,

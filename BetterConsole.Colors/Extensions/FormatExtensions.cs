@@ -1,5 +1,4 @@
 ﻿using BetterConsole.Core;
-using BetterConsoleColors.Common;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -67,7 +66,7 @@ namespace BetterConsole.Colors.Extensions
         }
 
         // Extra size is if the caller needs extra array items to put strings into for String.Format
-        public static string[] GetAnsiCodes(this CellFormat format, int extraArraySize = 0) 
+        public static string[] GetAnsiCodes(this Format format, int extraArraySize = 0) 
         {
             var styles = format.FontStyle;
             int colorCodeCount = 0;

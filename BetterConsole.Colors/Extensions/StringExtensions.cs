@@ -1,4 +1,5 @@
-﻿using BetterConsole.Core;
+﻿using BetterConsole.Colors.Common;
+using BetterConsole.Core;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -34,7 +35,7 @@ namespace BetterConsole.Colors.Extensions
         /// <param name="value"></param>
         /// <param name="format"></param>
         /// <returns></returns>
-        public static string SetStyle(this string value, CellFormat format)
+        public static string SetStyle(this string value, Format format)
         {
             string[] ansiCodes = format.GetAnsiCodes(1);
             if (ansiCodes.Length == 1)

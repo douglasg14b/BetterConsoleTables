@@ -48,7 +48,7 @@ namespace BetterConsole.Core
             [18] = Esc + "{0};{1};{2};{3};{4};{5};{6};{7};{8};{9;{10}};{11};{12};{13};{14};{15};{16};{17}m{18}" + Reset,
         };
 
-        internal static class Codes
+        public static class Codes
         {
             public const string Reset = "0";
 
