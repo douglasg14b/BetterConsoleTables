@@ -1,4 +1,5 @@
-﻿using BetterConsoleTables.Builders;
+﻿using BetterConsole.Colors.Extensions;
+using BetterConsoleTables.Builders;
 using BetterConsoleTables.Common;
 using BetterConsoleTables.Configuration;
 using BetterConsoleTables.Models;
@@ -31,7 +32,7 @@ namespace BetterConsoleTables
 
         private void Create()
         {
-            m_cellFormats = new List<List<ValueFormat>>();
+            m_cellFormats = new List<List<CellFormat>>();
             _ = PlatformInfo.HasFormattingSupport; //TODO: TEMP
         }
 
@@ -92,11 +93,11 @@ namespace BetterConsoleTables
 
         #endregion
 
-        private List<List<ValueFormat>> m_cellFormats { get; set; }
+        private List<List<CellFormat>> m_cellFormats { get; set; }
 
         private void AddFormatRow(int length)
         {
-            var formatRow = new List<ValueFormat>(length);
+            var formatRow = new List<CellFormat>(length);
             for(int i = 0; i < length; i++)
             {
                 formatRow.Add(m_headers[i].RowsFormat);
@@ -148,7 +149,7 @@ namespace BetterConsoleTables
         {
             if (m_cellFormats.Count == 0)
             {
-                m_cellFormats.Add(new List<ValueFormat>());
+                m_cellFormats.Add(new List<CellFormat>());
             }
 
             m_headers.Add(column);
@@ -297,7 +298,7 @@ namespace BetterConsoleTables
         }
 
         //TEMP FOR NOW
-        private string FormatHeader2(IList<string> values, IList<ValueFormat> formats, int[] columnLengths, ref char innerDelimiter, ref char outerDelimiter)
+        private string FormatHeader2(IList<string> values, IList<CellFormat> formats, int[] columnLengths, ref char innerDelimiter, ref char outerDelimiter)
         {
             string output = String.Empty;
             int rowWidth = 0; //Will be used for padding

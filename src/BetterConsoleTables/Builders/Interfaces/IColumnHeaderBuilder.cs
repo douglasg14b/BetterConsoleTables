@@ -10,7 +10,7 @@ namespace BetterConsoleTables.Builders.Interfaces
     public interface IColumnHeaderBuilder
     {        
         IColumnValueFormatBuilder WithHeaderFormat();
-        IColumnValueFormatBuilder WithHeaderFormat(ValueFormat format);
+        IColumnValueFormatBuilder WithHeaderFormat(CellFormat format);
         IColumnBuilder WithHeaderAlignment(Alignment alignment);
     }
 }

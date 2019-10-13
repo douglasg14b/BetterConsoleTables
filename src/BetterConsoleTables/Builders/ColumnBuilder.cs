@@ -28,8 +28,8 @@ namespace BetterConsoleTables.Builders
             return column;
         }
 
-        public IColumnValueFormatBuilder WithRowsFormat() => WithRowsFormat(new ValueFormat());
-        public IColumnValueFormatBuilder WithRowsFormat(ValueFormat format)
+        public IColumnValueFormatBuilder WithRowsFormat() => WithRowsFormat(new CellFormat());
+        public IColumnValueFormatBuilder WithRowsFormat(CellFormat format)
         {
             column.RowsFormat = format;
             return new ColumnValueFormatBuilder(format, this);
@@ -39,7 +39,7 @@ namespace BetterConsoleTables.Builders
         {
             if(column.RowsFormat is null)
             {
-                column.RowsFormat = new ValueFormat();
+                column.RowsFormat = new CellFormat();
             }
             column.RowsFormat.Alignment = alignment;
 
@@ -47,8 +47,8 @@ namespace BetterConsoleTables.Builders
         }
 
 
-        public IColumnValueFormatBuilder WithHeaderFormat() => WithHeaderFormat(new ValueFormat());
-        public IColumnValueFormatBuilder WithHeaderFormat(ValueFormat format)
+        public IColumnValueFormatBuilder WithHeaderFormat() => WithHeaderFormat(new CellFormat());
+        public IColumnValueFormatBuilder WithHeaderFormat(CellFormat format)
         {
             column.HeaderFormat = format;
             return new ColumnValueFormatBuilder(format, this);
@@ -58,7 +58,7 @@ namespace BetterConsoleTables.Builders
         {
             if (column.HeaderFormat is null)
             {
-                column.HeaderFormat = new ValueFormat();
+                column.HeaderFormat = new CellFormat();
             }
             column.HeaderFormat.Alignment = alignment;
 

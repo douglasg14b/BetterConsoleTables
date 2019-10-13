@@ -10,7 +10,7 @@ namespace BetterConsoleTables.Builders.Interfaces
     public interface IColumnRowsBuilder
     {
         IColumnValueFormatBuilder WithRowsFormat();
-        IColumnValueFormatBuilder WithRowsFormat(ValueFormat format);
+        IColumnValueFormatBuilder WithRowsFormat(CellFormat format);
 
         IColumnBuilder WithRowsAlignment(Alignment alignment);
     }

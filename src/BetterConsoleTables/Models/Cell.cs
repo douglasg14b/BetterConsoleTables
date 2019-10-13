@@ -10,24 +10,24 @@ namespace BetterConsoleTables.Models
     public class Cell<TValue>
     {
         public Cell(TValue value)
-            : this(value, new ValueFormat()) { }
+            : this(value, new CellFormat()) { }
 
-        public Cell(TValue value, ValueFormat format)
+        public Cell(TValue value, CellFormat format)
         {
             Value = value.ToString();
             Format = format;
         }
 
         public string Value { get; set; }
-        public ValueFormat Format { get; set; }
+        public CellFormat Format { get; set; }
     }
 
     public class TableCell : Cell<string>
     {
-        public TableCell(string value, ValueFormat config)
+        public TableCell(string value, CellFormat config)
             :base(value, config) {}
 
         public TableCell(string value)
-            : base(value, new ValueFormat()) { }
+            : base(value, new CellFormat()) { }
     }
 }

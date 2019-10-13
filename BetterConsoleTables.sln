@@ -1,11 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26430.15
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29409.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BetterConsoleTables", "src\BetterConsoleTables\BetterConsoleTables.csproj", "{97A09A23-3E34-482D-9852-0C5E7451A466}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BetterConsoleTablesExample", "src\BetterConsoleTablesExample\BetterConsoleTablesExample.csproj", "{38F959D5-7375-40F9-B7AD-92D2C9E8BD61}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetterConsole.Core", "BetterConsoles.Core\BetterConsole.Core.csproj", "{F0F4BC7B-AD16-4AA6-98D9-C7F251D93F09}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BetterConsole.Colors", "BetterConsole.Colors\BetterConsole.Colors.csproj", "{8FD22FE0-B387-4D58-8E3F-7FADEFD295BC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,9 +25,20 @@ Global
 		{38F959D5-7375-40F9-B7AD-92D2C9E8BD61}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{38F959D5-7375-40F9-B7AD-92D2C9E8BD61}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{38F959D5-7375-40F9-B7AD-92D2C9E8BD61}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F0F4BC7B-AD16-4AA6-98D9-C7F251D93F09}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F0F4BC7B-AD16-4AA6-98D9-C7F251D93F09}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F0F4BC7B-AD16-4AA6-98D9-C7F251D93F09}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F0F4BC7B-AD16-4AA6-98D9-C7F251D93F09}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8FD22FE0-B387-4D58-8E3F-7FADEFD295BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8FD22FE0-B387-4D58-8E3F-7FADEFD295BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8FD22FE0-B387-4D58-8E3F-7FADEFD295BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8FD22FE0-B387-4D58-8E3F-7FADEFD295BC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {465C8577-5B3D-4D21-9DA9-A86422499B4C}
 	EndGlobalSection
 	GlobalSection(Performance) = preSolution
 		HasPerformanceSessions = true

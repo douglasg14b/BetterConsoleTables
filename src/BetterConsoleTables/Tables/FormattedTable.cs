@@ -10,7 +10,7 @@ namespace BetterConsoleTables
 {
     public class FormattedTable : TableBase<FormattedTable, TableCell, TableCell>
     {
-        public List<ValueFormat[]> ConfigMatrix;
+        public List<CellFormat[]> ConfigMatrix;
 
         public override FormattedTable AddColumn(Column header)
         {

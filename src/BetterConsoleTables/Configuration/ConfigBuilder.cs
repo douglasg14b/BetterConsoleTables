@@ -10,7 +10,7 @@ namespace BetterConsoleTables.Configuration
 {
     public static class ConfigBuilder
     {
-        public static IBasicBuilder<ValueFormat> CellConfig => new BasicBuilder<ValueFormat>();
+        public static IBasicBuilder<CellFormat> CellConfig => new BasicBuilder<CellFormat>();
         public static IBasicBuilder<TableConfig> TableConfig => new BasicBuilder<TableConfig>();
     }
 

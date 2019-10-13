@@ -11,14 +11,14 @@ namespace BetterConsoleTables.Models
 {
     public class Column
     {
-        public Column(string columnTitle, ValueFormat headerFormat = null, ValueFormat rowsFormat = null)
+        public Column(string columnTitle, CellFormat headerFormat = null, CellFormat rowsFormat = null)
         {
             Title = columnTitle;
-            HeaderFormat = headerFormat ?? ValueFormat.Default();
-            RowsFormat = rowsFormat ?? ValueFormat.Default();
+            HeaderFormat = headerFormat ?? CellFormat.Default();
+            RowsFormat = rowsFormat ?? CellFormat.Default();
         }
 
-        public Column(object columnTitle, ValueFormat headerFormat = null, ValueFormat rowsFormat = null)
+        public Column(object columnTitle, CellFormat headerFormat = null, CellFormat rowsFormat = null)
             :this(columnTitle.ToString(), headerFormat, rowsFormat) { }
 
         public static Column Default(string columnTitle)
@@ -36,8 +36,8 @@ namespace BetterConsoleTables.Models
             => Column.Simple(columnTitle.ToString(), rowsAlignment, headerAlignment);
 
         public string Title { get; private set; }
-        public ValueFormat HeaderFormat { get; set; }
-        public ValueFormat RowsFormat { get; set; }
+        public CellFormat HeaderFormat { get; set; }
+        public CellFormat RowsFormat { get; set; }
 
         public Alignment HeaderAlignment => HeaderFormat?.Alignment ?? default;
         public Alignment RowsAlignment => RowsFormat?.Alignment ?? default;
