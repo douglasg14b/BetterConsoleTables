@@ -35,7 +35,7 @@ namespace BetterConsole.Colors.Extensions
         /// <param name="value"></param>
         /// <param name="format"></param>
         /// <returns></returns>
-        public static string SetStyle(this string value, Format format)
+        public static string SetStyle(this string value, IFormat format)
         {
             string[] ansiCodes = format.GetAnsiCodes(1);
             if (ansiCodes.Length == 1)
