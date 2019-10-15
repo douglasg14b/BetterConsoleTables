@@ -31,7 +31,8 @@ namespace BetterConsoleTables
         protected const char paddingChar = ' ';
         protected List<THeader> m_headers;
         protected List<TCell[]> m_rows;
-        
+        protected List<List<ICellFormat>> m_formatMatrix;
+
         public TableBase() :this(new TableConfig()) { }
 
         public TableBase(TableConfig config)
@@ -39,6 +40,7 @@ namespace BetterConsoleTables
             Config = config;
             m_headers = new List<THeader>();
             m_rows = new List<TCell[]>();
+            m_formatMatrix = new List<List<ICellFormat>>();
         }
 
         public IReadOnlyList<THeader> Headers => m_headers;
@@ -232,6 +234,21 @@ namespace BetterConsoleTables
             for (int i = 1; i < m_headers.Count; i++)
             {
                 output = String.Concat(output, innerDelimiter, " ", PadString(values[i].ToString(), columnLengths[i], columnAlignments[i]), " ");
+            }
+
+            output = String.Concat(output, outerDelimiter);
+            return PadRowInConsole(output);
+        }
+
+        // Same as above but without alignment param
+        protected string FormatDataRow(IList<TCell> values, int[] columnLengths, char innerDelimiter, char outerDelimiter)
+        {
+            string output = String.Empty;
+            output = String.Concat(output, outerDelimiter, " ", PadString(values[0].ToString(), columnLengths[0], Alignment.Left), " ");
+
+            for (int i = 1; i < m_headers.Count; i++)
+            {
+                output = String.Concat(output, innerDelimiter, " ", PadString(values[i].ToString(), columnLengths[i], Alignment.Left), " ");
             }
 
             output = String.Concat(output, outerDelimiter);

@@ -32,7 +32,6 @@ namespace BetterConsoleTables
 
         private void Create()
         {
-            m_cellFormats = new List<List<CellFormat>>();
             _ = PlatformInfo.HasFormattingSupport; //TODO: TEMP
         }
 
@@ -93,17 +92,6 @@ namespace BetterConsoleTables
 
         #endregion
 
-        private List<List<CellFormat>> m_cellFormats { get; set; }
-
-        private void AddFormatRow(int length)
-        {
-            var formatRow = new List<CellFormat>(length);
-            for(int i = 0; i < length; i++)
-            {
-                formatRow.Add(m_headers[i].RowsFormat);
-            }
-        }
-
         #region Public Method API
 
         /// <summary>
@@ -117,7 +105,7 @@ namespace BetterConsoleTables
         {
             if (rowValues is null) throw new ArgumentNullException(nameof(rowValues), "Cannot add a null row to a table");
 
-            AddFormatRow(rowValues.Length);
+            //AddFormatRow(rowValues.Length);
 
             string[] stringValues = new string[rowValues.Length];
             for (int i = 0; i < rowValues.Length; i++)
@@ -147,13 +135,13 @@ namespace BetterConsoleTables
 
         public override Table AddColumn(Column column)
         {
-            if (m_cellFormats.Count == 0)
+            if (m_formatMatrix.Count == 0)
             {
-                m_cellFormats.Add(new List<CellFormat>());
+                m_formatMatrix.Add(new List<ICellFormat>());
             }
 
             m_headers.Add(column);
-            m_cellFormats[0].Add(column.HeaderFormat);
+            m_formatMatrix[0].Add(column.HeaderFormat);
 
             if (m_rows.Count > 0 && LongestRow == m_headers.Count)
             {
@@ -235,18 +223,19 @@ namespace BetterConsoleTables
 
             Alignment[] columnAlignments = m_headers.Select(x => x.RowsAlignment).ToArray();
             string formattedHeaders;
+            string[] formattedRows;
 
             //Temp?
-            if (m_cellFormats.Count > 0)
+            if (m_formatMatrix.Count > 0)
             {
-                formattedHeaders = FormatHeader2(m_headers.Select(x => x.Title).ToList(), m_cellFormats[0], columnLengths, ref Config.innerColumnDelimiter, ref Config.outerColumnDelimiter);
+                formattedHeaders = FormatRow(m_headers.Select(x => x.Title).ToList(), m_formatMatrix[0], columnLengths, ref Config.innerColumnDelimiter, ref Config.outerColumnDelimiter);
+                formattedRows = FormatDataRows(m_rows, m_formatMatrix, columnLengths, ref Config.innerColumnDelimiter, ref Config.outerColumnDelimiter);
             }
             else
             {
                 formattedHeaders = FormatHeader(m_headers, columnLengths, Config.innerColumnDelimiter, Config.outerColumnDelimiter);
+                formattedRows = FormatDataRows(m_rows, columnLengths, columnAlignments, Config.innerColumnDelimiter, Config.outerColumnDelimiter);
             }
-
-            string[] formattedRows = FormatDataRows(m_rows, columnLengths, columnAlignments, Config.innerColumnDelimiter, Config.outerColumnDelimiter);
 
             string headerDivider = GenerateDivider(columnLengths, Config.headerBottomIntersection, Config.headerRowDivider, Config.outerLeftVerticalIntersection, Config.outerRightVerticalIntersection);
             string innerDivider = GenerateDivider(columnLengths, Config.innerIntersection, Config.innerRowDivider, Config.outerLeftVerticalIntersection, Config.outerRightVerticalIntersection);
@@ -298,7 +287,7 @@ namespace BetterConsoleTables
         }
 
         //TEMP FOR NOW
-        private string FormatHeader2(IList<string> values, IList<CellFormat> formats, int[] columnLengths, ref char innerDelimiter, ref char outerDelimiter)
+        private string FormatHeader2(IList<string> values, IList<ICellFormat> formats, int[] columnLengths, ref char innerDelimiter, ref char outerDelimiter)
         {
             string output = String.Empty;
             int rowWidth = 0; //Will be used for padding
@@ -310,6 +299,49 @@ namespace BetterConsoleTables
                 rowWidth += 1 + 1 + paddedValue.Length + 1; // delimiter, space, value, space
 
                 paddedValue = paddedValue.SetStyle(formats[i]);
+
+                output = String.Concat(output, delimiter, " ", paddedValue, " ");
+            }
+            output = String.Concat(output, outerDelimiter);
+            //return PadRowInConsole(output); //Need to only pad the ACTUAL string length, not the one with variations baked in
+            return output;
+        }
+
+        private string[] FormatDataRows(IList<string[]> values, List<List<ICellFormat>> formats, int[] columnLengths, ref char innerDelimiter, ref char outerDelimiter)
+        {
+            string[] output = new string[values.Count];
+
+            for(int i = 0; i < values.Count; i++)
+            {
+                if (formats != null && formats.Count > i + 1 && formats[i+1] != null) // formats[i+1] since first element is header row
+                {
+                    output[i] = FormatRow(values[i], formats[i + 1], columnLengths, ref innerDelimiter, ref outerDelimiter);
+                }
+                else
+                {
+                    output[i] = FormatDataRow(values[i], columnLengths, innerDelimiter, outerDelimiter);
+                }
+            }
+
+            return output;
+        }
+
+        private string FormatRow(IList<string> values, IList<ICellFormat> formats, int[] columnLengths, ref char innerDelimiter, ref char outerDelimiter)
+        {
+            string output = String.Empty;
+            int rowWidth = 0; //Will be used for padding
+
+            for (int i = 0; i < values.Count; i++)
+            {
+                ref char delimiter = ref (i == 0 ? ref outerDelimiter : ref innerDelimiter);
+                string paddedValue = PadString(values[i], columnLengths[i], formats[i]?.Alignment ?? default);
+
+                rowWidth += 1 + 1 + paddedValue.Length + 1; // delimiter, space, value, space
+
+                if(formats.Count > 0 && formats[i] != null)
+                {
+                    paddedValue = paddedValue.SetStyle(formats[i]);
+                }
 
                 output = String.Concat(output, delimiter, " ", paddedValue, " ");
             }
