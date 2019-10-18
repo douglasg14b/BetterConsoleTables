@@ -2,7 +2,7 @@
 
 # BetterConsoleTables
 
-Faster, more configurable, and more robust console tables for C# console applications
+Faster, colorable, more configurable, and more robust console tables for C# console applications
 
 ## What it does
 
@@ -24,6 +24,28 @@ Yes! Yes I did. I wrote this to not just be configurable, but also performance f
 
 Generating a default table in the same manner as seen in the first example takes approximately 1900 ticks (19,000 nanoseconds), or 0.19 milliseconds. I'm happy with this number, considering it's an order of magnitude faster than other libraries.
 
+## Features
+
+* Print multiple tables
+  * Automatically lines up the columns and their widths between the tables
+* Configurable table drawing formats
+  * Several presets to choose from
+  * Can change any of the table drawing characters in the configuration
+* Colors
+  * Full RGB support
+  * Background & Foreground coloring
+  * Gradients
+  * ~~Value-based coloring~~
+* Font/Text Formatting
+  * Bold (Brighten)
+  * Underline
+  * Italic <sup>**</sup>
+  * Blinking
+  * Crossed Out <sup>**</sup>
+  * Overline <sup>**</sup>
+  * Reversed colors (Swaps foreground & background)
+
+<sup>**</sup> Does not work in windows console
 
 ## Code Examples
 
