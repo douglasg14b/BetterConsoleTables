@@ -41,5 +41,10 @@ namespace BetterConsoleTables
         {
             throw new NotImplementedException();
         }
+
+        protected override void AddCellFormatsRow(int length)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -63,6 +63,8 @@ namespace BetterConsoleTables
             }
         }
 
+        protected abstract void AddCellFormatsRow(int length);
+
         public abstract TTable AddColumn(Column header);
         public abstract TTable AddColumn(object title, Alignment rowsAlignment = Alignment.Left, Alignment headerAlignment = Alignment.Left);
 
@@ -89,6 +91,8 @@ namespace BetterConsoleTables
             }
 
             m_rows.Add(rowValues);
+
+            AddCellFormatsRow(rowValues.Length); // Add a new row of formattings
 
             return (TTable)this;
         }

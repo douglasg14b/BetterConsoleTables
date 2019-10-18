@@ -92,6 +92,17 @@ namespace BetterConsoleTables
 
         #endregion
 
+        protected override void AddCellFormatsRow(int length)
+        {
+            var formatRow = new List<ICellFormat>(length);
+            for (int i = 0; i < length; i++)
+            {
+                formatRow.Add(m_headers[i].RowsFormat);
+            }
+
+            m_formatMatrix.Add(formatRow);
+        }
+
         #region Public Method API
 
         /// <summary>
@@ -104,8 +115,6 @@ namespace BetterConsoleTables
         public override Table AddRow(params object[] rowValues)
         {
             if (rowValues is null) throw new ArgumentNullException(nameof(rowValues), "Cannot add a null row to a table");
-
-            //AddFormatRow(rowValues.Length);
 
             string[] stringValues = new string[rowValues.Length];
             for (int i = 0; i < rowValues.Length; i++)
