@@ -8,6 +8,9 @@ using BetterConsoleTables.Models;
 using BetterConsoleTables.Configuration;
 using System.Drawing;
 using BetterConsoleTables.Builders;
+using System.Linq;
+using BetterConsole.Core;
+using BetterConsole.Colors.Extensions;
 
 namespace BetterConsoleTables_Example
 {
@@ -17,7 +20,8 @@ namespace BetterConsoleTables_Example
         {
             //ShowAlignedTables();
             //PerformanceTest.Run();
-            ShowExampleTables();
+            ShowFormattedTable();
+            //ShowExampleTables();
             Console.ReadLine();
         }
 
@@ -233,7 +237,7 @@ namespace BetterConsoleTables_Example
             Console.WriteLine($"{ticks}ticks or {ticks/10000f}ms per table");
         }
 
-        private static void ShowColoredHeaders()
+        private static void ShowFormattedTable()
         {
             Console.WriteLine();
             Table1();
@@ -263,24 +267,45 @@ namespace BetterConsoleTables_Example
 
             void Table2()
             {
-                Table table = new Table()
-                    .AddColumn(new ColumnBuilder("Colors!").WithHeaderFormat().WithForegroundColor(Color.BlueViolet).GetColumn())
-                    .AddColumn(new ColumnBuilder("Right")
+                Column[] columns =
+                {
+                    new ColumnBuilder("Colors!")
+                        .WithHeaderFormat()
+                            .WithForegroundColor(Color.BlueViolet)
+                        .GetColumn(),
+                    new ColumnBuilder("Right")
                                     .WithHeaderFormat()
                                         .WithForegroundColor(Color.Green)
                                         .WithAlignment(Alignment.Right)
-                                    .GetColumn())
-                    .AddColumn(new ColumnBuilder("Center!")
+                                    .GetColumn(),
+                    new ColumnBuilder("Center!")
                                     .WithHeaderFormat()
                                         .WithForegroundColor(Color.Firebrick)
                                         .WithAlignment(Alignment.Center)
-                                    .GetColumn());
+                                        .WithFontStyle(FontStyleExt.Bold)
+                                    .WithRowsFormat()
+                                        .WithForegroundColor(Color.DarkOliveGreen)
+                                        .WithAlignment(Alignment.Center)
+                                    .GetColumn(),
+                    new ColumnBuilder("Bold & Underlined!!")
+                                    .WithHeaderFormat()
+                                        .WithForegroundColor(Color.SeaShell)
+                                        .WithAlignment(Alignment.Center)
+                                        .WithFontStyle(FontStyleExt.Bold | FontStyleExt.Underline)
+                                    .GetColumn()
+                };
 
+                Table table = new Table()
+                    .AddColumn(columns[0])
+                    .AddColumn(columns[1])
+                    .AddColumn(columns[2])
+                    .AddColumn(columns[3]);
                 table.Config = TableConfig.MySqlSimple();
-                table.AddRow(Color.Gray.ToString(), "2", "3");
-                table.AddRow("Hello", "2", "3");
+                table.AddRow("99", "2", "3");
                 table.AddRow("Hello World!", "item", "Here");
                 table.AddRow("Longer items go here", "stuff stuff", "some centered thing");
+                table.AddColumn(columns[0]);
+
 
                 Console.Write(table.ToString());
             }
@@ -296,9 +321,9 @@ namespace BetterConsoleTables_Example
 
             void Table1()
             {
-                Column[] headers = new[]
+                IColumn[] headers = new[]
                 {
-                    Column.Simple("Left"),
+                    Column.Simple("Left".CrossedOut()),
                     Column.Simple("Right", Alignment.Right, Alignment.Right),
                     Column.Simple("Center", Alignment.Center, Alignment.Center),
                 };
@@ -307,9 +332,9 @@ namespace BetterConsoleTables_Example
 
                 Table table = new Table(headers);
                 table.Config = TableConfig.MySqlSimple();
-                table.AddRow(Color.Gray.ToString(), "2", "3");
-                table.AddRow("Hello".WithColor(Color.LightGray, ColorPlane.Foreground), "2".WithColor(Color.Red, ColorPlane.Foreground), "3");
-                table.AddRow("\u001b[48;2;55;90;150mHello World!\u001b[0m", "item", "Here");
+                table.AddRow("1", "2", "3");
+                table.AddRow("Hello There How Do You", "2", "3");
+                table.AddRow("Hello World!", "item", "Here");
                 table.AddRow("Longer items go here", "stuff stuff", "some centered thing");
 
                 Console.Write(table.ToString());
@@ -317,7 +342,7 @@ namespace BetterConsoleTables_Example
 
             void Table2()
             {
-                Column[] headers = new[]
+                IColumn[] headers = new[]
                 {
                     Column.Simple("Left"),
                     Column.Simple("Left Header", Alignment.Right),
@@ -335,7 +360,7 @@ namespace BetterConsoleTables_Example
 
         private static void ShowExampleTables()
         {
-            ShowColoredHeaders();
+            ShowFormattedTable();
             ShowAlignedTables();
             Console.WriteLine();
 
