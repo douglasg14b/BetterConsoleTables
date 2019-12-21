@@ -335,6 +335,15 @@ namespace BetterConsoleTables
             }
         }
 
+        protected string WrapText(string text, int maxWidth)
+        {
+            return text.Wrap(maxWidth);
+        }
+
+        #endregion
+
+        #region State Management
+
         /// <summary>
         ///     Extends the length of a format row to the provided length, 
         ///     copying the formatting from the matching header
@@ -353,7 +362,7 @@ namespace BetterConsoleTables
         /// </summary>
         protected virtual void EnsureProperFormatRowSize()
         {
-            for(int i = 0; i < m_rows.Count; i++)
+            for (int i = 0; i < m_rows.Count; i++)
             {
                 int formatIndex = i + 1; //1st matrix row is for headers
 
@@ -363,7 +372,7 @@ namespace BetterConsoleTables
                 }
 
                 // Format row is shorter than data row, extend format out to match data length
-                if(m_formatMatrix[formatIndex].Count < m_rows[i].Length)
+                if (m_formatMatrix[formatIndex].Count < m_rows[i].Length)
                 {
                     int toAdd = m_rows[i].Length - m_formatMatrix[formatIndex].Count;
                     ExtendFormatRow(formatIndex, toAdd);
@@ -415,7 +424,7 @@ namespace BetterConsoleTables
         {
             for (int i = 0; i < m_rows.Count; i++)
             {
-                if(m_rows[i].Length == newSize)
+                if (m_rows[i].Length == newSize)
                 {
                     continue;
                 }
@@ -442,7 +451,7 @@ namespace BetterConsoleTables
 
             for (int i = length; i < row.Length; i++)
             {
-                if(cellType == typeof(string))
+                if (cellType == typeof(string))
                 {
                     row[i] = (TCell)(object)String.Empty;
                 }
@@ -451,11 +460,6 @@ namespace BetterConsoleTables
                     row[i] = default(TCell);
                 }
             }
-        }
-
-        protected string WrapText(string text, int maxWidth)
-        {
-            return text.Wrap(maxWidth);
         }
 
         #endregion
