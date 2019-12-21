@@ -25,7 +25,7 @@ namespace BetterConsoleTables
             : base(rowsAlignment, headerAlignment, columns) { }
     }*/
 
-    public class Table : TableBase<Table, Column, string>
+    public class Table : TableBase<Table, IColumn, string>
     {
 
         #region Constructors
@@ -47,7 +47,7 @@ namespace BetterConsoleTables
             Create();
         }
 
-        public Table(TableConfig config, params Column[] columns)
+        public Table(TableConfig config, params IColumn[] columns)
             : this(config)
         {
             if (columns == null)
@@ -56,6 +56,20 @@ namespace BetterConsoleTables
             }
 
             m_headers.AddRange(columns);
+        }
+
+        public Table(TableConfig config, params string[] columns)
+        : this(config)
+        {
+            if (columns == null)
+            {
+                throw new ArgumentNullException(nameof(columns));
+            }
+
+            foreach(string title in columns)
+            {
+                m_headers.Add(Column.Default(title));
+            }
         }
 
         public Table(TableConfig config, Alignment rowsAlignment = Alignment.Left, Alignment headerAlignment = Alignment.Left, params object[] columns)
@@ -73,7 +87,10 @@ namespace BetterConsoleTables
         }
 
 
-        public Table(params Column[] columns)
+        public Table(params IColumn[] columns)
+            : this(new TableConfig(), columns) { }
+
+        public Table(params string[] columns)
             : this(new TableConfig(), columns) { }
 
         public Table(Alignment rowsAlignment = Alignment.Left, Alignment headerAlignment = Alignment.Left, params object[] columns)
@@ -83,7 +100,7 @@ namespace BetterConsoleTables
         // -------------------------------
         // ----- Static Constructors -----
 
-        public static Table From<T>(T[] items, Column[] columns)
+        public static Table From<T>(T[] items, IColumn[] columns)
         {
             Table table = new Table(columns);
             table.ProcessReflectionData(items);
@@ -142,7 +159,7 @@ namespace BetterConsoleTables
             return this;
         }
 
-        public override Table AddColumn(Column column)
+        public override Table AddColumn(IColumn column)
         {
             if (m_formatMatrix.Count == 0)
             {
@@ -152,14 +169,11 @@ namespace BetterConsoleTables
             m_headers.Add(column);
             m_formatMatrix[0].Add(column.HeaderFormat);
 
-            if (m_rows.Count > 0 && LongestRow == m_headers.Count)
-            {
-                IncrementRowElements(1);
-            }
+            EnsureProperRowSize();
             return this;
         }
 
-        public Table AddColumn(string title, Alignment rowsAlignment = Alignment.Left, Alignment headerAlignment = Alignment.Left)
+        public override Table AddColumn(string title, Alignment rowsAlignment = Alignment.Left, Alignment headerAlignment = Alignment.Left)
         {
             return AddColumn(Column.Simple(title, rowsAlignment, headerAlignment));
         }
@@ -182,10 +196,7 @@ namespace BetterConsoleTables
                 m_headers.Add(Column.Simple(column, rowsAlignment, headerAlignment));
             }
 
-            if (m_rows.Count > 0 && LongestRow == m_headers.Count)
-            {
-                IncrementRowElements(columns.Length);
-            }
+            EnsureProperRowSize();
 
             return this;
         }
@@ -203,10 +214,7 @@ namespace BetterConsoleTables
                 m_headers.Add(Column.Simple(column, rowsAlignment, headerAlignment));
             }
 
-            if (m_rows.Count > 0 && LongestRow == m_headers.Count)
-            {
-                IncrementRowElements(columns.Length);
-            }
+            EnsureProperRowSize();
 
             return this;
         }
@@ -283,7 +291,7 @@ namespace BetterConsoleTables
         }
 
         //TEMP FOR NOW
-        private string FormatHeader(IList<Column> values, int[] columnLengths, char innerDelimiter, char outerDelimiter)
+        private string FormatHeader(IList<IColumn> values, int[] columnLengths, char innerDelimiter, char outerDelimiter)
         {
             string output = String.Empty;
             output = String.Concat(output, outerDelimiter, " ", PadString(values[0].ToString(), columnLengths[0], m_headers[0].HeaderAlignment), " ");
@@ -357,6 +365,23 @@ namespace BetterConsoleTables
             output = String.Concat(output, outerDelimiter);
             //return PadRowInConsole(output); //Need to only pad the ACTUAL string length, not the one with variations baked in
             return output;
+        }
+
+        #endregion
+
+        #region State Management
+
+        /// <inheritdoc/>
+        protected override void ExtendFormatRow(int matrixRowIndex, int elementsToAdd)
+        {
+            var formatRow = m_formatMatrix[matrixRowIndex];
+            var lastIndex = formatRow.Count - 1;
+
+            for (int i = 0; i < elementsToAdd; i++)
+            {
+                var format = m_headers[lastIndex + i].RowsFormat;
+                formatRow.Add(format);
+            }
         }
 
         #endregion
