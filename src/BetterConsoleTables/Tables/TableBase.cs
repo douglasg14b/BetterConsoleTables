@@ -63,9 +63,14 @@ namespace BetterConsoleTables
             }
         }
 
+        /// <summary>
+        /// Adds a row of cell formats based on the column header formats
+        /// </summary>
+        /// <param name="length"></param>
         protected abstract void AddCellFormatsRow(int length);
 
-        public abstract TTable AddColumn(Column header);
+        public abstract TTable AddColumn(THeader column);
+        public abstract TTable AddColumn(string title, Alignment rowsAlignment = Alignment.Left, Alignment headerAlignment = Alignment.Left);
         public abstract TTable AddColumn(object title, Alignment rowsAlignment = Alignment.Left, Alignment headerAlignment = Alignment.Left);
 
         /// <summary>
@@ -137,7 +142,7 @@ namespace BetterConsoleTables
         #region Table Generation
 
 
-        internal protected int[] GetColumnLengths(Column[] columns)
+        internal protected int[] GetColumnLengths(IColumn[] columns)
         {
             int[] lengths = new int[columns.Length];
             for(int i = 0; i < columns.Length; i++)
@@ -145,7 +150,16 @@ namespace BetterConsoleTables
                 int max = columns[i].Title.Length;
                 for (int j = 0; j < m_rows.Count; j++)
                 {
-                    int length = m_rows[j][i]?.ToString()?.Length ?? 0;
+                    int length = 0;
+                    if(i < m_rows[j].Length) // i is in range (ie. row has all columns)
+                    {
+                        length = m_rows[j][i]?.ToString()?.Length ?? 0;
+                    }
+                    else
+                    {
+                        throw new IndexOutOfRangeException();
+                    }
+
                     if (length > max)
                     {
                         max = length;
@@ -322,6 +336,56 @@ namespace BetterConsoleTables
         }
 
         /// <summary>
+        ///     Extends the length of a format row to the provided length, 
+        ///     copying the formatting from the matching header
+        /// </summary>
+        /// <remarks>
+        ///     Used when a column is added after the data, which causes empty elements to be added to each row
+        ///     to ensure the row lengths match the column lengths. This will cause the format matrix's dimensions
+        ///     to no longer be in sync with the data dimensions.
+        /// </remarks>
+        /// <param name="matrixRowIndex">The row index of the format matrix that needs to be extended</param>
+        /// <param name="elementsToAdd">The number of elements to add to the format row</param>
+        protected abstract void ExtendFormatRow(int matrixRowIndex, int elementsToAdd);
+
+        /// <summary>
+        /// Ensures all rows have format matrix elements for each of their elements
+        /// </summary>
+        protected virtual void EnsureProperFormatRowSize()
+        {
+            for(int i = 0; i < m_rows.Count; i++)
+            {
+                int formatIndex = i + 1; //1st matrix row is for headers
+
+                if (i >= m_formatMatrix.Count)
+                {
+                    //Need to add a format matrix row
+                }
+
+                // Format row is shorter than data row, extend format out to match data length
+                if(m_formatMatrix[formatIndex].Count < m_rows[i].Length)
+                {
+                    int toAdd = m_rows[i].Length - m_formatMatrix[formatIndex].Count;
+                    ExtendFormatRow(formatIndex, toAdd);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Ensures all rows are the appropriate length for the column count.
+        /// Called when a column is added after data exists in the table
+        /// </summary>
+        protected virtual void EnsureProperRowSize()
+        {
+            // If there are rows, and the longest row has fewer columns that the current column count
+            if (m_rows.Count > 0 && LongestRow < m_headers.Count)
+            {
+                ResizeAllRows(m_headers.Count); // Extend length of rows
+                EnsureProperFormatRowSize(); // Ensure format matrix dimensions match data
+            }
+        }
+
+        /// <summary>
         /// Increments the length of all row arrays
         /// Sets the new elements to default
         /// </summary>
@@ -340,6 +404,27 @@ namespace BetterConsoleTables
                 {
                     m_rows[i][j] = default(TCell);
                 }
+            }
+        }
+
+        /// <summary>
+        /// Sets the sizes of all row arrays to the provided length
+        /// </summary>
+        /// <param name="newSize"></param>
+        protected virtual void ResizeAllRows(int newSize)
+        {
+            for (int i = 0; i < m_rows.Count; i++)
+            {
+                if(m_rows[i].Length == newSize)
+                {
+                    continue;
+                }
+
+                TCell[] array = m_rows[i];
+
+                ResizeRow(ref array, newSize);
+
+                m_rows[i] = array;
             }
         }
 
