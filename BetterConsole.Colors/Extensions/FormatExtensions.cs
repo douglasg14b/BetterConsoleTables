@@ -20,6 +20,10 @@ namespace BetterConsole.Colors.Extensions
             return (FormatType)((int)style | (int)colorFormat);
         }
 
+        /// <summary>
+        /// Gets the hamming weight of the enum.
+        /// The number of non-0 bits that are set
+        /// </summary>
         public static uint BitCount(this FontStyleExt styles)
         {
 #if NETCOREAPP3_0
