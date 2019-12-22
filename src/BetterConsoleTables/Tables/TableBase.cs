@@ -97,8 +97,11 @@ namespace BetterConsoleTables
 
             m_rows.Add(rowValues);
 
-            AddCellFormatsRow(rowValues.Length); // Add a new row of formattings
-
+            if(m_rows.Count > m_formatMatrix.Count - 1)
+            {
+                AddCellFormatsRow(rowValues.Length); // Add a new row of formattings
+            }
+            
             return (TTable)this;
         }
 
@@ -134,6 +137,8 @@ namespace BetterConsoleTables
         /// <param name="rows"></param>
         /// <returns>This Table</returns>
         public abstract TTable AddRows(IEnumerable<object[]> rows);
+
+        public abstract TTable ReplaceRows(IEnumerable<object[]> rows);
 
 
         public abstract string ToString(int[] columnWidths);
