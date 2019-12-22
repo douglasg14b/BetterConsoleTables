@@ -55,7 +55,7 @@ namespace BetterConsoleTables
                 throw new ArgumentNullException(nameof(columns));
             }
 
-            m_headers.AddRange(columns);
+            AddColumns(columns);
         }
 
         public Table(TableConfig config, params string[] columns)
@@ -68,7 +68,7 @@ namespace BetterConsoleTables
 
             foreach(string title in columns)
             {
-                m_headers.Add(Column.Default(title));
+                AddColumn(Column.Default(title), false);
             }
         }
 
@@ -82,7 +82,7 @@ namespace BetterConsoleTables
 
             foreach (var columnItem in columns)
             {
-                m_headers.Add(Column.Simple(columnItem, rowsAlignment, headerAlignment));
+                AddColumn(Column.Simple(columnItem, rowsAlignment, headerAlignment), false);
             }
         }
 
