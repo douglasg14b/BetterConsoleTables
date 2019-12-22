@@ -122,6 +122,16 @@ namespace BetterConsoleTables
 
         #region Public Method API
 
+        public override Table ReplaceRows(IEnumerable<object[]> rows)
+        {
+            if (rows is null) throw new ArgumentNullException(nameof(rows), "Cannot use null values to replace a tables data");
+
+            var headerFormats = m_formatMatrix[0];
+            m_rows.Clear();
+
+            return AddRows(rows);
+        }
+
         /// <summary>
         /// Adds a row to the bottom of the list with the provided column values
         /// Expected that the provided values count is <= the number of columns in the table
@@ -136,7 +146,7 @@ namespace BetterConsoleTables
             string[] stringValues = new string[rowValues.Length];
             for (int i = 0; i < rowValues.Length; i++)
             {
-                stringValues[i] = rowValues.ToString();
+                stringValues[i] = rowValues[i].ToString();
             }
             return AddRow(stringValues);
         }
@@ -159,7 +169,7 @@ namespace BetterConsoleTables
             return this;
         }
 
-        public override Table AddColumn(IColumn column)
+        private Table AddColumn(IColumn column, bool resizeRows = true)
         {
             if (m_formatMatrix.Count == 0)
             {
@@ -169,8 +179,17 @@ namespace BetterConsoleTables
             m_headers.Add(column);
             m_formatMatrix[0].Add(column.HeaderFormat);
 
-            EnsureProperRowSize();
+            if (resizeRows)
+            {
+                EnsureProperRowSize();
+            }
+
             return this;
+        }
+
+        public override Table AddColumn(IColumn column)
+        {
+            return AddColumn(column);
         }
 
         public override Table AddColumn(string title, Alignment rowsAlignment = Alignment.Left, Alignment headerAlignment = Alignment.Left)
@@ -192,12 +211,10 @@ namespace BetterConsoleTables
         {
             foreach (var column in columns)
             {
-                // Not calling AddColumn() to avoid multiple IncrementRowElements calls
-                m_headers.Add(Column.Simple(column, rowsAlignment, headerAlignment));
+               AddColumn(Column.Simple(column, rowsAlignment, headerAlignment), false);
             }
 
             EnsureProperRowSize();
-
             return this;
         }
 
@@ -210,12 +227,21 @@ namespace BetterConsoleTables
         {
             foreach (var column in columns)
             {
-                // Not calling AddColumn() to avoid multiple IncrementRowElements calls
-                m_headers.Add(Column.Simple(column, rowsAlignment, headerAlignment));
+                AddColumn(Column.Simple(column, rowsAlignment, headerAlignment), false);
             }
 
             EnsureProperRowSize();
+            return this;
+        }
 
+        public Table AddColumns(params IColumn[] columns)
+        {
+            foreach (var column in columns)
+            {
+                AddColumn(column, false);
+            }
+
+            EnsureProperRowSize();
             return this;
         }
 
