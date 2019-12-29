@@ -2,6 +2,21 @@
 
   <PropertyGroup>
     <TargetFrameworks>net471;netstandard2.0;netcoreapp2.2;netcoreapp3.0</TargetFrameworks>
+    <Authors>Douglas Gaskell</Authors>
+    <Description>A performance console coloring library</Description>
+    <PackageProjectUrl>https://github.com/douglasg14b/BetterConsoleTables</PackageProjectUrl>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <PackageReleaseNotes></PackageReleaseNotes>
+    <Copyright>Copyright 2020 (c) Douglas Gaskell. All rights reserved.</Copyright>
+    <PackageTags>console color colors formatting</PackageTags>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>1.0.0</Version>
+    <PackageVersion>1.0.0</PackageVersion>
+    <Product>Better Console Colors</Product>
+    <PackageLicenseExpression>LGPL-3.0-only</PackageLicenseExpression>
+    <RepositoryUrl>https://github.com/douglasg14b/BetterConsoleTables</RepositoryUrl>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 
   <ItemGroup>
