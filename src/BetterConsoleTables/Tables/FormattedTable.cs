@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BetterConsoleTables
 {
-    public class FormattedTable : TableBase<FormattedTable, TableCell, TableCell>
+    /*public class FormattedTable : TableBase<FormattedTable, TableCell, TableCell>
     {
         public List<CellFormat[]> ConfigMatrix;
 
@@ -46,5 +46,5 @@ namespace BetterConsoleTables
         {
             throw new NotImplementedException();
         }
-    }
+    }*/
 }
