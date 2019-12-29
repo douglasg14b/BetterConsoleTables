@@ -1,8 +1,13 @@
-﻿using BetterConsoleTables;
+﻿using BetterConsole.Core;
+using BetterConsoleTables;
+using BetterConsoleTables.Builders;
 using BetterConsoleTables.Configuration;
+using BetterConsoleTables.Models;
+using Clawfoot.TestUtilities.Performance;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -15,6 +20,13 @@ namespace BetterConsoleTablesExample
         {
             Console.OutputEncoding = Encoding.UTF8;
 
+            Benchmark_SimpleTable();
+            Benchmark_FormattedTable();
+            Benchmark_ReplaceData();
+        }
+
+        private static void Benchmark_SimpleTable()
+        {
             Clock.BenchmarkTime(() =>
             {
                 Table table = new Table("One", "Two", "Three");
@@ -24,27 +36,107 @@ namespace BetterConsoleTablesExample
                 table.AddRow("Longer items go here", "stuff", "stuff");
 
                 string tableString = table.ToString();
-            }, 100, 500);
+            });
         }
 
-        public static double NormalizedMean(this ICollection<double> values)
+        private static void Benchmark_FormattedTable()
         {
-            if (values.Count == 0)
-                return double.NaN;
+            Clock.BenchmarkTime(() =>
+            {
+                Column[] columns =
+                {
+                    new ColumnBuilder("Colors!")
+                        .WithHeaderFormat()
+                            .WithForegroundColor(Color.BlueViolet)
+                        .GetColumn(),
+                    new ColumnBuilder("Right")
+                                    .WithHeaderFormat()
+                                        .WithForegroundColor(Color.Green)
+                                        .WithAlignment(Alignment.Right)
+                                    .GetColumn(),
+                    new ColumnBuilder("Center!")
+                                    .WithHeaderFormat()
+                                        .WithForegroundColor(Color.Firebrick)
+                                        .WithAlignment(Alignment.Center)
+                                        .WithFontStyle(FontStyleExt.Bold)
+                                    .WithRowsFormat()
+                                        .WithForegroundColor(Color.DarkOliveGreen)
+                                        .WithAlignment(Alignment.Center)
+                                    .GetColumn(),
+                    new ColumnBuilder("Bold & Underlined!!")
+                                    .WithHeaderFormat()
+                                        .WithForegroundColor(Color.SeaShell)
+                                        .WithAlignment(Alignment.Center)
+                                        .WithFontStyle(FontStyleExt.Bold | FontStyleExt.Underline)
+                                    .GetColumn()
+                };
 
-            var deviations = values.Deviations().ToArray();
-            var meanDeviation = deviations.Sum(t => Math.Abs(t.Item2)) / values.Count;
-            return deviations.Where(t => t.Item2 > 0 || Math.Abs(t.Item2) <= meanDeviation).Average(t => t.Item1);
+                Table table = new Table()
+                    .AddColumn(columns[0])
+                    .AddColumn(columns[1])
+                    .AddColumn(columns[2])
+                    .AddColumn(columns[3]);
+                table.Config = TableConfig.MySqlSimple();
+                table.AddRow("99", "2", "3");
+                table.AddRow("Hello World!", "item", "Here");
+                table.AddRow("Longer items go here", "stuff stuff", "some centered thing");
+
+                string tableString = table.ToString();
+            });
         }
 
-        public static IEnumerable<Tuple<double, double>> Deviations(this ICollection<double> values)
+        private static void Benchmark_ReplaceData()
         {
-            if (values.Count == 0)
-                yield break;
+            Column[] columns =
+            {
+                    new ColumnBuilder("Colors!")
+                        .WithHeaderFormat()
+                            .WithForegroundColor(Color.BlueViolet)
+                        .GetColumn(),
+                    new ColumnBuilder("Right")
+                                    .WithHeaderFormat()
+                                        .WithForegroundColor(Color.Green)
+                                        .WithAlignment(Alignment.Right)
+                                    .GetColumn(),
+                    new ColumnBuilder("Center!")
+                                    .WithHeaderFormat()
+                                        .WithForegroundColor(Color.Firebrick)
+                                        .WithAlignment(Alignment.Center)
+                                        .WithFontStyle(FontStyleExt.Bold)
+                                    .WithRowsFormat()
+                                        .WithForegroundColor(Color.DarkOliveGreen)
+                                        .WithAlignment(Alignment.Center)
+                                    .GetColumn(),
+                    new ColumnBuilder("Bold & Underlined!!")
+                                    .WithHeaderFormat()
+                                        .WithForegroundColor(Color.SeaShell)
+                                        .WithAlignment(Alignment.Center)
+                                        .WithFontStyle(FontStyleExt.Bold | FontStyleExt.Underline)
+                                    .GetColumn()
+                };
 
-            var avg = values.Average();
-            foreach (var d in values)
-                yield return Tuple.Create(d, avg - d);
+            Table table = new Table()
+                .AddColumn(columns[0])
+                .AddColumn(columns[1])
+                .AddColumn(columns[2])
+                .AddColumn(columns[3]);
+            table.Config = TableConfig.MySqlSimple();
+            table.AddRow("99", "2", "3");
+            table.AddRow("Hello World!", "item", "Here");
+            table.AddRow("Longer items go here", "stuff stuff", "some centered thing");
+
+            Clock.BenchmarkTime(() =>
+            {
+                table.ReplaceRows(new List<object[]>()
+                {
+                    new [] { "123", "2", "3" },
+                    new [] { "Hello World!", "item", "Here" },
+                    new [] { "Replaced", "the", "data" },
+                });
+
+                string tableString = table.ToString();
+            });
+
         }
     }
 }

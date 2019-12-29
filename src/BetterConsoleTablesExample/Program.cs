@@ -12,15 +12,18 @@ using System.Linq;
 using BetterConsole.Core;
 using BetterConsole.Colors.Extensions;
 
+using Clawfoot.TestUtilities.Performance;
+
 namespace BetterConsoleTables_Example
 {
     class Program
     {
         static void Main(string[] args)
         {
+            PerformanceTest.Run();
             //ShowAlignedTables();
-            //PerformanceTest.Run();
-            ShowFormattedTable();
+            //ShowExmapleMultiTable();
+            //ShowFormattedTable();
             //ShowExampleTables();
             Console.ReadLine();
         }
@@ -85,158 +88,6 @@ namespace BetterConsoleTables_Example
 
             return lines;
         }
-
-        private static void RunWrapPerformanceTest()
-        {
-            int iterations = 25000;
-            Stopwatch stopwatch = new Stopwatch();
-            long total = 0;
-
-            for (int j = 0; j < iterations; j++)
-            {
-                Console.SetCursorPosition(0, 0);
-                stopwatch.Restart();
-
-                int limit = 20;
-                string text = "For a simple concatenation of 3 or 4 strings, it probably won't make_any_significant_difference,_and_string concatenation may even be slightly faster - but if you're wrong and there are lots of rows, StringBuilder will start getting much more efficient, and it's always more descriptive of what you're doing.";
-                StringBuilder builder = new StringBuilder();
-
-                int lastsplit = 0;
-                int lastWhiteSpace = 0;
-                bool lastSplitOnSpace = false;
-
-                for (int i = 0; i < text.Length; i++)
-                {
-                    if (Char.IsWhiteSpace(text[i]))
-                    {
-                        if (!(i - lastsplit < limit && i < text.Length))
-                        {
-                            if (i - lastsplit == limit)
-                            {
-                                if (builder.Length == 0)
-                                {
-                                    builder.AppendLine(text.Substring(lastsplit, i - lastsplit));
-                                }
-                                else
-                                {
-                                    builder.AppendLine(text.Substring(lastsplit + 1, i - lastsplit - 1));
-                                }
-
-                                lastsplit = i;
-                                lastWhiteSpace = i;
-                                lastSplitOnSpace = true;
-                            }
-                            //Current length is over limit, new whitespace found, size of next split area is less than limit, then split on last found white space
-                            else if (i - lastsplit > limit && lastsplit != lastWhiteSpace && lastWhiteSpace - lastsplit - 1 <= limit)
-                            {
-                                if (builder.Length == 0)
-                                {
-                                    builder.AppendLine(text.Substring(lastsplit, lastWhiteSpace - lastsplit));
-                                }
-                                else
-                                {
-                                    builder.AppendLine(text.Substring(lastsplit + 1, lastWhiteSpace - lastsplit - 1));
-                                }
-                                lastsplit = lastWhiteSpace; //Split was performed at the last whitepsace
-                                lastWhiteSpace = i; //On a new whitespace right now, set that accordingly
-                                lastSplitOnSpace = true;
-                            }
-                            //Last whitespace and last split are in the same location, and text is longer than limit. Means single word is longer than limit, then split inside word at limit
-                            else
-                            {
-                                if (Char.IsWhiteSpace(text[lastsplit])) //Last split was a whitespace, skip forward 1 char to skip whitespace
-                                {
-                                    builder.AppendLine(text.Substring(lastsplit + 1, limit));
-                                    lastsplit += limit + 1;
-                                }
-                                else
-                                {
-                                    builder.AppendLine(text.Substring(lastsplit, limit));
-                                    lastsplit += limit;
-                                }
-                                lastWhiteSpace = i; //On a new whitespace right now, set that accordingly
-                                lastSplitOnSpace = false;
-                                continue;
-                            }
-                        }
-                        else
-                        {
-                            lastWhiteSpace = i;
-                        }
-
-                        if (i + 1 != text.Length && Char.IsWhiteSpace(text[i + 1])) //If next char is whitespace, move forward till no more white space
-                        {
-                            i++;
-                            for (; i < text.Length; i++)
-                            {
-                                if (Char.IsWhiteSpace(text[i]))
-                                {
-                                    continue;
-                                }
-                                else
-                                {
-                                    i--; //Current character isn't whitespace, go back a character
-                                    lastWhiteSpace = i;
-                                    lastsplit = i;
-                                    break;
-                                }
-                            }
-                        }
-                    }
-
-                    if (i + 1 == text.Length)
-                    {
-                        if (lastSplitOnSpace) //split was done on a space, skip forward one to skip excess space
-                        {
-                            builder.AppendLine(text.Substring(lastsplit + 1, i - lastsplit));
-                        }
-                        else //Split wasn't done on a space
-                        {
-                            builder.AppendLine(text.Substring(lastsplit, i - lastsplit + 1));
-                        }
-                    }
-                }
-                string output = builder.ToString();
-                stopwatch.Stop();
-                total += stopwatch.ElapsedTicks;
-                Console.Write(j);
-            }
-
-            Console.WriteLine();
-            Console.WriteLine(total / iterations);
-        }
-
-        private static void RunPerformanceTest()
-        {
-            int iterations = 25000;
-            Console.OutputEncoding = Encoding.UTF8;
-            Stopwatch stopwatch = new Stopwatch();
-            long total = 0;
-            for(int i = 0; i < iterations; i++)
-            {
-                Console.SetCursorPosition(0, 0);
-                stopwatch.Restart();
-
-                Table table = new Table("One", "Two", "Three");
-                table.Config = TableConfig.Unicode();
-                table.AddRow("1", "2", "3");
-                table.AddRow("Short", "item", "Here");
-                table.AddRow("Longer items go here", "stuff", "stuff");
-
-                string tableString = table.ToString();
-
-                total += stopwatch.Elapsed.Ticks;
-                if(i % 100 == 0 || i+1 == iterations)
-                {
-                    Console.WriteLine(i+1);
-                }              
-            }
-
-            long ticks = total / iterations;
-            Console.WriteLine();
-            Console.WriteLine($"{ticks}ticks or {ticks/10000f}ms per table");
-        }
-
         private static void ShowFormattedTable()
         {
             Console.WriteLine();
@@ -247,7 +98,6 @@ namespace BetterConsoleTables_Example
             void Table1()
             {
                 //THis throws Exception
-                return;
                 Column[] headers = new[]
                 {
                     new ColumnBuilder("Colors!").WithHeaderFormat().WithForegroundColor(Color.BlueViolet).GetColumn(),
@@ -304,9 +154,17 @@ namespace BetterConsoleTables_Example
                 table.AddRow("99", "2", "3");
                 table.AddRow("Hello World!", "item", "Here");
                 table.AddRow("Longer items go here", "stuff stuff", "some centered thing");
-                table.AddColumn(columns[0]);
 
+                Console.Write(table.ToString());
 
+                table.ReplaceRows(new List<object[]>()
+                {
+                    new [] { "123", "2", "3" },
+                    new [] { "Hello World!", "item", "Here" },
+                    new [] { "Replaced", "the", "data" },
+                });
+
+                Console.WriteLine();
                 Console.Write(table.ToString());
             }
         }
@@ -323,7 +181,7 @@ namespace BetterConsoleTables_Example
             {
                 IColumn[] headers = new[]
                 {
-                    Column.Simple("Left".CrossedOut()),
+                    Column.Simple("Left"),
                     Column.Simple("Right", Alignment.Right, Alignment.Right),
                     Column.Simple("Center", Alignment.Center, Alignment.Center),
                 };
@@ -393,7 +251,7 @@ namespace BetterConsoleTables_Example
         private static void ShowExmapleMultiTable()
         {
             Table table = new Table("One", "Two", "Three");
-            table.Config = TableConfig.Default();
+            table.Config = TableConfig.UnicodeAlt();
             table.AddRow("1", "2", "3");
             table.AddRow("Short", "item", "Here");
             table.AddRow("Longer items go here", "stuff stuff", "stuff");
@@ -404,7 +262,14 @@ namespace BetterConsoleTables_Example
             table2.AddRow("Short", "item", "Here", "A fourth column!!!");
             table2.AddRow("stuff", "longer stuff", "even longer stuff in this cell");
 
-            ConsoleTables tables = new ConsoleTables(table, table2);
+
+            Table table3 = new Table("One", "Two");
+            table3.Config = TableConfig.UnicodeAlt();
+            table3.AddRow("One", "Two");
+            table3.AddRow("Short", "item");
+            table3.AddRow("stuff", "longer stuff");
+
+            ConsoleTables tables = new ConsoleTables(table, table2, table3);
             Console.Write(tables.ToString());
         }
 

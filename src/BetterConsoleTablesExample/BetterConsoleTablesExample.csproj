@@ -9,4 +9,10 @@
     <ProjectReference Include="..\BetterConsoleTables\BetterConsoleTables.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="Clawfoot.TestUtilities">
+      <HintPath>..\..\..\..\Clawfoot Software\Clawfoot.TestUtilities\bin\Release\netcoreapp2.0\Clawfoot.TestUtilities.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>
