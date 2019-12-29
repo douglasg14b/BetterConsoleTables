@@ -296,15 +296,26 @@ namespace BetterConsoleTables
                 builder.AppendLine(headerDivider);
             }
 
-            builder.AppendLine(formattedRows[0]);
+            
+            if(formattedRows.Length > 0)
+            {
+                builder.AppendLine(formattedRows[0]);
 
-            for (int i = 1; i < formattedRows.Length; i++)
+                for (int i = 1; i < formattedRows.Length; i++)
+                {
+                    if (Config.hasInnerRows)
+                    {
+                        builder.AppendLine(innerDivider);
+                    }
+                    builder.AppendLine(formattedRows[i]);
+                }
+            }
+            else // There are no rows/data
             {
                 if (Config.hasInnerRows)
                 {
                     builder.AppendLine(innerDivider);
                 }
-                builder.AppendLine(formattedRows[i]);
             }
 
             if (Config.hasBottomRow)
