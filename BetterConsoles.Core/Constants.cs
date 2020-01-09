@@ -85,8 +85,42 @@ namespace BetterConsole.Core
 
     public static class Constants
     {
-        public static readonly Color DefaultForegroundColor = Color.LightGray;
-        public static readonly Color DefaultBackgroundColor = Color.Black;
+        public static readonly Color _defaultForegroundColor = Color.White;
+        public static readonly Color _defaultBackgroundColor = Color.Black;
+
+        public static Color DefaultForegroundColor 
+        { 
+            get
+            {
+                if(UserDefinedDefaultForegroundColor == default)
+                {
+                    return _defaultForegroundColor;
+                }
+                return UserDefinedDefaultForegroundColor;
+            } 
+        }
+
+        public static Color DefaultBackgroundColor
+        {
+            get
+            {
+                if (UserDefinedDefaultBackgroundColor == default)
+                {
+                    return _defaultBackgroundColor;
+                }
+                return UserDefinedDefaultBackgroundColor;
+            }
+        }
+
+        /// <summary>
+        /// A static foreground color that can be defined by the user
+        /// </summary>
+        public static Color UserDefinedDefaultForegroundColor = default;
+
+        /// <summary>
+        /// A static background color that can be defined by the user
+        /// </summary>
+        public static Color UserDefinedDefaultBackgroundColor = default;
 
         public const ColorPlane DefaultColorPlane = ColorPlane.Foreground;
 
