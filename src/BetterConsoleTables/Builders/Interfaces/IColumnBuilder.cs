@@ -9,8 +9,8 @@ using System.Threading.Tasks;
 
 namespace BetterConsoleTables.Builders.Interfaces
 {
-    public interface IColumnBuilder : IColumnHeaderBuilder, IColumnRowsBuilder
+    public interface IColumnBuilder : IColumnHeaderBuilder<IColumnBuilder>, IColumnRowsBuilder<IColumnBuilder>
     {
-        Column GetColumn();
+        IColumn GetColumn();
     }
 }

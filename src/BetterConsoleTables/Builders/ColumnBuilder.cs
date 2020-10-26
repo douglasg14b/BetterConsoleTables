@@ -10,7 +10,7 @@ namespace BetterConsoleTables.Builders
 {
     public class ColumnBuilder : IColumnBuilder
     {
-        public Column column;
+        public IColumn column;
 
         public ColumnBuilder(string columnTitle)
             : this(new Column(columnTitle)) { }
@@ -18,18 +18,18 @@ namespace BetterConsoleTables.Builders
         public ColumnBuilder(object columnTitle)
             : this(new Column(columnTitle)) { }
 
-        public ColumnBuilder(Column column)
+        public ColumnBuilder(IColumn column)
         {
             this.column = column;
         }
 
-        public Column GetColumn()
+        public IColumn GetColumn()
         {
             return column;
         }
 
-        public IColumnValueFormatBuilder WithRowsFormat() => WithRowsFormat(new CellFormat());
-        public IColumnValueFormatBuilder WithRowsFormat(CellFormat format)
+        public IColumnValueFormatBuilder<IColumnBuilder> WithRowsFormat() => WithRowsFormat(new CellFormat());
+        public IColumnValueFormatBuilder<IColumnBuilder> WithRowsFormat(CellFormat format)
         {
             column.RowsFormat = format;
             return new ColumnValueFormatBuilder(format, this);
@@ -47,8 +47,8 @@ namespace BetterConsoleTables.Builders
         }
 
 
-        public IColumnValueFormatBuilder WithHeaderFormat() => WithHeaderFormat(new CellFormat());
-        public IColumnValueFormatBuilder WithHeaderFormat(CellFormat format)
+        public IColumnValueFormatBuilder<IColumnBuilder> WithHeaderFormat() => WithHeaderFormat(new CellFormat());
+        public IColumnValueFormatBuilder<IColumnBuilder> WithHeaderFormat(CellFormat format)
         {
             column.HeaderFormat = format;
             return new ColumnValueFormatBuilder(format, this);

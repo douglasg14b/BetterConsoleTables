@@ -7,10 +7,14 @@ using System.Threading.Tasks;
 
 namespace BetterConsoleTables.Builders.Interfaces
 {
-    public interface IColumnRowsBuilder
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <typeparam name="TColumnBuilder">The parent column builder this can return the call chain to</typeparam>
+    public interface IColumnRowsBuilder<TColumnBuilder>
     {
-        IColumnValueFormatBuilder WithRowsFormat();
-        IColumnValueFormatBuilder WithRowsFormat(CellFormat format);
+        IColumnValueFormatBuilder<TColumnBuilder> WithRowsFormat();
+        IColumnValueFormatBuilder<TColumnBuilder> WithRowsFormat(CellFormat format);
 
         IColumnBuilder WithRowsAlignment(Alignment alignment);
     }

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace BetterConsoleTables.Builders
 {
-    internal class ColumnValueFormatBuilder : CellFormatBuilder<IColumnValueFormatBuilder>, IColumnValueFormatBuilder, IColumnHeaderBuilder, IColumnRowsBuilder
+    internal class ColumnValueFormatBuilder : CellFormatBuilder<IColumnValueFormatBuilder<IColumnBuilder>>, IColumnValueFormatBuilder<IColumnBuilder>, IColumnHeaderBuilder<IColumnBuilder>, IColumnRowsBuilder<IColumnBuilder>
     {
         private IColumnBuilder instance;
         internal ColumnValueFormatBuilder(CellFormat format, IColumnBuilder instance)
@@ -19,11 +19,11 @@ namespace BetterConsoleTables.Builders
             this.instance = instance;
         }
 
-        public Column GetColumn() => instance.GetColumn();
-        public IColumnValueFormatBuilder WithRowsFormat() => instance.WithRowsFormat();
-        public IColumnValueFormatBuilder WithHeaderFormat() => instance.WithHeaderFormat();
-        public IColumnValueFormatBuilder WithRowsFormat(CellFormat format) => instance.WithRowsFormat(format);
-        public IColumnValueFormatBuilder WithHeaderFormat(CellFormat format) => instance.WithHeaderFormat(format);
+        public IColumn GetColumn() => instance.GetColumn();
+        public IColumnValueFormatBuilder<IColumnBuilder> WithRowsFormat() => instance.WithRowsFormat();
+        public IColumnValueFormatBuilder<IColumnBuilder> WithHeaderFormat() => instance.WithHeaderFormat();
+        public IColumnValueFormatBuilder<IColumnBuilder> WithRowsFormat(CellFormat format) => instance.WithRowsFormat(format);
+        public IColumnValueFormatBuilder<IColumnBuilder> WithHeaderFormat(CellFormat format) => instance.WithHeaderFormat(format);
 
         public IColumnBuilder WithHeaderAlignment(Alignment alignment) => instance.WithHeaderAlignment(alignment);
         public IColumnBuilder WithRowsAlignment(Alignment alignment) => instance.WithRowsAlignment(alignment);

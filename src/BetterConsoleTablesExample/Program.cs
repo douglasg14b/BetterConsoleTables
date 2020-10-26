@@ -13,6 +13,8 @@ using BetterConsole.Core;
 using BetterConsole.Colors.Extensions;
 
 using Clawfoot.TestUtilities.Performance;
+using BetterConsoleTables.Builders.Interfaces;
+using BetterConsoleTables.Builders.Interfaces.Table;
 
 namespace BetterConsoleTables_Example
 {
@@ -98,7 +100,7 @@ namespace BetterConsoleTables_Example
             void Table1()
             {
                 //THis throws Exception
-                Column[] headers = new[]
+                IColumn[] headers = new[]
                 {
                     new ColumnBuilder("Colors!").WithHeaderFormat().WithForegroundColor(Color.BlueViolet).GetColumn(),
                     new ColumnBuilder("Right").WithHeaderFormat().WithForegroundColor(Color.Green).GetColumn(),
@@ -115,9 +117,11 @@ namespace BetterConsoleTables_Example
                 Console.Write(table.ToString());
             }
 
+            ITableBuilder test = null;
+
             void Table2()
             {
-                Column[] columns =
+                IColumn[] columns =
                 {
                     new ColumnBuilder("Colors!")
                         .WithHeaderFormat()
