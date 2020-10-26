@@ -25,15 +25,14 @@ namespace BetterConsoleTables
 
 
     // Table class that has individual row items of type TCell
-    public abstract class TableBase<TTable, THeader, TCell>
-        where TTable: TableBase<TTable, THeader, TCell>
+    public abstract class TableBase<TTable, THeader, TCell> : ITableBase<TTable, THeader, TCell> where TTable : TableBase<TTable, THeader, TCell>
     {
         protected const char paddingChar = ' ';
         protected List<THeader> m_headers;
         protected List<TCell[]> m_rows;
         protected List<List<ICellFormat>> m_formatMatrix;
 
-        public TableBase() :this(new TableConfig()) { }
+        public TableBase() : this(new TableConfig()) { }
 
         public TableBase(TableConfig config)
         {
@@ -97,11 +96,11 @@ namespace BetterConsoleTables
 
             m_rows.Add(rowValues);
 
-            if(m_rows.Count > m_formatMatrix.Count - 1)
+            if (m_rows.Count > m_formatMatrix.Count - 1)
             {
                 AddCellFormatsRow(rowValues.Length); // Add a new row of formattings
             }
-            
+
             return (TTable)this;
         }
 
@@ -115,7 +114,7 @@ namespace BetterConsoleTables
             if (rows is null) throw new ArgumentNullException(nameof(rows), "Cannot add null rows to a table");
             if (!rows.Any()) throw new ArgumentException("Cannot add an empty collection of rows to a table", nameof(rows));
 
-            foreach(var row in rows)
+            foreach (var row in rows)
             {
                 AddRow(row);
             }
@@ -150,13 +149,13 @@ namespace BetterConsoleTables
         internal protected int[] GetColumnLengths(IColumn[] columns)
         {
             int[] lengths = new int[columns.Length];
-            for(int i = 0; i < columns.Length; i++)
+            for (int i = 0; i < columns.Length; i++)
             {
                 int max = columns[i].Title.Length;
                 for (int j = 0; j < m_rows.Count; j++)
                 {
                     int length = 0;
-                    if(i < m_rows[j].Length) // i is in range (ie. row has all columns)
+                    if (i < m_rows[j].Length) // i is in range (ie. row has all columns)
                     {
                         length = m_rows[j][i]?.ToString()?.Length ?? 0;
                     }

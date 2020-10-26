@@ -13,19 +13,19 @@ using System.Text;
 
 namespace BetterConsoleTables
 {
-   /*public class Table<TModel> : TableBase<Table, Column, TModel>
-    {
-        public Table() : base() { }
-        public Table(TableConfig config) : base(config) { }
-        public Table(TableConfig config, params Column[] columns) : base(config, columns) { }
-        public Table(TableConfig config, Alignment rowsAlignment = Alignment.Left, Alignment headerAlignment = Alignment.Left, params object[] columns)
-            : base(config, rowsAlignment, headerAlignment, columns) { }
-        public Table(params Column[] columns) : base(columns) { }
-        public Table(Alignment rowsAlignment = Alignment.Left, Alignment headerAlignment = Alignment.Left, params object[] columns)
-            : base(rowsAlignment, headerAlignment, columns) { }
-    }*/
+    /*public class Table<TModel> : TableBase<Table, Column, TModel>
+     {
+         public Table() : base() { }
+         public Table(TableConfig config) : base(config) { }
+         public Table(TableConfig config, params Column[] columns) : base(config, columns) { }
+         public Table(TableConfig config, Alignment rowsAlignment = Alignment.Left, Alignment headerAlignment = Alignment.Left, params object[] columns)
+             : base(config, rowsAlignment, headerAlignment, columns) { }
+         public Table(params Column[] columns) : base(columns) { }
+         public Table(Alignment rowsAlignment = Alignment.Left, Alignment headerAlignment = Alignment.Left, params object[] columns)
+             : base(rowsAlignment, headerAlignment, columns) { }
+     }*/
 
-    public class Table : TableBase<Table, IColumn, string>
+    public class Table : TableBase<Table, IColumn, string>, ITable
     {
 
         #region Constructors
@@ -35,7 +35,7 @@ namespace BetterConsoleTables
             _ = PlatformInfo.HasFormattingSupport; //TODO: TEMP
         }
 
-        public Table() 
+        public Table()
             : base()
         {
             Create();
@@ -66,7 +66,7 @@ namespace BetterConsoleTables
                 throw new ArgumentNullException(nameof(columns));
             }
 
-            foreach(string title in columns)
+            foreach (string title in columns)
             {
                 AddColumn(Column.Default(title), false);
             }
@@ -211,7 +211,7 @@ namespace BetterConsoleTables
         {
             foreach (var column in columns)
             {
-               AddColumn(Column.Simple(column, rowsAlignment, headerAlignment), false);
+                AddColumn(Column.Simple(column, rowsAlignment, headerAlignment), false);
             }
 
             EnsureProperRowSize();
@@ -296,8 +296,8 @@ namespace BetterConsoleTables
                 builder.AppendLine(headerDivider);
             }
 
-            
-            if(formattedRows.Length > 0)
+
+            if (formattedRows.Length > 0)
             {
                 builder.AppendLine(formattedRows[0]);
 
@@ -365,9 +365,9 @@ namespace BetterConsoleTables
         {
             string[] output = new string[values.Count];
 
-            for(int i = 0; i < values.Count; i++)
+            for (int i = 0; i < values.Count; i++)
             {
-                if (formats != null && formats.Count > i + 1 && formats[i+1] != null) // formats[i+1] since first element is header row
+                if (formats != null && formats.Count > i + 1 && formats[i + 1] != null) // formats[i+1] since first element is header row
                 {
                     output[i] = FormatRow(values[i], formats[i + 1], columnLengths, ref innerDelimiter, ref outerDelimiter);
                 }
@@ -392,7 +392,7 @@ namespace BetterConsoleTables
 
                 rowWidth += 1 + 1 + paddedValue.Length + 1; // delimiter, space, value, space
 
-                if(formats.Count > 0 && formats[i] != null)
+                if (formats.Count > 0 && formats[i] != null)
                 {
                     paddedValue = paddedValue.SetStyle(formats[i]);
                 }
