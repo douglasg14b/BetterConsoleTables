@@ -11,11 +11,25 @@ namespace BetterConsoleTables.Builders.Interfaces
     /// 
     /// </summary>
     /// <typeparam name="TColumnBuilder">The parent column builder this can return the call chain to</typeparam>
-    public interface IColumnValueFormatBuilder<TColumnBuilder> : 
-        ICellFormatBuilder<IColumnValueFormatBuilder<TColumnBuilder>>, 
-        IColumnHeaderBuilder<TColumnBuilder>, 
-        IColumnRowsBuilder<TColumnBuilder>
+    public interface IColumnValueFormatBuilder<TColumnBuilder, TValueFormatBuilder> :
+        ICellFormatBuilder<TValueFormatBuilder>,
+        IColumnHeaderBuilder<TColumnBuilder, TValueFormatBuilder>,
+        IColumnRowsBuilder<TColumnBuilder, TValueFormatBuilder>
+    {
+    }
+
+    /// <summary>
+    /// Standalone value format builder that is not used in the table builder
+    /// </summary>
+    public interface IStandaloneColumnValueFormatBuilder : IColumnValueFormatBuilder<IStandaloneColumnBuilder, IStandaloneColumnValueFormatBuilder>
     {
         IColumn GetColumn();
+    }
+
+    /// <summary>
+    /// Table value format builder that is used in the table builder
+    /// </summary>
+    public interface ITableColumnValueFormatBuilder : ITableBuilder, IColumnValueFormatBuilder<ITableColumnBuilder, ITableColumnValueFormatBuilder>
+    {
     }
 }

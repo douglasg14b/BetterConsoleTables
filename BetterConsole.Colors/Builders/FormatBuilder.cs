@@ -21,7 +21,6 @@ namespace BetterConsole.Colors.Builders
     }
 
     public class FormatBuilder<TBuilder, TFormat> : IFormatBuilder<TBuilder, TFormat>
-        where TBuilder: IFormatBuilder<TBuilder, TFormat>
         where TFormat : IFormat
     {
         protected TFormat format;

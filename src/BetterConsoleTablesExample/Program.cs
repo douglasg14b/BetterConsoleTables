@@ -14,7 +14,6 @@ using BetterConsole.Colors.Extensions;
 
 using Clawfoot.TestUtilities.Performance;
 using BetterConsoleTables.Builders.Interfaces;
-using BetterConsoleTables.Builders.Interfaces.Table;
 
 namespace BetterConsoleTables_Example
 {
@@ -22,10 +21,10 @@ namespace BetterConsoleTables_Example
     {
         static void Main(string[] args)
         {
-            PerformanceTest.Run();
+            //PerformanceTest.Run();
             //ShowAlignedTables();
             //ShowExmapleMultiTable();
-            //ShowFormattedTable();
+            ShowFormattedTable();
             //ShowExampleTables();
             Console.ReadLine();
         }
@@ -95,7 +94,9 @@ namespace BetterConsoleTables_Example
             Console.WriteLine();
             Table1();
             Console.WriteLine();
-            Table2();
+            Table11();
+            Console.WriteLine();
+            //Table2();
 
             void Table1()
             {
@@ -103,8 +104,8 @@ namespace BetterConsoleTables_Example
                 IColumn[] headers = new[]
                 {
                     new ColumnBuilder("Colors!").WithHeaderFormat().WithForegroundColor(Color.BlueViolet).GetColumn(),
-                    new ColumnBuilder("Right").WithHeaderFormat().WithForegroundColor(Color.Green).GetColumn(),
-                    new ColumnBuilder("Center!").WithHeaderFormat().WithForegroundColor(Color.Firebrick).GetColumn(),
+                    new ColumnBuilder("Right").WithHeaderFormat().WithAlignment(Alignment.Right).WithForegroundColor(Color.Green).GetColumn(),
+                    new ColumnBuilder("Center!").WithHeaderFormat().WithAlignment(Alignment.Center).WithForegroundColor(Color.Firebrick).GetColumn(),
                 };
 
                 Table table = new Table(headers);
@@ -117,7 +118,36 @@ namespace BetterConsoleTables_Example
                 Console.Write(table.ToString());
             }
 
-            ITableBuilder test = null;
+            void Table11()
+            {
+                ITable table = new TableBuilder(TableConfig.MySqlSimple())
+                    .WithColumn("Colors!")
+                        .WithHeaderFormat()
+                            .WithForegroundColor(Color.BlueViolet)
+                    .WithColumn("Right")
+                        .WithHeaderFormat()
+                            .WithAlignment(Alignment.Right)
+                            .WithForegroundColor(Color.Green)
+                    .WithColumn("Center!")
+                        .WithHeaderFormat()
+                            .WithAlignment(Alignment.Center)
+                            .WithForegroundColor(Color.Firebrick)
+                    .Build();
+
+                table.AddRow(Color.Gray.ToString(), "2", "3");
+                table.AddRow("Hello", "2", "3");
+                table.AddRow("Hello World!", "item", "Here");
+                table.AddRow("Longer items go here", "stuff stuff", "some centered thing");
+
+                Console.Write(table.ToString());
+            }
+
+            /*ITableBuilder test = null;
+
+            test
+                .WithColumn("sdfsdf")
+                    .WithHeaderFormat()
+                        .WithFontStyle(FontStyleExt.Bold)*/
 
             void Table2()
             {

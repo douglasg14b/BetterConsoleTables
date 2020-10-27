@@ -10,22 +10,68 @@ using System.Threading.Tasks;
 
 namespace BetterConsoleTables.Builders
 {
-    internal class ColumnValueFormatBuilder : CellFormatBuilder<IColumnValueFormatBuilder<IColumnBuilder>>, IColumnValueFormatBuilder<IColumnBuilder>, IColumnHeaderBuilder<IColumnBuilder>, IColumnRowsBuilder<IColumnBuilder>
+    /// <summary>
+    /// The base column format builder.
+    /// Used by the table builder
+    /// </summary>
+    /// <typeparam name="TColumnBuilder"></typeparam>
+    internal class ColumnValueFormatBuilder<TColumnBuilder, TValueBuilder> : 
+        CellFormatBuilder<TValueBuilder>,
+        IColumnValueFormatBuilder<TColumnBuilder, TValueBuilder>
+
+        where TColumnBuilder : IGenericColumnBuilder<TColumnBuilder, TValueBuilder>
     {
-        private IColumnBuilder instance;
-        internal ColumnValueFormatBuilder(CellFormat format, IColumnBuilder instance)
+        private TColumnBuilder instance;
+        internal ColumnValueFormatBuilder(CellFormat format, TColumnBuilder instance)
             : base(format)
         {
             this.instance = instance;
         }
 
-        public IColumn GetColumn() => instance.GetColumn();
-        public IColumnValueFormatBuilder<IColumnBuilder> WithRowsFormat() => instance.WithRowsFormat();
-        public IColumnValueFormatBuilder<IColumnBuilder> WithHeaderFormat() => instance.WithHeaderFormat();
-        public IColumnValueFormatBuilder<IColumnBuilder> WithRowsFormat(CellFormat format) => instance.WithRowsFormat(format);
-        public IColumnValueFormatBuilder<IColumnBuilder> WithHeaderFormat(CellFormat format) => instance.WithHeaderFormat(format);
+        public TValueBuilder WithRowsFormat() => instance.WithRowsFormat();
+        public TValueBuilder WithHeaderFormat() => instance.WithHeaderFormat();
+        public TValueBuilder WithRowsFormat(CellFormat format) => instance.WithRowsFormat(format);
+        public TValueBuilder WithHeaderFormat(CellFormat format) => instance.WithHeaderFormat(format);
 
-        public IColumnBuilder WithHeaderAlignment(Alignment alignment) => instance.WithHeaderAlignment(alignment);
-        public IColumnBuilder WithRowsAlignment(Alignment alignment) => instance.WithRowsAlignment(alignment);
+        public TColumnBuilder WithHeaderAlignment(Alignment alignment) => instance.WithHeaderAlignment(alignment);
+        public TColumnBuilder WithRowsAlignment(Alignment alignment) => instance.WithRowsAlignment(alignment);
+    }
+
+    /// <summary>
+    /// The value format builder that's used for teh standalone column builder, not the table builder
+    /// </summary>
+    /// <typeparam name="TColumnBuilder"></typeparam>
+    internal class StandaloneColumnValueFormatBuilder : 
+        ColumnValueFormatBuilder<IStandaloneColumnBuilder, IStandaloneColumnValueFormatBuilder>, 
+        IStandaloneColumnValueFormatBuilder
+    {
+        private IStandaloneColumnBuilder instance;
+        internal StandaloneColumnValueFormatBuilder(CellFormat format, IStandaloneColumnBuilder instance)
+            : base(format, instance)
+        {
+            this.instance = instance;
+        }
+        public IColumn GetColumn() => instance.GetColumn();
+    }
+
+    /// <summary>
+    /// The value format builder that's used for teh standalone column builder, not the table builder
+    /// </summary>
+    /// <typeparam name="TColumnBuilder"></typeparam>
+    internal class TableColumnValueFormatBuilder :
+        ColumnValueFormatBuilder<ITableColumnBuilder, ITableColumnValueFormatBuilder>,
+        ITableColumnValueFormatBuilder
+    {
+        private ITableColumnBuilder instance;
+        internal TableColumnValueFormatBuilder(CellFormat format, ITableColumnBuilder instance)
+            : base(format, instance)
+        {
+            this.instance = instance;
+        }
+
+        public ITableColumnBuilder WithColumn(string columnTitle) => instance.WithColumn(columnTitle);
+
+        public ITableColumnBuilder WithColumn(IColumn column) => instance.WithColumn(column);
+        public ITable Build() => instance.Build();
     }
 }

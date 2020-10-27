@@ -13,8 +13,8 @@ namespace BetterConsoleTables.Builders.Interfaces
         ICellFormat GetFormat();
     }
 
-    public interface ICellFormatBuilder<TBuilder> : IFormatBuilder<TBuilder, ICellFormat>
+    public interface ICellFormatBuilder<TParentBuilder> : IFormatBuilder<TParentBuilder, ICellFormat>
     {
-        TBuilder WithAlignment(Alignment alignment);
+        TParentBuilder WithAlignment(Alignment alignment);
     }
 }

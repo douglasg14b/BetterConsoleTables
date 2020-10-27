@@ -23,7 +23,6 @@ namespace BetterConsoleTables.Builders
     }
 
     public class CellFormatBuilder<TBuilder> : FormatBuilder<TBuilder, ICellFormat>, ICellFormatBuilder<TBuilder>
-    where TBuilder : ICellFormatBuilder<TBuilder>
     {
         new protected ICellFormat format;
 

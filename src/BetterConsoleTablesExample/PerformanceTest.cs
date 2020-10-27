@@ -43,7 +43,7 @@ namespace BetterConsoleTablesExample
         {
             Clock.BenchmarkTime(() =>
             {
-                Column[] columns =
+                IColumn[] columns =
                 {
                     new ColumnBuilder("Colors!")
                         .WithHeaderFormat()
@@ -87,7 +87,7 @@ namespace BetterConsoleTablesExample
 
         private static void Benchmark_ReplaceData()
         {
-            Column[] columns =
+            IColumn[] columns =
             {
                     new ColumnBuilder("Colors!")
                         .WithHeaderFormat()
