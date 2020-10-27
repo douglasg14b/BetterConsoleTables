@@ -25,7 +25,7 @@ namespace BetterConsoleTables
 
 
     // Table class that has individual row items of type TCell
-    public abstract class TableBase<TTable, THeader, TCell> : ITableBase<TTable, THeader, TCell> where TTable : TableBase<TTable, THeader, TCell>
+    public abstract class TableBase<TTable, THeader, TCell> where TTable : TableBase<TTable, THeader, TCell>
     {
         protected const char paddingChar = ' ';
         protected List<THeader> m_headers;

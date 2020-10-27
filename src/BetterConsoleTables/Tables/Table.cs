@@ -25,7 +25,7 @@ namespace BetterConsoleTables
              : base(rowsAlignment, headerAlignment, columns) { }
      }*/
 
-    public class Table : TableBase<Table, IColumn, string>, ITable
+    public class Table : TableBase<Table, IColumn, string>
     {
 
         #region Constructors

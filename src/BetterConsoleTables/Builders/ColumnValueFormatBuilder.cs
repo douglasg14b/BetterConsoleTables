@@ -72,6 +72,6 @@ namespace BetterConsoleTables.Builders
         public ITableColumnBuilder WithColumn(string columnTitle) => instance.WithColumn(columnTitle);
 
         public ITableColumnBuilder WithColumn(IColumn column) => instance.WithColumn(column);
-        public ITable Build() => instance.Build();
+        public Table Build() => instance.Build();
     }
 }

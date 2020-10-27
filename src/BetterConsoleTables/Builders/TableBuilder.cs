@@ -12,7 +12,7 @@ namespace BetterConsoleTables.Builders
     public class TableBuilder : ITableBuilder
     {
         Queue<TableColumnBuilder> columns = new Queue<TableColumnBuilder>();
-        ITable table;
+        Table table;
 
         public TableBuilder()
         {
@@ -39,7 +39,7 @@ namespace BetterConsoleTables.Builders
             return builder;
         }
 
-        public ITable Build()
+        public Table Build()
         {
             while (columns.Any())
             {

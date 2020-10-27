@@ -94,9 +94,7 @@ namespace BetterConsoleTables_Example
             Console.WriteLine();
             Table1();
             Console.WriteLine();
-            Table11();
-            Console.WriteLine();
-            //Table2();
+            Table2();
 
             void Table1()
             {
@@ -118,30 +116,6 @@ namespace BetterConsoleTables_Example
                 Console.Write(table.ToString());
             }
 
-            void Table11()
-            {
-                ITable table = new TableBuilder(TableConfig.MySqlSimple())
-                    .WithColumn("Colors!")
-                        .WithHeaderFormat()
-                            .WithForegroundColor(Color.BlueViolet)
-                    .WithColumn("Right")
-                        .WithHeaderFormat()
-                            .WithAlignment(Alignment.Right)
-                            .WithForegroundColor(Color.Green)
-                    .WithColumn("Center!")
-                        .WithHeaderFormat()
-                            .WithAlignment(Alignment.Center)
-                            .WithForegroundColor(Color.Firebrick)
-                    .Build();
-
-                table.AddRow(Color.Gray.ToString(), "2", "3");
-                table.AddRow("Hello", "2", "3");
-                table.AddRow("Hello World!", "item", "Here");
-                table.AddRow("Longer items go here", "stuff stuff", "some centered thing");
-
-                Console.Write(table.ToString());
-            }
-
             /*ITableBuilder test = null;
 
             test
@@ -151,39 +125,34 @@ namespace BetterConsoleTables_Example
 
             void Table2()
             {
-                IColumn[] columns =
-                {
-                    new ColumnBuilder("Colors!")
+
+                Table table = new TableBuilder()
+                    .WithColumn("Colors!")
                         .WithHeaderFormat()
                             .WithForegroundColor(Color.BlueViolet)
-                        .GetColumn(),
-                    new ColumnBuilder("Right")
-                                    .WithHeaderFormat()
-                                        .WithForegroundColor(Color.Green)
-                                        .WithAlignment(Alignment.Right)
-                                    .GetColumn(),
-                    new ColumnBuilder("Center!")
-                                    .WithHeaderFormat()
-                                        .WithForegroundColor(Color.Firebrick)
-                                        .WithAlignment(Alignment.Center)
-                                        .WithFontStyle(FontStyleExt.Bold)
-                                    .WithRowsFormat()
-                                        .WithForegroundColor(Color.DarkOliveGreen)
-                                        .WithAlignment(Alignment.Center)
-                                    .GetColumn(),
-                    new ColumnBuilder("Bold & Underlined!!")
-                                    .WithHeaderFormat()
-                                        .WithForegroundColor(Color.SeaShell)
-                                        .WithAlignment(Alignment.Center)
-                                        .WithFontStyle(FontStyleExt.Bold | FontStyleExt.Underline)
-                                    .GetColumn()
-                };
+                    .WithColumn("Right")
+                        .WithHeaderFormat()
+                            .WithForegroundColor(Color.Green)
+                            .WithAlignment(Alignment.Right)
+                        .WithRowsFormat()
+                            .WithAlignment(Alignment.Right)
+                            .WithBackgroundColor(Color.ForestGreen)
+                            .WithForegroundColor(Color.DarkGray)
+                    .WithColumn("Center!")
+                        .WithHeaderFormat()
+                            .WithForegroundColor(Color.Firebrick)
+                            .WithAlignment(Alignment.Center)
+                            .WithFontStyle(FontStyleExt.Bold)
+                        .WithRowsFormat()
+                            .WithForegroundColor(Color.DarkOliveGreen)
+                            .WithAlignment(Alignment.Center)
+                    .WithColumn("Bold & Underlined!!")
+                        .WithHeaderFormat()
+                            .WithForegroundColor(Color.SeaShell)
+                            .WithAlignment(Alignment.Center)
+                            .WithFontStyle(FontStyleExt.Bold | FontStyleExt.Underline)
+                    .Build();
 
-                Table table = new Table()
-                    .AddColumn(columns[0])
-                    .AddColumn(columns[1])
-                    .AddColumn(columns[2])
-                    .AddColumn(columns[3]);
                 table.Config = TableConfig.MySqlSimple();
                 table.AddRow("99", "2", "3");
                 table.AddRow("Hello World!", "item", "Here");

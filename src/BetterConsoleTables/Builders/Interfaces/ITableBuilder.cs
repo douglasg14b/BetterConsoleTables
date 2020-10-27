@@ -11,6 +11,6 @@ namespace BetterConsoleTables.Builders.Interfaces
     {
         ITableColumnBuilder WithColumn(string columnTitle);
         ITableColumnBuilder WithColumn(IColumn column);
-        ITable Build();
+        Table Build();
     }
 }
