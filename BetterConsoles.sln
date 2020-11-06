@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29409.12
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BetterConsoleTables", "BetterConsoles.Tables\BetterConsoles.Tables.csproj", "{97A09A23-3E34-482D-9852-0C5E7451A466}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BetterConsoles.Tables", "BetterConsoles.Tables\BetterConsoles.Tables.csproj", "{97A09A23-3E34-482D-9852-0C5E7451A466}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BetterConsoleTablesExample", "BetterConsoles.Tables.Examples\BetterConsoles.Tables.Examples.csproj", "{38F959D5-7375-40F9-B7AD-92D2C9E8BD61}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BetterConsoles.Tables.Examples", "BetterConsoles.Tables.Examples\BetterConsoles.Tables.Examples.csproj", "{38F959D5-7375-40F9-B7AD-92D2C9E8BD61}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetterConsole.Core", "BetterConsoles.Core\BetterConsole.Core.csproj", "{F0F4BC7B-AD16-4AA6-98D9-C7F251D93F09}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetterConsoles.Core", "BetterConsoles.Core\BetterConsoles.Core.csproj", "{F0F4BC7B-AD16-4AA6-98D9-C7F251D93F09}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BetterConsole.Colors", "BetterConsole.Colors\BetterConsole.Colors.csproj", "{8FD22FE0-B387-4D58-8E3F-7FADEFD295BC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BetterConsoles.Colors", "BetterConsoles.Colors\BetterConsoles.Colors.csproj", "{8FD22FE0-B387-4D58-8E3F-7FADEFD295BC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

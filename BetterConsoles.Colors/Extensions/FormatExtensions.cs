@@ -1,4 +1,4 @@
-﻿using BetterConsole.Core;
+﻿using BetterConsoles.Core;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -10,7 +10,7 @@ using System.Runtime.Intrinsics.X86;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BetterConsole.Colors.Extensions
+namespace BetterConsoles.Colors.Extensions
 {
     public static class FormatExtensions
     {

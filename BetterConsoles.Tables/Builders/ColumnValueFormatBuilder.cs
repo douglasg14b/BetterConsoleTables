@@ -1,6 +1,6 @@
-﻿using BetterConsoleTables.Builders.Interfaces;
-using BetterConsoleTables.Configuration;
-using BetterConsoleTables.Models;
+﻿using BetterConsoles.Tables.Builders.Interfaces;
+using BetterConsoles.Tables.Configuration;
+using BetterConsoles.Tables.Models;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BetterConsoleTables.Builders
+namespace BetterConsoles.Tables.Builders
 {
     /// <summary>
     /// The base column format builder.

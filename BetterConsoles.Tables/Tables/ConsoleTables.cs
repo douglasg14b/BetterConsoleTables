@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace BetterConsoleTables
+namespace BetterConsoles.Tables
 {
     public class ConsoleTables
     {

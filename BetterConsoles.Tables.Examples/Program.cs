@@ -1,21 +1,21 @@
 ﻿using System;
-using BetterConsoleTables;
+using BetterConsoles.Tables;
 using System.Diagnostics;
 using System.Text;
 using System.Collections.Generic;
-using BetterConsoleTablesExample;
-using BetterConsoleTables.Models;
-using BetterConsoleTables.Configuration;
+using BetterConsoles.Tables.Examples;
+using BetterConsoles.Tables.Models;
+using BetterConsoles.Tables.Configuration;
 using System.Drawing;
-using BetterConsoleTables.Builders;
+using BetterConsoles.Tables.Builders;
 using System.Linq;
-using BetterConsole.Core;
-using BetterConsole.Colors.Extensions;
+using BetterConsoles.Core;
+using BetterConsoles.Colors.Extensions;
 
 using Clawfoot.TestUtilities.Performance;
-using BetterConsoleTables.Builders.Interfaces;
+using BetterConsoles.Tables.Builders.Interfaces;
 
-namespace BetterConsoleTables_Example
+namespace BetterConsoles.Tables.Examples
 {
     class Program
     {

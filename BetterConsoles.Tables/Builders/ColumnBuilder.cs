@@ -1,5 +1,5 @@
-﻿using BetterConsoleTables.Builders.Interfaces;
-using BetterConsoleTables.Models;
+﻿using BetterConsoles.Tables.Builders.Interfaces;
+using BetterConsoles.Tables.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +7,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BetterConsoleTables.Builders
+namespace BetterConsoles.Tables.Builders
 {
 
     public class ColumnBuilder : IStandaloneColumnBuilder

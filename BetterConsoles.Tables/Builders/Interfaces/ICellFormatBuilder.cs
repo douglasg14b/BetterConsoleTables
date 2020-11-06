@@ -1,12 +1,12 @@
-﻿using BetterConsole.Colors.Builders;
-using BetterConsoleTables.Models;
+﻿using BetterConsoles.Colors.Builders;
+using BetterConsoles.Tables.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BetterConsoleTables.Builders.Interfaces
+namespace BetterConsoles.Tables.Builders.Interfaces
 {
     /// <summary>
     /// Formatter used to format individual cells

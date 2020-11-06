@@ -20,7 +20,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BetterConsoles.Core\BetterConsole.Core.csproj" />
+    <ProjectReference Include="..\BetterConsoles.Core\BetterConsoles.Core.csproj" />
   </ItemGroup>
 
 </Project>

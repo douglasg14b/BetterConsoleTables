@@ -1,6 +1,6 @@
-﻿using BetterConsole.Colors;
+﻿using BetterConsoles.Colors;
 
-namespace BetterConsoleTables.Models
+namespace BetterConsoles.Tables.Models
 {
     /// <summary>
     /// Defines the formatting for the string contained in a specific table cell, to be printed in the console

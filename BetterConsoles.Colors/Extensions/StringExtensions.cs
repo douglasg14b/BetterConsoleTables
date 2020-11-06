@@ -1,12 +1,12 @@
-﻿using BetterConsole.Colors.Common;
-using BetterConsole.Core;
+﻿using BetterConsoles.Colors.Common;
+using BetterConsoles.Core;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 
-namespace BetterConsole.Colors.Extensions
+namespace BetterConsoles.Colors.Extensions
 {
     public static class StringExtensions
     {

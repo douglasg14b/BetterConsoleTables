@@ -1,12 +1,12 @@
-﻿using BetterConsoleTables.Common;
-using BetterConsoleTables.Models;
+﻿using BetterConsoles.Tables.Common;
+using BetterConsoles.Tables.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BetterConsoleTables.Configuration
+namespace BetterConsoles.Tables.Configuration
 {
     // Unused right now
     internal static class ConfigBuilder

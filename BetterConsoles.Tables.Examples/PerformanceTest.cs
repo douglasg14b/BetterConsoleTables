@@ -1,8 +1,8 @@
-﻿using BetterConsole.Core;
-using BetterConsoleTables;
-using BetterConsoleTables.Builders;
-using BetterConsoleTables.Configuration;
-using BetterConsoleTables.Models;
+﻿using BetterConsoles.Core;
+using BetterConsoles.Tables;
+using BetterConsoles.Tables.Builders;
+using BetterConsoles.Tables.Configuration;
+using BetterConsoles.Tables.Models;
 using Clawfoot.TestUtilities.Performance;
 using System;
 using System.Collections.Generic;
@@ -12,7 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 
-namespace BetterConsoleTablesExample
+namespace BetterConsoles.Tables.Examples
 {
     public static class PerformanceTest
     {

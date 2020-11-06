@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BetterConsoleTables.Models
+namespace BetterConsoles.Tables.Models
 {
     public class TableRow
     {

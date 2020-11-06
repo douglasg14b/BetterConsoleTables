@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BetterConsole.Core
+namespace BetterConsoles.Core
 {
     public enum ColorPlane
     {

@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BetterConsoleTables.Common
+namespace BetterConsoles.Tables.Common
 {
     public interface IBasicBuilder<T> where T : new()
     {

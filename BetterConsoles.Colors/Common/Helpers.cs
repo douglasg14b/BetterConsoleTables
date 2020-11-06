@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
 
-namespace BetterConsole.Colors.Common
+namespace BetterConsoles.Colors.Common
 {
     public static class Helpers
     {

@@ -1,4 +1,4 @@
-﻿using BetterConsoleTables.Models;
+﻿using BetterConsoles.Tables.Models;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -10,7 +10,7 @@ using System.Runtime.Intrinsics.X86;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BetterConsoleTables
+namespace BetterConsoles.Tables
 {
     public static class Extensions
     {

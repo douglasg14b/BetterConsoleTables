@@ -1,8 +1,8 @@
-﻿using BetterConsole.Colors.Extensions;
-using BetterConsoleTables.Builders;
-using BetterConsoleTables.Common;
-using BetterConsoleTables.Configuration;
-using BetterConsoleTables.Models;
+﻿using BetterConsoles.Colors.Extensions;
+using BetterConsoles.Tables.Builders;
+using BetterConsoles.Tables.Common;
+using BetterConsoles.Tables.Configuration;
+using BetterConsoles.Tables.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -11,7 +11,7 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace BetterConsoleTables
+namespace BetterConsoles.Tables
 {
     /*public class Table<TModel> : TableBase<Table, Column, TModel>
      {

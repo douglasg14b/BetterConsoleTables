@@ -1,5 +1,5 @@
-﻿using BetterConsoleTables.Builders;
-using BetterConsoleTables.Configuration;
+﻿using BetterConsoles.Tables.Builders;
+using BetterConsoles.Tables.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BetterConsoleTables.Models
+namespace BetterConsoles.Tables.Models
 {
     public class Column : IColumn
     {

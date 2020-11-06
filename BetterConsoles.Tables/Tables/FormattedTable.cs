@@ -1,12 +1,12 @@
-﻿using BetterConsoleTables.Configuration;
-using BetterConsoleTables.Models;
+﻿using BetterConsoles.Tables.Configuration;
+using BetterConsoles.Tables.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BetterConsoleTables
+namespace BetterConsoles.Tables
 {
     /*public class FormattedTable : TableBase<FormattedTable, TableCell, TableCell>
     {

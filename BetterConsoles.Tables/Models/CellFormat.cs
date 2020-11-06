@@ -1,5 +1,5 @@
-﻿using BetterConsole.Colors;
-using BetterConsole.Core;
+﻿using BetterConsoles.Colors;
+using BetterConsoles.Core;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BetterConsoleTables.Models
+namespace BetterConsoles.Tables.Models
 {
     /// <summary>
     /// The Format configuration that will be applied to a table cell

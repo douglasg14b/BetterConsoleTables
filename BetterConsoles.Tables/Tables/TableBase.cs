@@ -1,4 +1,4 @@
-﻿using BetterConsoleTables.Configuration;
+﻿using BetterConsoles.Tables.Configuration;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using Clawfoot.Extensions;
-using BetterConsoleTables.Models;
+using BetterConsoles.Tables.Models;
 
-namespace BetterConsoleTables
+namespace BetterConsoles.Tables
 {
     // Table class that uses a Type as its rows. Each column is a property on TModel
     /*public abstract class TableBase<TTable, THeader, TModel> : TableBase<TTable, THeader>

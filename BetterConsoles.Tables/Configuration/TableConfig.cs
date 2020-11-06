@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Text;
 
-namespace BetterConsoleTables.Configuration
+namespace BetterConsoles.Tables.Configuration
 {
     public class TableConfig
     {

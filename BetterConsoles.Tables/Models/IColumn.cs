@@ -1,4 +1,4 @@
-﻿namespace BetterConsoleTables.Models
+﻿namespace BetterConsoles.Tables.Models
 {
     public interface IColumn
     {

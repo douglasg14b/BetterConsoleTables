@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BetterConsoleTables.Common
+namespace BetterConsoles.Tables.Common
 {
     internal static class PlatformInfo
     {

@@ -30,7 +30,8 @@
    </ItemGroup>
 
    <ItemGroup>
-     <ProjectReference Include="..\BetterConsole.Colors\BetterConsole.Colors.csproj" />
+     <ProjectReference Include="..\BetterConsoles.Colors\BetterConsoles.Colors.csproj" />
+     <ProjectReference Include="..\BetterConsoles.Core\BetterConsoles.Core.csproj" />
    </ItemGroup>
   
    <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">

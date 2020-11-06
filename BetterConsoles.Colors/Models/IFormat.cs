@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
-using BetterConsole.Core;
+using BetterConsoles.Core;
 
-namespace BetterConsole.Colors
+namespace BetterConsoles.Colors
 {
     /// <summary>
     /// Defines the formatting configuration for a string to be printed in a console
