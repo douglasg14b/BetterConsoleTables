@@ -24,7 +24,7 @@ namespace BetterConsoleTables.Builders
             table = new Table(config);
         }
 
-
+        /// <inheritdoc/>
         public ITableColumnBuilder WithColumn(string columnTitle)
         {
             TableColumnBuilder builder = new TableColumnBuilder(columnTitle, this);
@@ -32,6 +32,7 @@ namespace BetterConsoleTables.Builders
             return builder;
         }
 
+        /// <inheritdoc/>
         public ITableColumnBuilder WithColumn(IColumn column)
         {
             TableColumnBuilder builder = new TableColumnBuilder(column, this);
@@ -39,6 +40,7 @@ namespace BetterConsoleTables.Builders
             return builder;
         }
 
+        /// <inheritdoc/>
         public Table Build()
         {
             while (columns.Any())

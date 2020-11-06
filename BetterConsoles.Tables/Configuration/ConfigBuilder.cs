@@ -8,7 +8,8 @@ using System.Threading.Tasks;
 
 namespace BetterConsoleTables.Configuration
 {
-    public static class ConfigBuilder
+    // Unused right now
+    internal static class ConfigBuilder
     {
         public static IBasicBuilder<CellFormat> CellConfig => new BasicBuilder<CellFormat>();
         public static IBasicBuilder<TableConfig> TableConfig => new BasicBuilder<TableConfig>();

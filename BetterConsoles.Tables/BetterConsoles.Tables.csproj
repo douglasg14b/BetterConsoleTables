@@ -16,7 +16,9 @@
     <PackageLicenseExpression>LGPL-3.0-only</PackageLicenseExpression>
     <RepositoryUrl>https://github.com/douglasg14b/BetterConsoleTables</RepositoryUrl>
     <IncludeSymbols>true</IncludeSymbols>
-    <SymbolPackageFormat>snupkg</SymbolPackageFormat>  
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <AssemblyName>BetterConsole.Tables</AssemblyName>
+    <RootNamespace>BetterConsole.Tables</RootNamespace>  
   </PropertyGroup>
 
    <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.3' ">
@@ -28,7 +30,7 @@
    </ItemGroup>
 
    <ItemGroup>
-     <ProjectReference Include="..\..\BetterConsole.Colors\BetterConsole.Colors.csproj" />
+     <ProjectReference Include="..\BetterConsole.Colors\BetterConsole.Colors.csproj" />
    </ItemGroup>
   
    <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">

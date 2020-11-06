@@ -10,7 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BetterConsoleTables\BetterConsoleTables.csproj" />
+    <ProjectReference Include="..\BetterConsoles.Tables\BetterConsoles.Tables.csproj" />
   </ItemGroup>
 
   <ItemGroup>

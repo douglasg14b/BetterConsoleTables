@@ -95,15 +95,4 @@ namespace BetterConsoleTables
             return output;
         }
     }
-
-    public enum Style
-    {
-        Default = 0,
-        Markdown = 1,
-        Simple = 2,
-        MySql = 3,
-        MySqlSimple = 4,
-        Unicode = 5,
-        UnicodeAlt = 6
-    }
 }
