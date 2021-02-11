@@ -7,9 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BetterConsoles.Tables", "Be
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BetterConsoles.Tables.Examples", "BetterConsoles.Tables.Examples\BetterConsoles.Tables.Examples.csproj", "{38F959D5-7375-40F9-B7AD-92D2C9E8BD61}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetterConsoles.Core", "BetterConsoles.Core\BetterConsoles.Core.csproj", "{F0F4BC7B-AD16-4AA6-98D9-C7F251D93F09}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BetterConsoles.Core", "BetterConsoles.Core\BetterConsoles.Core.csproj", "{F0F4BC7B-AD16-4AA6-98D9-C7F251D93F09}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BetterConsoles.Colors", "BetterConsoles.Colors\BetterConsoles.Colors.csproj", "{8FD22FE0-B387-4D58-8E3F-7FADEFD295BC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetterConsoles.Tests.Performance", "BetterConsoles.Tests.Performance\BetterConsoles.Tests.Performance.csproj", "{BE28ADBD-B5AB-4806-9174-DC5E0989BBEA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{8FD22FE0-B387-4D58-8E3F-7FADEFD295BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8FD22FE0-B387-4D58-8E3F-7FADEFD295BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8FD22FE0-B387-4D58-8E3F-7FADEFD295BC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE28ADBD-B5AB-4806-9174-DC5E0989BBEA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE28ADBD-B5AB-4806-9174-DC5E0989BBEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE28ADBD-B5AB-4806-9174-DC5E0989BBEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE28ADBD-B5AB-4806-9174-DC5E0989BBEA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

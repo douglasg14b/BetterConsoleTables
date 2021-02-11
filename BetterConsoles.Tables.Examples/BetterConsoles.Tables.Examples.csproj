@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="BetterConsoleTables" Version="1.1.2" />
     <PackageReference Include="Clawfoot.TestUtilities" Version="0.0.4" />
   </ItemGroup>
 

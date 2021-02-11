@@ -21,11 +21,22 @@ namespace BetterConsoles.Tables.Examples
     {
         static void Main(string[] args)
         {
+            for(int i = 0; i < 3000; i++)
+            {
+                Table table = new Table("One", "Two", "Three");
+                table.Config = TableConfig.Unicode();
+                table.AddRow("1", "2", "3");
+                table.AddRow("Short", "item", "Here");
+                table.AddRow("Longer items go here", "stuff", "stuff");
+
+                string tableString = table.ToString();
+            }
             //PerformanceTest.Run();
             //ShowAlignedTables();
             //ShowExmapleMultiTable();
-            ShowFormattedTable();
+            //ShowFormattedTable();
             //ShowExampleTables();
+            Console.WriteLine("Complete");
             Console.ReadLine();
         }
 
