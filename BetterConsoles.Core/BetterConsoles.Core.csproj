@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net471;netstandard2.0;netcoreapp2.2;netcoreapp3.0</TargetFrameworks>
+    <TargetFrameworks>net471;netstandard2.0;netcoreapp2.1;netcoreapp3.1;net5.0</TargetFrameworks>
     <Authors>Douglas Gaskell</Authors>
     <Description>Core library for the BetterConsole set of libraries</Description>
     <PackageProjectUrl>https://github.com/douglasg14b/BetterConsoleTables</PackageProjectUrl>

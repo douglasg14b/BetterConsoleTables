@@ -64,7 +64,7 @@ namespace BetterConsoles.Tests.Performance
 
 
         [Benchmark(Baseline = true)]
-        public void TestDefacto()
+        public void OtherConsoleTables()
         {
             var table = new ConsoleTable("One", "Two", "Three");
             table.AddRow("1", "2", "3")
@@ -75,7 +75,7 @@ namespace BetterConsoles.Tests.Performance
         }
 
         [Benchmark]
-        public void TestLegacyTables()
+        public void v1()
         {
             BetterConsoleTables.Table table = new BetterConsoleTables.Table("One", "Two", "Three");
             table.Config = BetterConsoleTables.TableConfiguration.Unicode();
@@ -87,7 +87,7 @@ namespace BetterConsoles.Tests.Performance
         }
 
         [Benchmark]
-        public void TestNewTables()
+        public void v2()
         {
             Table table = new Table("One", "Two", "Three");
             table.Config = TableConfig.Unicode();
@@ -99,7 +99,7 @@ namespace BetterConsoles.Tests.Performance
         }
 
         [Benchmark]
-        public void NewTableFormatted()
+        public void v2_Formatted()
         {
             IColumn[] columns =
             {
@@ -143,7 +143,7 @@ namespace BetterConsoles.Tests.Performance
         }
 
         [Benchmark]
-        public void FormattedReplaceData()
+        public void v2_Formatted_ReplaceData()
         {
             defaultTable.ReplaceRows(new List<object[]>()
                 {

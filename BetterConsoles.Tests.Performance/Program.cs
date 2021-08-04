@@ -11,6 +11,8 @@ namespace BetterConsoles.Tests.Performance
         static void Main(string[] args)
         {
             var summary = BenchmarkRunner.Run<PerformanceComparisons>();
+
+            Console.ReadLine();
         }
 
 
