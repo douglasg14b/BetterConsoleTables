@@ -37,5 +37,11 @@ namespace BetterConsoles.Tables.Builders
             format.Alignment = alignment;
             return (TBuilder)(ICellFormatBuilder<TBuilder>)this;
         }
+
+        public TBuilder WithInnerFormatting()
+        {
+            format.InnerFormatting = true;
+            return (TBuilder)(ICellFormatBuilder<TBuilder>)this;
+        }
     }
 }

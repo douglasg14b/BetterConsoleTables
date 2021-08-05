@@ -104,6 +104,7 @@ namespace BetterConsoles.Tables
             return (TTable)this;
         }
 
+
         /// <summary>
         /// Adds an array of rows to the bottom of the list
         /// </summary>
@@ -173,6 +174,42 @@ namespace BetterConsoles.Tables
             }
 
             return lengths;
+        }
+
+        /// <summary>
+        /// Gets the length 
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        internal protected int GetEscapedStringLength(string value)
+        {
+            bool inEscape = false;
+            int totalLen = 0;
+            for (int i = 0; i < value.Length; i++)
+            {
+                // If we hit escape char, and the 2nd escape char to follow matches, we are in an escape point
+                if (!inEscape && value[i] == BetterConsoles.Core.Ansi.EscChar1)
+                {
+                    if (i + 1 < value.Length && value[i + 1] == BetterConsoles.Core.Ansi.EscChar2)
+                    {
+                        inEscape = true;
+                    }
+                    continue;
+                }
+
+                if (!inEscape)
+                {
+                    totalLen++;
+                }
+
+
+                if (inEscape && value[i] == 'm')
+                {
+                    inEscape = false;
+                }
+            }
+
+            return totalLen;
         }
 
         /// <summary>
@@ -462,6 +499,31 @@ namespace BetterConsoles.Tables
                 else
                 {
                     row[i] = default(TCell);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Resizes a row array to a specific length
+        /// Sets the new elements to default
+        /// </summary>
+        /// <param name="row"></param>
+        /// <param name="newSize"></param>
+        protected virtual void ResizeRow(ref ICell[] row, int newSize)
+        {
+            int length = row.Length;
+            Array.Resize(ref row, newSize);
+            Type cellType = typeof(TCell);
+
+            for (int i = length; i < row.Length; i++)
+            {
+                if (cellType == typeof(string))
+                {
+                    row[i] = new Cell<TCell>((TCell)(object)String.Empty);
+                }
+                else
+                {
+                    row[i] = new Cell<TCell>(default(TCell));
                 }
             }
         }

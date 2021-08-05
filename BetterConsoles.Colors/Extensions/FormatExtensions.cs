@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-#if NETCOREAPP3_0
+#if NETCOREAPP3_0_OR_GREATER || NET5_0_OR_GREATER
 using System.Runtime.Intrinsics.X86;
 #endif
 using System.Text;
@@ -26,7 +26,7 @@ namespace BetterConsoles.Colors.Extensions
         /// </summary>
         public static uint BitCount(this FontStyleExt styles)
         {
-#if NETCOREAPP3_0
+#if NETCOREAPP3_0_OR_GREATER || NET5_0_OR_GREATER
             return Popcnt.PopCount((uint)styles);
 #else
             uint count = 0;

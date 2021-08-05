@@ -9,6 +9,8 @@ namespace BetterConsoles.Core
 {
     public static class Ansi
     {
+        public const char EscChar1 = '\u001b';
+        public const char EscChar2 = '[';
         public const string Esc = "\u001b[";
         public const string End = "m";
         public const string Block = "\u001b[{0}m";

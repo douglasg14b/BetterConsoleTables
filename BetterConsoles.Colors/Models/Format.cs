@@ -32,7 +32,7 @@ namespace BetterConsoles.Colors
 
 
         public bool DefaultColors => DefaultForeground && DefaultBackground;
-        public bool DefaultForeground => ForegroundColor == Constants.DefaultBackgroundColor;
+        public bool DefaultForeground => ForegroundColor == Constants.DefaultForegroundColor;
         public bool DefaultBackground => BackgroundColor == Constants.DefaultBackgroundColor;
 
         public static Format Default()

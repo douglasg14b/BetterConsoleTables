@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BetterConsoles.Tables.Models
 {
-    public class Cell<TValue>
+    public class Cell<TValue> : ICell
     {
         public Cell(TValue value)
             : this(value, new CellFormat()) { }
@@ -19,7 +19,7 @@ namespace BetterConsoles.Tables.Models
         }
 
         public string Value { get; set; }
-        public CellFormat Format { get; set; }
+        public ICellFormat Format { get; set; }
     }
 
     public class TableCell : Cell<string>

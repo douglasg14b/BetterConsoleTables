@@ -12,5 +12,14 @@ namespace BetterConsoles.Tables.Models
         /// Text will only be aligned if there is sufficent room for padding
         /// </summary>
         Alignment Alignment { get; set; }
+
+        bool InnerFormatting { get; set;}
+
+#if NETCOREAPP3_0_OR_GREATER || NET5_0_OR_GREATER
+        public static ICellFormat operator +(ICellFormat a, ICellFormat b)
+        {
+            return CellFormat.Merge(a, b);
+        }
+# endif
     }
 }

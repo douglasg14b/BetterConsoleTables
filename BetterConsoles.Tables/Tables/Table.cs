@@ -120,6 +120,17 @@ namespace BetterConsoles.Tables
             m_formatMatrix.Add(formatRow);
         }
 
+        protected void AddCellFormatsRow(ICell[] cells)
+        {
+            var formatRow = new List<ICellFormat>(cells.Length);
+            for (int i = 0; i < cells.Length; i++)
+            {
+                formatRow.Add(CellFormat.Merge(cells[i].Format, m_headers[i].RowsFormat));
+            }
+
+            m_formatMatrix.Add(formatRow);
+        }
+
         #region Public Method API
 
         public override Table ReplaceRows(IEnumerable<object[]> rows)
@@ -130,6 +141,38 @@ namespace BetterConsoles.Tables
             m_rows.Clear();
 
             return AddRows(rows);
+        }
+
+        /// <summary>
+        /// Adds a row to the bottom of the list with the provided column values & formats
+        /// Expected that the provided values count is <= the number of columns in the table
+        /// </summary>
+        /// <param name="values">The column values.</param>
+        /// <returns>This Table</returns>
+        public Table AddRow(params ICell[] rows)
+        {
+            if (rows is null) throw new ArgumentNullException(nameof(rows), "Cannot add a null row to a table");
+            if (rows.Length == 0) throw new ArgumentException("Cannot add row with a length of 0 to a table", nameof(rows));
+            if (Headers.Count == 0) throw new InvalidOperationException("No columns exist, please add columns before adding rows");
+            if (rows.Length > Headers.Count)
+            {
+                throw new InvalidOperationException(
+                    $"The number columns in the row ({rows.Length}) is greater than the number of columns in the table ({m_headers.Count})");
+            }
+
+            if (rows.Length < Headers.Count)
+            {
+                ResizeRow(ref rows, Headers.Count);
+            }
+
+            m_rows.Add(rows.Select(x => x.Value).ToArray());
+
+            if (m_rows.Count > m_formatMatrix.Count - 1)
+            {
+                AddCellFormatsRow(rows); // Add a new row of formattings
+            }
+
+            return this;
         }
 
         /// <summary>
