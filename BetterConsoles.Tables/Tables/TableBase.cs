@@ -156,6 +156,46 @@ namespace BetterConsoles.Tables
                 for (int j = 0; j < m_rows.Count; j++)
                 {
                     int length = 0;
+                    if (m_formatMatrix[j][i].InnerFormatting)
+                    {
+                        length = GetEscapedStringLength(m_rows[j][i]?.ToString());
+                    }
+                    else
+                    {
+                        if (i < m_rows[j].Length) // i is in range (ie. row has all columns)
+                        {
+                            length = m_rows[j][i]?.ToString()?.Length ?? 0;
+                        }
+                        else
+                        {
+                            throw new IndexOutOfRangeException();
+                        }
+                    }
+
+                    if (length > max)
+                    {
+                        max = length;
+                    }
+                }
+                lengths[i] = max;
+            }
+
+            return lengths;
+        }
+
+        /// <summary>
+        /// Gets the widths of each of the columns of the table
+        /// by iterating through each row and determining the width of the longest value
+        /// </summary>
+        internal protected int[] GetColumnLengths()
+        {
+            int[] lengths = new int[m_headers.Count];
+            for (int i = 0; i < m_headers.Count; i++)
+            {
+                int max = m_headers[i].ToString().Length;
+                for (int j = 0; j < m_rows.Count; j++)
+                {
+                    int length = 0;
                     if (i < m_rows[j].Length) // i is in range (ie. row has all columns)
                     {
                         length = m_rows[j][i]?.ToString()?.Length ?? 0;
@@ -172,17 +212,18 @@ namespace BetterConsoles.Tables
                 }
                 lengths[i] = max;
             }
-
             return lengths;
         }
 
         /// <summary>
-        /// Gets the length 
+        /// Gets the length of a string value, excluding formatting sequences
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
         internal protected int GetEscapedStringLength(string value)
         {
+            if (String.IsNullOrEmpty(value)) return 0;
+
             bool inEscape = false;
             int totalLen = 0;
             for (int i = 0; i < value.Length; i++)
@@ -210,29 +251,6 @@ namespace BetterConsoles.Tables
             }
 
             return totalLen;
-        }
-
-        /// <summary>
-        /// Gets the widths of each of the columns of the table
-        /// by iterating through each row and determining the width of the longest value
-        /// </summary>
-        internal protected int[] GetColumnLengths()
-        {
-            int[] lengths = new int[m_headers.Count];
-            for (int i = 0; i < m_headers.Count; i++)
-            {
-                int max = m_headers[i].ToString().Length;
-                for (int j = 0; j < m_rows.Count; j++)
-                {
-                    int length = m_rows[j][i].ToString().Length;
-                    if (length > max)
-                    {
-                        max = length;
-                    }
-                }
-                lengths[i] = max;
-            }
-            return lengths;
         }
 
         /// <summary>
@@ -321,8 +339,16 @@ namespace BetterConsoles.Tables
         /// <summary>
         /// Pads a string to the max length following the provided alignment
         /// </summary>
-        protected string PadString(string value, int maxLength, Alignment alignment)
+        protected string PadString(string value, int maxLength, Alignment alignment, bool innerFormatting = false)
         {
+            //TODO: PERFORMANCE: I need to only do this once and cache it somewhere, like in an array
+            // Get the real length and add the difference to the max length so the padding is accurate
+            if (innerFormatting)
+            {
+                int realLength = GetEscapedStringLength(value);
+                maxLength = maxLength + (value.Length - realLength);
+            }
+
             if (value.Length == maxLength)
             {
                 return value;

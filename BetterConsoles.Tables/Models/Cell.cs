@@ -7,6 +7,15 @@ using System.Threading.Tasks;
 
 namespace BetterConsoles.Tables.Models
 {
+    public class Cell : Cell<string>
+    {
+        public Cell(string value)
+            : this(value, new CellFormat()) { }
+
+        public Cell(string value, CellFormat format)
+            :base(value, format) { }
+    }
+
     public class Cell<TValue> : ICell
     {
         public Cell(TValue value)

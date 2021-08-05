@@ -423,6 +423,7 @@ namespace BetterConsoles.Tables
             return output;
         }
 
+        // Does the more complex formatting as opposed to FormatDataRow
         private string FormatRow(IList<string> values, IList<ICellFormat> formats, int[] columnLengths, ref char innerDelimiter, ref char outerDelimiter)
         {
             string output = String.Empty;
@@ -431,7 +432,7 @@ namespace BetterConsoles.Tables
             for (int i = 0; i < values.Count; i++)
             {
                 ref char delimiter = ref (i == 0 ? ref outerDelimiter : ref innerDelimiter);
-                string paddedValue = PadString(values[i], columnLengths[i], formats[i]?.Alignment ?? default);
+                string paddedValue = PadString(values[i], columnLengths[i], formats[i]?.Alignment ?? default, formats[i].InnerFormatting);
 
                 rowWidth += 1 + 1 + paddedValue.Length + 1; // delimiter, space, value, space
 
