@@ -17,16 +17,16 @@ namespace BetterConsoles.Tables.Builders.Interfaces
         /// <summary>
         /// Adds formatting to the rows of this column
         /// </summary>
-        TValueFormatBuilder WithRowsFormat();
+        TValueFormatBuilder RowsFormat();
 
         /// <summary>
         /// Adds formatting to the rows of this column
         /// </summary>
-        TValueFormatBuilder WithRowsFormat(CellFormat format);
+        TValueFormatBuilder RowsFormat(CellFormat format);
 
         /// <summary>
         /// Adds text alignment to the rows of this column
         /// </summary>
-        TColumnBuilder WithRowsAlignment(Alignment alignment);
+        TColumnBuilder RowsAlignment(Alignment alignment);
     }
 }

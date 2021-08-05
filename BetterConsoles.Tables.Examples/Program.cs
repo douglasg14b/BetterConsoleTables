@@ -61,48 +61,56 @@ namespace BetterConsoles.Tables.Examples
         private static void ShowPrettyTable()
         {
             Table table = new TableBuilder()
-                .WithColumn("Date")
-                    .WithHeaderFormat()
-                        .WithForegroundColor(Color.FromArgb(152, 114, 159))
-                        .WithAlignment(Alignment.Center)
-                        .WithFontStyle(FontStyleExt.Bold)
-                    .WithRowsFormat()
-                        .WithForegroundColor(Color.FromArgb(128, 129, 126))
-                .WithColumn("Title")
-                    .WithHeaderFormat()
-                        .WithForegroundColor(Color.FromArgb(152, 114, 159))
-                        .WithAlignment(Alignment.Center)
-                        .WithFontStyle(FontStyleExt.Bold)
-                    .WithRowsFormat()
-                        .WithForegroundColor(Color.FromArgb(220, 220, 220))
-                        .WithAlignment(Alignment.Left)
-                .WithColumn("Production Budget")
-                    .WithHeaderFormat()
-                        .WithForegroundColor(Color.FromArgb(152, 114, 159))
-                        .WithAlignment(Alignment.Center)
-                    .WithRowsFormat()
-                        .WithForegroundColor(Color.FromArgb(204, 83, 78))
-                        .WithAlignment(Alignment.Right)
-                .WithColumn("Box Office")
-                    .WithHeaderFormat()
-                        .WithForegroundColor(Color.FromArgb(152, 114, 159))
-                        .WithAlignment(Alignment.Center)
-                    .WithRowsFormat()
-                        .WithForegroundColor(Color.FromArgb(152, 168, 75))
-                        .WithAlignment(Alignment.Right)
+                .AddColumn("Date")
+                    .HeaderFormat()
+                        .ForegroundColor(Color.FromArgb(152, 114, 159))
+                        .Alignment(Alignment.Center)
+                        .FontStyle(FontStyleExt.Bold)
+                    .RowsFormat()
+                        .ForegroundColor(Color.FromArgb(128, 129, 126))
+                .AddColumn("Title")
+                    .HeaderFormat()
+                        .ForegroundColor(Color.FromArgb(152, 114, 159))
+                        .Alignment(Alignment.Center)
+                        .FontStyle(FontStyleExt.Bold)
+                    .RowsFormat()
+                        .ForegroundColor(Color.FromArgb(220, 220, 220))
+                        .Alignment(Alignment.Left)
+                        .HasInnerFormatting()
+                .AddColumn("Production Budget")
+                    .HeaderFormat()
+                        .ForegroundColor(Color.FromArgb(152, 114, 159))
+                        .Alignment(Alignment.Center)
+                    .RowsFormat()
+                        .ForegroundColor(Color.FromArgb(204, 83, 78))
+                        .Alignment(Alignment.Right)
+                .AddColumn("Box Office")
+                    .HeaderFormat()
+                        .ForegroundColor(Color.FromArgb(152, 114, 159))
+                        .Alignment(Alignment.Center)
+                    .RowsFormat()
+                        .ForegroundColor(Color.FromArgb(152, 168, 75))
+                        .Alignment(Alignment.Right)
                 .Build();
+
+            var test = "Solo".WithForegroundColor(Color.FromArgb(204, 83, 78));
+            test += ": A Star Wars Story".WithForegroundColor(Color.FromArgb(220, 220, 220));
 
             table.Config = TableConfig.Unicode();
             table.AddRow("Dec 20, 2019", "Star Wars: The Rise of Skywalker", "$275,000,000", "$375,126,118");
-            table.AddRow("May 25, 2018", "Solo: A Star Wars Story", "$275,000,000", "$393,151,347");
+            table.AddRow("May 25, 2018", test, "$275,000,000", "$393,151,347");
             table.AddRow("Dec 15, 2017", "Star Wars Ep. VIII: The Last Jedi", "$262,000,000", "$1,332,539,889");
-            table.AddRow(new ICell[] 
+            table.AddRow(new ICell[]
             {
-                new CellBuilder("Dec 15, 2017").GetCell(),
-                new CellBuilder("Star Wars Ep. VIII: The Last Jedi").GetCell(),
-                new CellBuilder("$262,000,000").GetCell(),
-                new CellBuilder("$1,332,539,889").WithFontStyle(FontStyleExt.Underline).GetCell(),
+                new Cell("Dec 15, 2017"),
+                new Cell("Star Wars Ep. VIII: The Last Jedi"),
+                new Cell("$262,000,000"),
+                new CellBuilder("$1,332,539,889")
+                    .FontStyle(FontStyleExt.Underline)
+                    .GetCell(),
             });
+
+            var testOutput = table.ToString();
 
             Console.Write(table.ToString());
         }
@@ -156,9 +164,9 @@ namespace BetterConsoles.Tables.Examples
                 //THis throws Exception
                 IColumn[] headers = new[]
                 {
-                    new ColumnBuilder("Colors!").WithHeaderFormat().WithForegroundColor(Color.BlueViolet).GetColumn(),
-                    new ColumnBuilder("Right").WithHeaderFormat().WithAlignment(Alignment.Right).WithForegroundColor(Color.Green).GetColumn(),
-                    new ColumnBuilder("Center!").WithHeaderFormat().WithAlignment(Alignment.Center).WithForegroundColor(Color.Firebrick).GetColumn(),
+                    new ColumnBuilder("Colors!").HeaderFormat().ForegroundColor(Color.BlueViolet).GetColumn(),
+                    new ColumnBuilder("Right").HeaderFormat().Alignment(Alignment.Right).ForegroundColor(Color.Green).GetColumn(),
+                    new ColumnBuilder("Center!").HeaderFormat().Alignment(Alignment.Center).ForegroundColor(Color.Firebrick).GetColumn(),
                 };
 
                 Table table = new Table(headers);
@@ -182,31 +190,31 @@ namespace BetterConsoles.Tables.Examples
             {
 
                 Table table = new TableBuilder()
-                    .WithColumn("Colors!")
-                        .WithHeaderFormat()
-                            .WithForegroundColor(Color.BlueViolet)
-                    .WithColumn("Right")
-                        .WithHeaderFormat()
-                            .WithForegroundColor(Color.Green)
-                            .WithAlignment(Alignment.Right)
-                        .WithRowsFormat()
-                            .WithAlignment(Alignment.Right)
-                            .WithBackgroundColor(Color.ForestGreen)
-                            .WithForegroundColor(Color.DarkGray)
-                    .WithColumn("Center!")
-                        .WithHeaderFormat()
-                            .WithForegroundColor(Color.Firebrick)
-                            .WithAlignment(Alignment.Center)
-                            .WithFontStyle(FontStyleExt.Bold)
-                        .WithRowsFormat()
-                            .WithForegroundColor(Color.DarkOliveGreen)
-                            .WithAlignment(Alignment.Center)
-                            .WithFontStyle(FontStyleExt.Bold)
-                    .WithColumn("Bold & Underlined!!")
-                        .WithHeaderFormat()
-                            .WithForegroundColor(Color.SeaShell)
-                            .WithAlignment(Alignment.Center)
-                            .WithFontStyle(FontStyleExt.Bold | FontStyleExt.Underline)
+                    .AddColumn("Colors!")
+                        .HeaderFormat()
+                            .ForegroundColor(Color.BlueViolet)
+                    .AddColumn("Right")
+                        .HeaderFormat()
+                            .ForegroundColor(Color.Green)
+                            .Alignment(Alignment.Right)
+                        .RowsFormat()
+                            .Alignment(Alignment.Right)
+                            .BackgroundColor(Color.ForestGreen)
+                            .ForegroundColor(Color.DarkGray)
+                    .AddColumn("Center!")
+                        .HeaderFormat()
+                            .ForegroundColor(Color.Firebrick)
+                            .Alignment(Alignment.Center)
+                            .FontStyle(FontStyleExt.Bold)
+                        .RowsFormat()
+                            .ForegroundColor(Color.DarkOliveGreen)
+                            .Alignment(Alignment.Center)
+                            .FontStyle(FontStyleExt.Bold)
+                    .AddColumn("Bold & Underlined!!")
+                        .HeaderFormat()
+                            .ForegroundColor(Color.SeaShell)
+                            .Alignment(Alignment.Center)
+                            .FontStyle(FontStyleExt.Bold | FontStyleExt.Underline)
                     .Build();
 
                 table.Config = TableConfig.MySqlSimple();

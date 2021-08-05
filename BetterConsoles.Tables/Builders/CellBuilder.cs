@@ -45,10 +45,10 @@ namespace BetterConsoles.Tables.Builders
             return _cell;
         }
 
-        public StandaloneCellBuilder<TValue> WithAlignment(Alignment alignment) => _cellFormatBuilder.WithAlignment(alignment);
-        public StandaloneCellBuilder<TValue> WithBackgroundColor(Color color) => _cellFormatBuilder.WithBackgroundColor(color);
-        public StandaloneCellBuilder<TValue> WithFontStyle(FontStyleExt styles) => _cellFormatBuilder.WithFontStyle(styles);
-        public StandaloneCellBuilder<TValue> WithForegroundColor(Color color) => _cellFormatBuilder.WithForegroundColor(color);
-        public StandaloneCellBuilder<TValue> WithInnerFormatting() => _cellFormatBuilder.WithInnerFormatting();
+        public StandaloneCellBuilder<TValue> Alignment(Alignment alignment) => _cellFormatBuilder.Alignment(alignment);
+        public StandaloneCellBuilder<TValue> BackgroundColor(Color color) => _cellFormatBuilder.BackgroundColor(color);
+        public StandaloneCellBuilder<TValue> FontStyle(FontStyleExt styles) => _cellFormatBuilder.FontStyle(styles);
+        public StandaloneCellBuilder<TValue> ForegroundColor(Color color) => _cellFormatBuilder.ForegroundColor(color);
+        public StandaloneCellBuilder<TValue> HasInnerFormatting() => _cellFormatBuilder.HasInnerFormatting();
     }
 }

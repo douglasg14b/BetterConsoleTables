@@ -30,19 +30,19 @@ namespace BetterConsoles.Colors.Builders
             this.format = format;
         }
 
-        public TBuilder WithBackgroundColor(Color color)
+        public TBuilder BackgroundColor(Color color)
         {
             format.BackgroundColor = color;
             return (TBuilder)(IFormatBuilder<TBuilder, TFormat>)this;
         }
 
-        public TBuilder WithForegroundColor(Color color)
+        public TBuilder ForegroundColor(Color color)
         {
             format.ForegroundColor = color;
             return (TBuilder)(IFormatBuilder<TBuilder, TFormat>)this;
         }
 
-        public TBuilder WithFontStyle(FontStyleExt styles)
+        public TBuilder FontStyle(FontStyleExt styles)
         {
             format.FontStyle = styles;
             return (TBuilder)(IFormatBuilder<TBuilder, TFormat>)this;

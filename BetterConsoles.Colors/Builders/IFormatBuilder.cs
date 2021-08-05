@@ -16,8 +16,8 @@ namespace BetterConsoles.Colors.Builders
 
     public interface IFormatBuilder<TParentBuilder, TFormat> where TFormat : IFormat
     {
-        TParentBuilder WithForegroundColor(Color color);
-        TParentBuilder WithBackgroundColor(Color color);
-        TParentBuilder WithFontStyle(FontStyleExt styles);
+        TParentBuilder ForegroundColor(Color color);
+        TParentBuilder BackgroundColor(Color color);
+        TParentBuilder FontStyle(FontStyleExt styles);
     }
 }

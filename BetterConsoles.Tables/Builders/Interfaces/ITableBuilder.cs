@@ -14,14 +14,14 @@ namespace BetterConsoles.Tables.Builders.Interfaces
         /// </summary>
         /// <param name="columnTitle">The title of the column</param>
         /// <returns>The column builder instance</returns>
-        ITableColumnBuilder WithColumn(string columnTitle);
+        ITableColumnBuilder AddColumn(string columnTitle);
 
         /// <summary>
         /// Adds a column to the builder and enables chaining to configure this column
         /// </summary>
         /// <param name="column">The column configuration</param>
         /// <returns>The column builder instance</returns>
-        ITableColumnBuilder WithColumn(IColumn column);
+        ITableColumnBuilder AddColumn(IColumn column);
 
         /// <summary>
         /// Creates the table with the specified configuration

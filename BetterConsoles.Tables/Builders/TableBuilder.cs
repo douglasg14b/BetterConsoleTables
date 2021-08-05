@@ -25,7 +25,7 @@ namespace BetterConsoles.Tables.Builders
         }
 
         /// <inheritdoc/>
-        public ITableColumnBuilder WithColumn(string columnTitle)
+        public ITableColumnBuilder AddColumn(string columnTitle)
         {
             TableColumnBuilder builder = new TableColumnBuilder(columnTitle, this);
             columns.Enqueue(builder);
@@ -33,7 +33,7 @@ namespace BetterConsoles.Tables.Builders
         }
 
         /// <inheritdoc/>
-        public ITableColumnBuilder WithColumn(IColumn column)
+        public ITableColumnBuilder AddColumn(IColumn column)
         {
             TableColumnBuilder builder = new TableColumnBuilder(column, this);
             columns.Enqueue(builder);

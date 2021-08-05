@@ -30,14 +30,14 @@ namespace BetterConsoles.Tables.Builders
             return column;
         }
 
-        public IStandaloneColumnValueFormatBuilder WithRowsFormat() => WithRowsFormat(new CellFormat());
-        public IStandaloneColumnValueFormatBuilder WithRowsFormat(CellFormat format)
+        public IStandaloneColumnValueFormatBuilder RowsFormat() => RowsFormat(new CellFormat());
+        public IStandaloneColumnValueFormatBuilder RowsFormat(CellFormat format)
         {
             column.RowsFormat = format;
             return new StandaloneColumnValueFormatBuilder(format, this);
         }
 
-        public IStandaloneColumnBuilder WithRowsAlignment(Alignment alignment)
+        public IStandaloneColumnBuilder RowsAlignment(Alignment alignment)
         {
             if(column.RowsFormat is null)
             {
@@ -49,14 +49,14 @@ namespace BetterConsoles.Tables.Builders
         }
 
 
-        public IStandaloneColumnValueFormatBuilder WithHeaderFormat() => WithHeaderFormat(new CellFormat());
-        public IStandaloneColumnValueFormatBuilder WithHeaderFormat(CellFormat format)
+        public IStandaloneColumnValueFormatBuilder HeaderFormat() => HeaderFormat(new CellFormat());
+        public IStandaloneColumnValueFormatBuilder HeaderFormat(CellFormat format)
         {
             column.HeaderFormat = format;
             return new StandaloneColumnValueFormatBuilder(format, this);
         }
 
-        public IStandaloneColumnBuilder WithHeaderAlignment(Alignment alignment)
+        public IStandaloneColumnBuilder HeaderAlignment(Alignment alignment)
         {
             if (column.HeaderFormat is null)
             {
@@ -84,14 +84,14 @@ namespace BetterConsoles.Tables.Builders
 
         internal IColumn GetColumn() => column;
 
-        public ITableColumnValueFormatBuilder WithRowsFormat() => WithRowsFormat(new CellFormat());
-        public ITableColumnValueFormatBuilder WithRowsFormat(CellFormat format)
+        public ITableColumnValueFormatBuilder RowsFormat() => RowsFormat(new CellFormat());
+        public ITableColumnValueFormatBuilder RowsFormat(CellFormat format)
         {
             column.RowsFormat = format;
             return new TableColumnValueFormatBuilder(format, this);
         }
 
-        public ITableColumnBuilder WithRowsAlignment(Alignment alignment)
+        public ITableColumnBuilder RowsAlignment(Alignment alignment)
         {
             if (column.RowsFormat is null)
             {
@@ -103,14 +103,14 @@ namespace BetterConsoles.Tables.Builders
         }
 
 
-        public ITableColumnValueFormatBuilder WithHeaderFormat() => WithHeaderFormat(new CellFormat());
-        public ITableColumnValueFormatBuilder WithHeaderFormat(CellFormat format)
+        public ITableColumnValueFormatBuilder HeaderFormat() => HeaderFormat(new CellFormat());
+        public ITableColumnValueFormatBuilder HeaderFormat(CellFormat format)
         {
             column.HeaderFormat = format;
             return new TableColumnValueFormatBuilder(format, this);
         }
 
-        public ITableColumnBuilder WithHeaderAlignment(Alignment alignment)
+        public ITableColumnBuilder HeaderAlignment(Alignment alignment)
         {
             if (column.HeaderFormat is null)
             {
@@ -121,9 +121,9 @@ namespace BetterConsoles.Tables.Builders
             return this;
         }
 
-        public ITableColumnBuilder WithColumn(string columnTitle) => instance.WithColumn(columnTitle);
+        public ITableColumnBuilder AddColumn(string columnTitle) => instance.AddColumn(columnTitle);
 
-        public ITableColumnBuilder WithColumn(IColumn column) => instance.WithColumn(column);
+        public ITableColumnBuilder AddColumn(IColumn column) => instance.AddColumn(column);
 
         public Table Build() => instance.Build();
     }

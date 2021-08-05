@@ -29,8 +29,8 @@ namespace BetterConsoles.Tables.Models
         public static IColumn Simple(string columnTitle, Alignment rowsAlignment = Alignment.Left, Alignment headerAlignment = Alignment.Left)
         {
             return new ColumnBuilder(columnTitle)
-                .WithRowsAlignment(rowsAlignment)
-                .WithHeaderAlignment(headerAlignment)
+                .RowsAlignment(rowsAlignment)
+                .HeaderAlignment(headerAlignment)
                 .GetColumn();
         }
 

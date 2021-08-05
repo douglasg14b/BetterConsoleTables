@@ -28,13 +28,13 @@ namespace BetterConsoles.Tables.Builders
             this.instance = instance;
         }
 
-        public TValueBuilder WithRowsFormat() => instance.WithRowsFormat();
-        public TValueBuilder WithHeaderFormat() => instance.WithHeaderFormat();
-        public TValueBuilder WithRowsFormat(CellFormat format) => instance.WithRowsFormat(format);
-        public TValueBuilder WithHeaderFormat(CellFormat format) => instance.WithHeaderFormat(format);
+        public TValueBuilder RowsFormat() => instance.RowsFormat();
+        public TValueBuilder HeaderFormat() => instance.HeaderFormat();
+        public TValueBuilder RowsFormat(CellFormat format) => instance.RowsFormat(format);
+        public TValueBuilder HeaderFormat(CellFormat format) => instance.HeaderFormat(format);
 
-        public TColumnBuilder WithHeaderAlignment(Alignment alignment) => instance.WithHeaderAlignment(alignment);
-        public TColumnBuilder WithRowsAlignment(Alignment alignment) => instance.WithRowsAlignment(alignment);
+        public TColumnBuilder HeaderAlignment(Alignment alignment) => instance.HeaderAlignment(alignment);
+        public TColumnBuilder RowsAlignment(Alignment alignment) => instance.RowsAlignment(alignment);
     }
 
     /// <summary>
@@ -69,9 +69,9 @@ namespace BetterConsoles.Tables.Builders
             this.instance = instance;
         }
 
-        public ITableColumnBuilder WithColumn(string columnTitle) => instance.WithColumn(columnTitle);
+        public ITableColumnBuilder AddColumn(string columnTitle) => instance.AddColumn(columnTitle);
 
-        public ITableColumnBuilder WithColumn(IColumn column) => instance.WithColumn(column);
+        public ITableColumnBuilder AddColumn(IColumn column) => instance.AddColumn(column);
         public Table Build() => instance.Build();
     }
 }

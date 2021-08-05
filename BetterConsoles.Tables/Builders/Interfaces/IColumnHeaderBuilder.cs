@@ -14,8 +14,8 @@ namespace BetterConsoles.Tables.Builders.Interfaces
     /// <typeparam name="TColumnValueFormatBuilder">The parent column format builder this can return the call chain to</typeparam>
     public interface IColumnHeaderBuilder<TColumnBuilder, TColumnValueFormatBuilder>
     {
-        TColumnValueFormatBuilder WithHeaderFormat();
-        TColumnValueFormatBuilder WithHeaderFormat(CellFormat format);
-        TColumnBuilder WithHeaderAlignment(Alignment alignment);
+        TColumnValueFormatBuilder HeaderFormat();
+        TColumnValueFormatBuilder HeaderFormat(CellFormat format);
+        TColumnBuilder HeaderAlignment(Alignment alignment);
     }
 }

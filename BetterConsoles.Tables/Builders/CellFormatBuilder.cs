@@ -32,13 +32,13 @@ namespace BetterConsoles.Tables.Builders
             this.format = format;
         }
 
-        public TBuilder WithAlignment(Alignment alignment)
+        public TBuilder Alignment(Alignment alignment)
         {
             format.Alignment = alignment;
             return (TBuilder)(ICellFormatBuilder<TBuilder>)this;
         }
 
-        public TBuilder WithInnerFormatting()
+        public TBuilder HasInnerFormatting()
         {
             format.InnerFormatting = true;
             return (TBuilder)(ICellFormatBuilder<TBuilder>)this;
