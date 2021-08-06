@@ -156,7 +156,7 @@ namespace BetterConsoles.Tables
                 for (int j = 0; j < m_rows.Count; j++)
                 {
                     int length = 0;
-                    if (m_formatMatrix[j][i].InnerFormatting)
+                    if (m_formatMatrix[j+1][i].InnerFormatting) // j+1 to skip header format row
                     {
                         length = GetEscapedStringLength(m_rows[j][i]?.ToString());
                     }
@@ -196,13 +196,20 @@ namespace BetterConsoles.Tables
                 for (int j = 0; j < m_rows.Count; j++)
                 {
                     int length = 0;
-                    if (i < m_rows[j].Length) // i is in range (ie. row has all columns)
+                    if (m_formatMatrix[j + 1][i].InnerFormatting) // j+1 to skip header format row
                     {
-                        length = m_rows[j][i]?.ToString()?.Length ?? 0;
+                        length = GetEscapedStringLength(m_rows[j][i]?.ToString());
                     }
                     else
                     {
-                        throw new IndexOutOfRangeException();
+                        if (i < m_rows[j].Length) // i is in range (ie. row has all columns)
+                        {
+                            length = m_rows[j][i]?.ToString()?.Length ?? 0;
+                        }
+                        else
+                        {
+                            throw new IndexOutOfRangeException();
+                        }
                     }
 
                     if (length > max)

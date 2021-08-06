@@ -194,6 +194,18 @@ namespace BetterConsoles.Tables
             return AddRow(stringValues);
         }
 
+        public Table AddRows(IEnumerable<ICell[]> rows)
+        {
+            if (rows is null) throw new ArgumentNullException(nameof(rows), "Cannot add null rows to a table");
+            if (!rows.Any()) throw new ArgumentException("Cannot add an empty collection of rows to a table", nameof(rows));
+
+            foreach (object[] row in rows)
+            {
+                AddRow(row);
+            }
+            return this;
+        }
+
         /// <summary>
         /// Adds an array of rows to the bottom of the list
         /// Converts the provided objects to strings via ToString()

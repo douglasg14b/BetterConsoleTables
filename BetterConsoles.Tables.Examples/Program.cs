@@ -25,6 +25,7 @@ namespace BetterConsoles.Tables.Examples
         static void Main(string[] args)
         {
             ShowPrettyTable();
+            ShowBudgetTable();
 
             //ShowExampleGeneratedTable();
             //ShowAlignedTables();
@@ -60,11 +61,62 @@ namespace BetterConsoles.Tables.Examples
 
         private static void ShowBudgetTable()
         {
+            var transactions = new []
+            {
+                new { date = "09/14/2020", payee = "Costco", category = "Shopping/Supplies", value = -327.19 },
+                new { date = "07/06/2020", payee = "Starbucks", category = "Food/Coffee", value = -5.12 },
+                new { date = "06/25/2020", payee = "Acme Inc", category = "Inflow", value = 2196.36 },
+                new { date = "06/22/2020", payee = "Comcast", category = "Monthly/Internet", value = -97.47 }
+            };
+
+            Color positiveMoney = Color.FromArgb(152, 168, 75);
+            Color negativeMoney = Color.FromArgb(204, 83, 78);
+
             CellFormat headerFormat = new CellFormat()
             {
                 Alignment = Alignment.Center,
                 ForegroundColor = Color.FromArgb(152, 114, 159)
             };
+
+            Table table = new TableBuilder(headerFormat)
+                .AddColumn("Date", rowsFormat: new CellFormat(foregroundColor: Color.FromArgb(128, 129, 126)))
+                .AddColumn("Payee")
+                    .RowsFormat()
+                        .ForegroundColor(Color.FromArgb(100, 160, 179))
+                .AddColumn("Category")
+                    .RowsFormat()
+                        .ForegroundColor(Color.FromArgb(100, 160, 179))
+                .AddColumn("Value")
+                    .RowsFormat()
+                        .Alignment(Alignment.Right)
+                .Build();
+            table.Config = TableConfig.Unicode();
+
+            foreach (var item in transactions)
+            {
+                string valueStr = string.Format("{0:$#.00}", item.value);
+
+                if (item.value >= 0)
+                {
+                    valueStr = valueStr.ForegroundColor(positiveMoney);
+                }
+                else
+                {
+                    valueStr = valueStr.ForegroundColor(negativeMoney);
+                }
+
+                var columns = new ICell[]
+                {
+                    new Cell(item.date),
+                    new Cell(item.payee),
+                    new Cell(item.category),
+                    new Cell(valueStr, new CellFormat() { InnerFormatting = true }),
+                };
+
+                table.AddRow(columns);
+            }
+
+            Console.Write(table.ToString());
         }
 
         private static void ShowPrettyTable()
@@ -92,12 +144,12 @@ namespace BetterConsoles.Tables.Examples
                         .Alignment(Alignment.Right)
                 .Build();
 
-            var test = "Solo".WithForegroundColor(Color.FromArgb(204, 83, 78));
-            test += ": A Star Wars Story".WithForegroundColor(Color.FromArgb(220, 220, 220));
+            var soloFormatted = "Solo".ForegroundColor(Color.FromArgb(204, 83, 78));
+            soloFormatted += ": A Star Wars Story".ForegroundColor(Color.FromArgb(220, 220, 220));
 
             table.Config = TableConfig.Unicode();
             table.AddRow("Dec 20, 2019", "Star Wars: The Rise of Skywalker", "$275,000,000", "$375,126,118")
-                    .AddRow("May 25, 2018", test, "$275,000,000", "$393,151,347")
+                    .AddRow("May 25, 2018", soloFormatted, "$275,000,000", "$393,151,347")
                     .AddRow("Dec 15, 2017", "Star Wars Ep. VIII: The Last Jedi", "$262,000,000", "$1,332,539,889")
                     .AddRow(new Cell[]
                     {

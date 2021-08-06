@@ -63,23 +63,23 @@ namespace BetterConsoles.Colors.Extensions
             return string.Format(Constants.AnsiCrossedOut, value);
         }
 
-        public static string WithColor(this string value, Color color, ColorPlane plane)
+        public static string Color(this string value, Color color, ColorPlane plane)
         {
             string output = string.Format(Constants.FullColorFormat, (int)plane, color.R, color.G, color.B, value);
             return output;
         }
 
-        public static string WithForegroundColor(this string value, Color color)
+        public static string ForegroundColor(this string value, Color color)
         {
-            return value.WithColor(color, ColorPlane.Foreground);
+            return value.Color(color, ColorPlane.Foreground);
         }
 
         public static string WithBackgroundColor(this string value, Color color)
         {
-            return value.WithColor(color, ColorPlane.Background);
+            return value.Color(color, ColorPlane.Background);
         }
 
-        public static string WithForegroundGradient(this string value, Color start, Color end)
+        public static string ForegroundGradient(this string value, Color start, Color end)
         {
             int whiteSpaceCount = 0;
             for (int i = 0; i < value.Length; i++)
