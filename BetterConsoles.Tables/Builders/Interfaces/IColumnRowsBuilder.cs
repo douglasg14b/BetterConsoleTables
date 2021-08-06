@@ -14,6 +14,8 @@ namespace BetterConsoles.Tables.Builders.Interfaces
     /// <typeparam name="TColumnBuilder">The parent column builder this can return the call chain to</typeparam>
     public interface IColumnRowsBuilder<TColumnBuilder, TValueFormatBuilder>
     {
+        TColumnBuilder RowFormatter(Func<object, string> formatter);
+
         /// <summary>
         /// Adds formatting to the rows of this column
         /// </summary>
@@ -22,7 +24,7 @@ namespace BetterConsoles.Tables.Builders.Interfaces
         /// <summary>
         /// Adds formatting to the rows of this column
         /// </summary>
-        TValueFormatBuilder RowsFormat(CellFormat format);
+        TValueFormatBuilder RowsFormat(ICellFormat format);
 
         /// <summary>
         /// Adds text alignment to the rows of this column

@@ -105,6 +105,7 @@ namespace BetterConsoles.Tables.Examples
                     .RowsFormat()
                         .ForegroundColor(Color.FromArgb(100, 160, 179))
                 .AddColumn("Value")
+                    .RowFormatter((x) => FormatMoney((double)x))
                     .RowsFormat()
                         .Alignment(Alignment.Right)
                 .Build();
@@ -112,15 +113,17 @@ namespace BetterConsoles.Tables.Examples
 
             foreach (var item in transactions)
             {
-                var columns = new ICell[]
-                {
-                    new Cell(item.date),
-                    new Cell(item.payee),
-                    new Cell(item.category),
-                    new Cell<double>(item.value, (x) => FormatMoney(x)),
-                };
+                //var columns = new ICell[]
+                //{
+                //    new Cell(item.date),
+                //    new Cell(item.payee),
+                //    new Cell(item.category),
+                //    new Cell<double>(item.value, (x) => FormatMoney(x)),
+                //};
 
-                table.AddRow(columns);
+                //table.AddRow(columns);
+
+                table.AddRow(item.date, item.payee, item.category, item.value);              
             }
 
             Console.Write(table.ToString());

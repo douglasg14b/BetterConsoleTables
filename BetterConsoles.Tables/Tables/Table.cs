@@ -189,7 +189,14 @@ namespace BetterConsoles.Tables
             string[] stringValues = new string[rowValues.Length];
             for (int i = 0; i < rowValues.Length; i++)
             {
-                stringValues[i] = rowValues[i].ToString();
+                if(m_headers[i].RowFormatter != null)
+                {
+                    stringValues[i] = m_headers[i].RowFormatter(rowValues[i]);
+                }
+                else
+                {
+                    stringValues[i] = rowValues[i].ToString();
+                }            
             }
             return AddRow(stringValues);
         }

@@ -41,6 +41,8 @@ namespace BetterConsoles.Tables.Models
         public ICellFormat HeaderFormat { get; set; }
         public ICellFormat RowsFormat { get; set; }
 
+        public Func<object, string> RowFormatter { get; set; }
+
         public Alignment HeaderAlignment => HeaderFormat?.Alignment ?? default;
         public Alignment RowsAlignment => RowsFormat?.Alignment ?? default;
 

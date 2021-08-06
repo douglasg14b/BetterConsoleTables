@@ -30,8 +30,8 @@ namespace BetterConsoles.Tables.Builders
             return column;
         }
 
-        public IStandaloneColumnValueFormatBuilder RowsFormat() => RowsFormat(new CellFormat());
-        public IStandaloneColumnValueFormatBuilder RowsFormat(CellFormat format)
+        public IStandaloneColumnValueFormatBuilder RowsFormat() => RowsFormat(CellFormat.Merge(column.RowsFormat, CellFormat.Default()));
+        public IStandaloneColumnValueFormatBuilder RowsFormat(ICellFormat format)
         {
             column.RowsFormat = format;
             return new StandaloneColumnValueFormatBuilder(format, this);
@@ -49,8 +49,8 @@ namespace BetterConsoles.Tables.Builders
         }
 
 
-        public IStandaloneColumnValueFormatBuilder HeaderFormat() => HeaderFormat(new CellFormat());
-        public IStandaloneColumnValueFormatBuilder HeaderFormat(CellFormat format)
+        public IStandaloneColumnValueFormatBuilder HeaderFormat() => RowsFormat(CellFormat.Merge(column.RowsFormat, CellFormat.Default()));
+        public IStandaloneColumnValueFormatBuilder HeaderFormat(ICellFormat format)
         {
             column.HeaderFormat = format;
             return new StandaloneColumnValueFormatBuilder(format, this);
@@ -64,6 +64,13 @@ namespace BetterConsoles.Tables.Builders
             }
             column.HeaderFormat.Alignment = alignment;
 
+            return this;
+        }
+
+        public IStandaloneColumnBuilder RowFormatter(Func<object, string> formatter)
+        {
+            column.RowFormatter = formatter;
+            column.RowsFormat.InnerFormatting = true;
             return this;
         }
     }
@@ -84,8 +91,8 @@ namespace BetterConsoles.Tables.Builders
 
         internal IColumn GetColumn() => column;
 
-        public ITableColumnValueFormatBuilder RowsFormat() => RowsFormat(new CellFormat());
-        public ITableColumnValueFormatBuilder RowsFormat(CellFormat format)
+        public ITableColumnValueFormatBuilder RowsFormat() => RowsFormat(CellFormat.Merge(column.RowsFormat, CellFormat.Default()));
+        public ITableColumnValueFormatBuilder RowsFormat(ICellFormat format)
         {
             column.RowsFormat = format;
             return new TableColumnValueFormatBuilder(format, this);
@@ -103,8 +110,8 @@ namespace BetterConsoles.Tables.Builders
         }
 
 
-        public ITableColumnValueFormatBuilder HeaderFormat() => HeaderFormat(new CellFormat());
-        public ITableColumnValueFormatBuilder HeaderFormat(CellFormat format)
+        public ITableColumnValueFormatBuilder HeaderFormat() => RowsFormat(CellFormat.Merge(column.RowsFormat, CellFormat.Default()));
+        public ITableColumnValueFormatBuilder HeaderFormat(ICellFormat format)
         {
             column.HeaderFormat = format;
             return new TableColumnValueFormatBuilder(format, this);
@@ -118,6 +125,13 @@ namespace BetterConsoles.Tables.Builders
             }
             column.HeaderFormat.Alignment = alignment;
 
+            return this;
+        }
+
+        public ITableColumnBuilder RowFormatter(Func<object, string> formatter)
+        {
+            column.RowFormatter = formatter;
+            column.RowsFormat.InnerFormatting = true;
             return this;
         }
 

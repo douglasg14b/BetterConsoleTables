@@ -15,7 +15,7 @@ namespace BetterConsoles.Tables.Builders.Interfaces
     public interface IColumnHeaderBuilder<TColumnBuilder, TColumnValueFormatBuilder>
     {
         TColumnValueFormatBuilder HeaderFormat();
-        TColumnValueFormatBuilder HeaderFormat(CellFormat format);
+        TColumnValueFormatBuilder HeaderFormat(ICellFormat format);
         TColumnBuilder HeaderAlignment(Alignment alignment);
     }
 }

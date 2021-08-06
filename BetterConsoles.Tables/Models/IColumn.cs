@@ -1,4 +1,6 @@
-﻿namespace BetterConsoles.Tables.Models
+﻿using System;
+
+namespace BetterConsoles.Tables.Models
 {
     public interface IColumn
     {
@@ -7,6 +9,8 @@
         
         ICellFormat HeaderFormat { get; set; }     
         ICellFormat RowsFormat { get; set; }
+
+        Func<object, string> RowFormatter { get; set; }
 
         /// <summary>
         /// Computed from the <see cref="HeaderFormat"/>

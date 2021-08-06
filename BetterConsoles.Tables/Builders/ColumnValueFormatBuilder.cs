@@ -22,16 +22,18 @@ namespace BetterConsoles.Tables.Builders
         where TColumnBuilder : IGenericColumnBuilder<TColumnBuilder, TValueBuilder>
     {
         private TColumnBuilder instance;
-        internal ColumnValueFormatBuilder(CellFormat format, TColumnBuilder instance)
+        internal ColumnValueFormatBuilder(ICellFormat format, TColumnBuilder instance)
             : base(format)
         {
             this.instance = instance;
         }
 
+        public TColumnBuilder RowFormatter(Func<object, string> formatter) => instance.RowFormatter(formatter);
+
         public TValueBuilder RowsFormat() => instance.RowsFormat();
         public TValueBuilder HeaderFormat() => instance.HeaderFormat();
-        public TValueBuilder RowsFormat(CellFormat format) => instance.RowsFormat(format);
-        public TValueBuilder HeaderFormat(CellFormat format) => instance.HeaderFormat(format);
+        public TValueBuilder RowsFormat(ICellFormat format) => instance.RowsFormat(format);
+        public TValueBuilder HeaderFormat(ICellFormat format) => instance.HeaderFormat(format);
 
         public TColumnBuilder HeaderAlignment(Alignment alignment) => instance.HeaderAlignment(alignment);
         public TColumnBuilder RowsAlignment(Alignment alignment) => instance.RowsAlignment(alignment);
@@ -46,7 +48,7 @@ namespace BetterConsoles.Tables.Builders
         IStandaloneColumnValueFormatBuilder
     {
         private IStandaloneColumnBuilder instance;
-        internal StandaloneColumnValueFormatBuilder(CellFormat format, IStandaloneColumnBuilder instance)
+        internal StandaloneColumnValueFormatBuilder(ICellFormat format, IStandaloneColumnBuilder instance)
             : base(format, instance)
         {
             this.instance = instance;
@@ -63,7 +65,7 @@ namespace BetterConsoles.Tables.Builders
         ITableColumnValueFormatBuilder
     {
         private ITableColumnBuilder instance;
-        internal TableColumnValueFormatBuilder(CellFormat format, ITableColumnBuilder instance)
+        internal TableColumnValueFormatBuilder(ICellFormat format, ITableColumnBuilder instance)
             : base(format, instance)
         {
             this.instance = instance;
