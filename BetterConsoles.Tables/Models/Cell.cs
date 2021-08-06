@@ -27,8 +27,24 @@ namespace BetterConsoles.Tables.Models
             Format = format;
         }
 
+        public Cell(TValue value, CellFormat format, Func<TValue, string> formatCallback)
+        {
+            Value = formatCallback(value);
+            FormatCallback = formatCallback;
+            Format = format;
+        }
+
+        public Cell(TValue value, Func<TValue, string> formatCallback)
+        {
+            Value = formatCallback(value);
+            FormatCallback = formatCallback;
+            Format = new CellFormat() { InnerFormatting = true };
+        }
+
         public string Value { get; set; }
-        public ICellFormat Format { get; set; }
+        public ICellFormat Format { get; set; } = new CellFormat();
+
+        public Func<TValue, string> FormatCallback { get; set; }
     }
 
     public class TableCell : Cell<string>

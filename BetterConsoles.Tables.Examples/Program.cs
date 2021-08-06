@@ -71,12 +71,30 @@ namespace BetterConsoles.Tables.Examples
 
             Color positiveMoney = Color.FromArgb(152, 168, 75);
             Color negativeMoney = Color.FromArgb(204, 83, 78);
+            string FormatMoney(double money)
+            {
+                string valueStr = string.Format("{0:$#.00}", money);
+
+                if (money >= 0)
+                {
+                    valueStr = valueStr.ForegroundColor(positiveMoney);
+                }
+                else
+                {
+                    valueStr = valueStr.ForegroundColor(negativeMoney);
+                }
+
+                return valueStr;
+            }
+
 
             CellFormat headerFormat = new CellFormat()
             {
                 Alignment = Alignment.Center,
                 ForegroundColor = Color.FromArgb(152, 114, 159)
             };
+
+
 
             Table table = new TableBuilder(headerFormat)
                 .AddColumn("Date", rowsFormat: new CellFormat(foregroundColor: Color.FromArgb(128, 129, 126)))
@@ -94,23 +112,12 @@ namespace BetterConsoles.Tables.Examples
 
             foreach (var item in transactions)
             {
-                string valueStr = string.Format("{0:$#.00}", item.value);
-
-                if (item.value >= 0)
-                {
-                    valueStr = valueStr.ForegroundColor(positiveMoney);
-                }
-                else
-                {
-                    valueStr = valueStr.ForegroundColor(negativeMoney);
-                }
-
                 var columns = new ICell[]
                 {
                     new Cell(item.date),
                     new Cell(item.payee),
                     new Cell(item.category),
-                    new Cell(valueStr, new CellFormat() { InnerFormatting = true }),
+                    new Cell<double>(item.value, (x) => FormatMoney(x)),
                 };
 
                 table.AddRow(columns);
