@@ -4,11 +4,20 @@
     {
         string Title { get; }
 
-        Alignment HeaderAlignment { get; }
-        ICellFormat HeaderFormat { get; set; }
-        Alignment RowsAlignment { get; }
-        ICellFormat RowsFormat { get; set; }
         
+        ICellFormat HeaderFormat { get; set; }     
+        ICellFormat RowsFormat { get; set; }
+
+        /// <summary>
+        /// Computed from the <see cref="HeaderFormat"/>
+        /// </summary>
+        Alignment HeaderAlignment { get; }
+
+        /// <summary>
+        /// Computed from the <see cref="RowsFormat"/>
+        /// </summary>
+        Alignment RowsAlignment { get; }
+
         string ToString();
     }
 }

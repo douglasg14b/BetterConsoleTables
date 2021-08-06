@@ -58,36 +58,35 @@ namespace BetterConsoles.Tables.Examples
             Console.WriteLine(total / iterations);
         }
 
+        private static void ShowBudgetTable()
+        {
+            CellFormat headerFormat = new CellFormat()
+            {
+                Alignment = Alignment.Center,
+                ForegroundColor = Color.FromArgb(152, 114, 159)
+            };
+        }
+
         private static void ShowPrettyTable()
         {
-            Table table = new TableBuilder()
-                .AddColumn("Date")
-                    .HeaderFormat()
-                        .ForegroundColor(Color.FromArgb(152, 114, 159))
-                        .Alignment(Alignment.Center)
-                        .FontStyle(FontStyleExt.Bold)
-                    .RowsFormat()
-                        .ForegroundColor(Color.FromArgb(128, 129, 126))
+            CellFormat headerFormat = new CellFormat()
+            {
+                Alignment = Alignment.Center,
+                ForegroundColor = Color.FromArgb(152, 114, 159)
+            };
+
+            Table table = new TableBuilder(headerFormat)
+                .AddColumn("Date", rowsFormat: new CellFormat(foregroundColor: Color.FromArgb(128, 129, 126)))
                 .AddColumn("Title")
-                    .HeaderFormat()
-                        .ForegroundColor(Color.FromArgb(152, 114, 159))
-                        .Alignment(Alignment.Center)
-                        .FontStyle(FontStyleExt.Bold)
                     .RowsFormat()
                         .ForegroundColor(Color.FromArgb(220, 220, 220))
                         .Alignment(Alignment.Left)
                         .HasInnerFormatting()
                 .AddColumn("Production Budget")
-                    .HeaderFormat()
-                        .ForegroundColor(Color.FromArgb(152, 114, 159))
-                        .Alignment(Alignment.Center)
                     .RowsFormat()
                         .ForegroundColor(Color.FromArgb(204, 83, 78))
                         .Alignment(Alignment.Right)
                 .AddColumn("Box Office")
-                    .HeaderFormat()
-                        .ForegroundColor(Color.FromArgb(152, 114, 159))
-                        .Alignment(Alignment.Center)
                     .RowsFormat()
                         .ForegroundColor(Color.FromArgb(152, 168, 75))
                         .Alignment(Alignment.Right)
@@ -97,20 +96,17 @@ namespace BetterConsoles.Tables.Examples
             test += ": A Star Wars Story".WithForegroundColor(Color.FromArgb(220, 220, 220));
 
             table.Config = TableConfig.Unicode();
-            table.AddRow("Dec 20, 2019", "Star Wars: The Rise of Skywalker", "$275,000,000", "$375,126,118");
-            table.AddRow("May 25, 2018", test, "$275,000,000", "$393,151,347");
-            table.AddRow("Dec 15, 2017", "Star Wars Ep. VIII: The Last Jedi", "$262,000,000", "$1,332,539,889");
-            table.AddRow(new ICell[]
-            {
-                new Cell("Dec 15, 2017"),
-                new Cell("Star Wars Ep. VIII: The Last Jedi"),
-                new Cell("$262,000,000"),
-                new CellBuilder("$1,332,539,889")
-                    .FontStyle(FontStyleExt.Underline)
-                    .GetCell(),
-            });
+            table.AddRow("Dec 20, 2019", "Star Wars: The Rise of Skywalker", "$275,000,000", "$375,126,118")
+                    .AddRow("May 25, 2018", test, "$275,000,000", "$393,151,347")
+                    .AddRow("Dec 15, 2017", "Star Wars Ep. VIII: The Last Jedi", "$262,000,000", "$1,332,539,889")
+                    .AddRow(new Cell[]
+                    {
+                        new Cell("Dec 15, 2017"),
+                        new Cell("Star Wars Ep. VIII: The Last Jedi"),
+                        new Cell("$262,000,000"),
+                        new Cell("$1,332,539,889", new CellFormat() { FontStyle = FontStyleExt.Underline }),
+                    });
 
-            var testOutput = table.ToString();
 
             Console.Write(table.ToString());
         }

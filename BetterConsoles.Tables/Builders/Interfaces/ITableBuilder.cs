@@ -14,7 +14,7 @@ namespace BetterConsoles.Tables.Builders.Interfaces
         /// </summary>
         /// <param name="columnTitle">The title of the column</param>
         /// <returns>The column builder instance</returns>
-        ITableColumnBuilder AddColumn(string columnTitle);
+        ITableColumnBuilder AddColumn(string columnTitle, ICellFormat headerFormat = null, ICellFormat rowsFormat = null);
 
         /// <summary>
         /// Adds a column to the builder and enables chaining to configure this column

@@ -17,18 +17,18 @@ namespace BetterConsoles.Tables.Models
     {
         public CellFormat() { }
 
-        public CellFormat(Alignment alignment = Constants.DefaultAlignment,
+        public CellFormat(Alignment alignment = default,
             Color foregroundColor = default,
             Color backgroundColor = default,
             FontStyleExt fontStyle = FontStyleExt.None,
             bool innerFormatting = false)
-            : base(foregroundColor, backgroundColor, fontStyle)
+            :base(foregroundColor, backgroundColor, fontStyle)
         {
             Alignment = alignment;
             InnerFormatting = innerFormatting;
         }
 
-        public Alignment Alignment { get; set; } = Constants.DefaultAlignment;
+        public Alignment Alignment { get; set; }
 
         /// <summary>
         /// If the string for this cell has console formatting already baked into it

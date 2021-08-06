@@ -21,19 +21,19 @@ namespace BetterConsoles.Colors
             Color backgroundColor = default,
             FontStyleExt fontStyle = FontStyleExt.None)
         {
-            ForegroundColor = foregroundColor == default ? Constants.DefaultForegroundColor : foregroundColor;
-            BackgroundColor = backgroundColor == default ? Constants.DefaultForegroundColor : backgroundColor;
+            ForegroundColor = foregroundColor;
+            BackgroundColor = backgroundColor;
             FontStyle = fontStyle;
         }
 
-        public Color ForegroundColor { get; set; } = Constants.DefaultForegroundColor;
-        public Color BackgroundColor { get; set; } = Constants.DefaultBackgroundColor;
-        public FontStyleExt FontStyle { get; set; } = FontStyleExt.None;
+        public Color ForegroundColor { get; set; }
+        public Color BackgroundColor { get; set; }
+        public FontStyleExt FontStyle { get; set; }
 
 
         public bool DefaultColors => DefaultForeground && DefaultBackground;
-        public bool DefaultForeground => ForegroundColor == Constants.DefaultForegroundColor;
-        public bool DefaultBackground => BackgroundColor == Constants.DefaultBackgroundColor;
+        public bool DefaultForeground => ForegroundColor == default;
+        public bool DefaultBackground => BackgroundColor == default;
 
         public static Format Default()
         {

@@ -69,7 +69,7 @@ namespace BetterConsoles.Tables.Builders
             this.instance = instance;
         }
 
-        public ITableColumnBuilder AddColumn(string columnTitle) => instance.AddColumn(columnTitle);
+        public ITableColumnBuilder AddColumn(string columnTitle, ICellFormat headerFormat = null, ICellFormat rowsFormat = null) => instance.AddColumn(columnTitle, headerFormat, rowsFormat);
 
         public ITableColumnBuilder AddColumn(IColumn column) => instance.AddColumn(column);
         public Table Build() => instance.Build();

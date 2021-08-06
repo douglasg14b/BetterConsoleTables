@@ -11,6 +11,7 @@ namespace BetterConsoles.Tables.Builders
 {
     public class TableBuilder : ITableBuilder
     {
+        ICellFormat _defaultHeaderFormat = null;
         Queue<TableColumnBuilder> columns = new Queue<TableColumnBuilder>();
         Table table;
 
@@ -19,15 +20,31 @@ namespace BetterConsoles.Tables.Builders
             table = new Table();
         }
 
+        /// <summary>
+        /// </summary>
+        /// <param name="headersFormat">Will set the defualt header format for all rows</param>
+        public TableBuilder(ICellFormat headersFormat)
+        {
+            table = new Table();
+            _defaultHeaderFormat = headersFormat;
+        }
+
         public TableBuilder(TableConfig config)
         {
             table = new Table(config);
         }
 
         /// <inheritdoc/>
-        public ITableColumnBuilder AddColumn(string columnTitle)
+        public ITableColumnBuilder AddColumn(string columnTitle, ICellFormat headerFormat = null, ICellFormat rowsFormat = null)
         {
-            TableColumnBuilder builder = new TableColumnBuilder(columnTitle, this);
+            if(headerFormat is null && _defaultHeaderFormat != null)
+            {
+                headerFormat = _defaultHeaderFormat;
+            }
+
+            IColumn column = new Column(columnTitle, headerFormat, rowsFormat);
+
+            TableColumnBuilder builder = new TableColumnBuilder(column, this);
             columns.Enqueue(builder);
             return builder;
         }
