@@ -28,7 +28,7 @@ namespace BetterConsoles.Tables.Builders
             this.instance = instance;
         }
 
-        public TColumnBuilder RowFormatter(Func<object, string> formatter) => instance.RowFormatter(formatter);
+        public TColumnBuilder RowFormatter<TInput>(Func<TInput, string> formatter) => instance.RowFormatter(formatter);
 
         public TValueBuilder RowsFormat() => instance.RowsFormat();
         public TValueBuilder HeaderFormat() => instance.HeaderFormat();

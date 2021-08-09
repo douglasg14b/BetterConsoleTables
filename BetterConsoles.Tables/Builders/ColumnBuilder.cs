@@ -67,9 +67,9 @@ namespace BetterConsoles.Tables.Builders
             return this;
         }
 
-        public IStandaloneColumnBuilder RowFormatter(Func<object, string> formatter)
+        public IStandaloneColumnBuilder RowFormatter<TInput>(Func<TInput, string> formatter)
         {
-            column.RowFormatter = formatter;
+            column.RowFormatter = (p) => formatter((TInput)p);
             column.RowsFormat.InnerFormatting = true;
             return this;
         }
@@ -128,9 +128,9 @@ namespace BetterConsoles.Tables.Builders
             return this;
         }
 
-        public ITableColumnBuilder RowFormatter(Func<object, string> formatter)
+        public ITableColumnBuilder RowFormatter<TInput>(Func<TInput, string> formatter)
         {
-            column.RowFormatter = formatter;
+            column.RowFormatter = (p) => formatter((TInput)p);
             column.RowsFormat.InnerFormatting = true;
             return this;
         }

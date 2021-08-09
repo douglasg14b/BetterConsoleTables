@@ -5,7 +5,6 @@ namespace BetterConsoles.Tables.Models
     public interface IColumn
     {
         string Title { get; }
-
         
         ICellFormat HeaderFormat { get; set; }     
         ICellFormat RowsFormat { get; set; }

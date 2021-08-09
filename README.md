@@ -45,6 +45,7 @@ As you can see from the tests below, Version 2 takes ~1.1x as long as the defact
 
 * Every table cell can have it's own formatting
    * Current API is inelegant, better API being developed `[Coming Soon]`
+* Formatting Callbacks/Custom Formatters
 * Configuration Flexibility
    * Fluent API
    * Config classes

@@ -24,6 +24,7 @@ namespace BetterConsoles.Tables.Examples
     {
         static void Main(string[] args)
         {
+            // Examples.ValueFormatters();
             ShowPrettyTable();
             ShowBudgetTable();
 
@@ -69,8 +70,8 @@ namespace BetterConsoles.Tables.Examples
                 new { date = "06/22/2020", payee = "Comcast", category = "Monthly/Internet", value = -97.47 }
             };
 
-            Color positiveMoney = Color.FromArgb(152, 168, 75);
-            Color negativeMoney = Color.FromArgb(204, 83, 78);
+            Color positiveMoney = ExampleConstants.SoftGreen;
+            Color negativeMoney = Color.IndianRed;
             string FormatMoney(double money)
             {
                 string valueStr = string.Format("{0:$#.00}", money);
@@ -91,10 +92,10 @@ namespace BetterConsoles.Tables.Examples
             CellFormat headerFormat = new CellFormat()
             {
                 Alignment = Alignment.Center,
-                ForegroundColor = Color.FromArgb(152, 114, 159)
+                ForegroundColor = Color.Magenta
             };
 
-
+            Table table1 = new Table();
 
             Table table = new TableBuilder(headerFormat)
                 .AddColumn("Date", rowsFormat: new CellFormat(foregroundColor: Color.FromArgb(128, 129, 126)))
@@ -105,7 +106,7 @@ namespace BetterConsoles.Tables.Examples
                     .RowsFormat()
                         .ForegroundColor(Color.FromArgb(100, 160, 179))
                 .AddColumn("Value")
-                    .RowFormatter((x) => FormatMoney((double)x))
+                    .RowFormatter<double>((x) => FormatMoney(x))
                     .RowsFormat()
                         .Alignment(Alignment.Right)
                 .Build();
