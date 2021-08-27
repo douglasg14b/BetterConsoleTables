@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BetterConsoleTables" Version="1.1.2" />
+    <PackageReference Include="Clawfoot.TestUtilities" Version="0.0.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BetterConsoles.Tables\BetterConsoles.Tables.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Clawfoot.TestUtilities">
+      <HintPath>..\..\..\..\Clawfoot Software\Clawfoot.TestUtilities\bin\Release\netcoreapp2.0\Clawfoot.TestUtilities.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,51 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net471;netstandard2.0;netcoreapp2.1;netcoreapp3.1;net5.0</TargetFrameworks>   
+    <Authors>Douglas Gaskell</Authors>
+    <Description>Better tables for your console application</Description>
+    <PackageProjectUrl>https://github.com/douglasg14b/BetterConsoleTables</PackageProjectUrl>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <PackageReleaseNotes></PackageReleaseNotes>
+    <Copyright>Copyright 2020 (c) Douglas Gaskell. All rights reserved.</Copyright>
+    <PackageTags>console table tables</PackageTags>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>2.0.2-rc1</Version>
+    <PackageVersion>2.0.2-rc1</PackageVersion>
+    <Product>Better Console Tables</Product>
+    <PackageLicenseExpression>LGPL-3.0-only</PackageLicenseExpression>
+    <RepositoryUrl>https://github.com/douglasg14b/BetterConsoleTables</RepositoryUrl>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <PackageId>BetterConsoleTables</PackageId>
+    <AssemblyName>BetterConsole.Tables</AssemblyName>
+    <RootNamespace>BetterConsole.Tables</RootNamespace>  
+  </PropertyGroup>
+
+   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.3' ">
+      <PackageReference Include="System.Reflection.TypeExtensions" Version="4.3.0" />
+   </ItemGroup>
+
+   <ItemGroup>
+     <PackageReference Include="Clawfoot.Extensions" Version="0.6.0" />
+   </ItemGroup>
+
+   <ItemGroup>
+     <ProjectReference Include="..\BetterConsoles.Colors\BetterConsoles.Colors.csproj" />
+     <ProjectReference Include="..\BetterConsoles.Core\BetterConsoles.Core.csproj" />
+   </ItemGroup>
+  
+   <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
+      <DefineConstants>$(DefineConstants);STANDARD;STANDARD20</DefineConstants>
+   </PropertyGroup>
+   <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.3' ">
+      <DefineConstants>$(DefineConstants);STANDARD;STANDARD13</DefineConstants>
+   </PropertyGroup>
+
+  <ItemGroup>
+    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
+      <_Parameter1>BetterConsoles.Tables.Examples</_Parameter1>
+    </AssemblyAttribute>
+  </ItemGroup>
+
+</Project>
