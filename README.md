@@ -26,7 +26,7 @@ To make something better than the defacto [console tables library](https://githu
 
 ## How do I use it?
 
-1. Get it from nuget `Install-Package BetterConsoleTables -Version 1.1.0`
+1. Get it from nuget `Install-Package BetterConsoleTables -Version 1.1.2`
 2. Include it `using BetterConsoleTables;`
 3. See code examples or example directory
 
@@ -147,12 +147,11 @@ static void Main(String[] args)
         new ColumnHeader("Left Header", Alignment.Right),
         new ColumnHeader("Right Header", Alignment.Center, Alignment.Right),
     };
-    Table table = new Table(headers);
-    
-    table.Config = TableConfiguration.MySqlSimple();
-    table.AddRow("1", "2", "3");
-    table.AddRow("Short", "item", "Here");
-    table.AddRow("Longer items go here", "Right Contents", "Centered Contents");
+    Table table = new Table(headers)
+        .AddRow("1", "2", "3")
+        .AddRow("Short", "item", "Here")
+        .AddRow("Longer items go here", "Right Contents", "Centered Contents");
+    table.Config = TableConfiguration.MySqlSimple(); // Sets table formatting
 
     Console.Write(table.ToString());
     Console.ReadKey();
