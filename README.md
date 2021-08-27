@@ -1,6 +1,9 @@
 [![Nuget](https://img.shields.io/nuget/v/BetterConsoleTables.svg?style=flat-square)](https://www.nuget.org/packages/BetterConsoleTables)
 [![Nuget](https://img.shields.io/nuget/vpre/BetterConsoleTables?style=flat-square)](https://www.nuget.org/packages/BetterConsoleTables/2.0.2-rc1)
 
+![image](https://user-images.githubusercontent.com/1400380/131178503-4ba32545-44e4-4ffc-a77e-dba9e96c74b7.png)
+
+
 **Note:** Readme is still WIP
 
 # Better Consoles
