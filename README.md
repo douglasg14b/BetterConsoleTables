@@ -4,7 +4,7 @@
 ![image](https://user-images.githubusercontent.com/1400380/131178503-4ba32545-44e4-4ffc-a77e-dba9e96c74b7.png)
 
 
-**Note:** Readme is still WIP
+**Note:** Readme is still WIP for V2
 
 # Better Consoles
 
