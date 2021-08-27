@@ -1,5 +1,7 @@
 [![Nuget](https://img.shields.io/nuget/v/BetterConsoleTables.svg?style=flat-square)](https://www.nuget.org/packages/BetterConsoleTables)
+[![Nuget](https://img.shields.io/nuget/vpre/BetterConsoleTables?style=flat-square)](https://www.nuget.org/packages/BetterConsoleTables/2.0.0-beta1)
 
+**Note:** Readme is still WIP
 
 # Better Consoles
 
@@ -7,6 +9,7 @@ Faster, colorable, more configurable, and more robust console colors & tables fo
 
 * Better Console Colors
 * Better Console Tables
+
 
 
 # Better Console Tables
