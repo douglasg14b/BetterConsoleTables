@@ -1,5 +1,5 @@
 [![Nuget](https://img.shields.io/nuget/v/BetterConsoleTables.svg?style=flat-square)](https://www.nuget.org/packages/BetterConsoleTables)
-[![Nuget](https://img.shields.io/nuget/vpre/BetterConsoleTables?style=flat-square)](https://www.nuget.org/packages/BetterConsoleTables/2.0.0-beta1)
+[![Nuget](https://img.shields.io/nuget/vpre/BetterConsoleTables?style=flat-square)](https://www.nuget.org/packages/BetterConsoleTables/2.0.2-rc1)
 
 **Note:** Readme is still WIP
 
@@ -55,7 +55,7 @@ As you can see from the tests below, Version 2 takes ~1.1x as long as the defact
    * Pre-formatted strings
 * Print multiple tables
   * Automatically lines up the columns and their widths between the tables
-* Configurable table drawing formats
+* Configurable table box drawing formats
   * Several presets to choose from
   * Can change any of the table drawing characters in the configuration
   * Dividers, headers, outside & inside edges, and even corners are configurable

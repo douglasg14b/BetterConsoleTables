@@ -10,13 +10,14 @@
     <Copyright>Copyright 2020 (c) Douglas Gaskell. All rights reserved.</Copyright>
     <PackageTags>console table tables</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>2.0.0-beta1</Version>
-    <PackageVersion>2.0.0-beta1</PackageVersion>
+    <Version>2.0.2-rc1</Version>
+    <PackageVersion>2.0.2-rc1</PackageVersion>
     <Product>Better Console Tables</Product>
     <PackageLicenseExpression>LGPL-3.0-only</PackageLicenseExpression>
     <RepositoryUrl>https://github.com/douglasg14b/BetterConsoleTables</RepositoryUrl>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <PackageId>BetterConsoleTables</PackageId>
     <AssemblyName>BetterConsole.Tables</AssemblyName>
     <RootNamespace>BetterConsole.Tables</RootNamespace>  
   </PropertyGroup>

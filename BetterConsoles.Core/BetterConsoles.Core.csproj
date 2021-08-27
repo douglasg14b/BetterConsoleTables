@@ -10,8 +10,8 @@
     <Copyright>Copyright 2020 (c) Douglas Gaskell. All rights reserved.</Copyright>
     <PackageTags>console</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.1.0</Version>
-    <PackageVersion>1.1.0</PackageVersion>
+    <Version>1.2.0</Version>
+    <PackageVersion>1.2.0</PackageVersion>
     <Product>Better Console Core</Product>
     <PackageLicenseExpression>LGPL-3.0-only</PackageLicenseExpression>
     <RepositoryUrl>https://github.com/douglasg14b/BetterConsoleTables</RepositoryUrl>
