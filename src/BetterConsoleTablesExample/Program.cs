@@ -11,10 +11,27 @@ namespace BetterConsoleTables_Example
     {
         static void Main(string[] args)
         {
-            //ShowAlignedTables();
+
+            ShowAlignedTables();
             //PerformanceTest.Run();
-            ShowExampleTables();
-            Console.ReadLine();
+            //ShowExampleTables();
+            //Console.ReadLine();
+        }
+
+        private void NoRows()
+        {
+            ColumnHeader[] headers = new[]
+            {
+                new ColumnHeader("Left"),
+                new ColumnHeader("Left Header", Alignment.Right),
+                new ColumnHeader("Right Header", Alignment.Center, Alignment.Right),
+            };
+
+
+            var table = new Table(headers);
+            table.Config = TableConfiguration.Unicode();
+            var ret = table.ToString();
+            Console.Write(ret);
         }
 
         //Unused TEST
