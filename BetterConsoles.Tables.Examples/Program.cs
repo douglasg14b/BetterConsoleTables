@@ -24,6 +24,7 @@ namespace BetterConsoles.Tables.Examples
     {
         static void Main(string[] args)
         {
+            NoRows();
             // Examples.ValueFormatters();
             ShowPrettyTable();
             ShowBudgetTable();
@@ -35,6 +36,24 @@ namespace BetterConsoles.Tables.Examples
             //ShowExampleTables();
             Console.WriteLine("Complete");
             Console.ReadLine();
+        }
+
+        private static void NoRows()
+        {
+            Column[] headers = new[]
+            {
+                new Column("Left"),
+                new Column("Left Header"),
+                new Column("Right Header"),
+            };
+
+
+            var table = new Table(headers);
+            table.Config = TableConfig.Unicode();
+
+            var ret = table.ToString();
+
+            Console.Write(ret);
         }
 
         //Unused TEST

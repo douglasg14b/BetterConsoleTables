@@ -372,13 +372,6 @@ namespace BetterConsoles.Tables
                     builder.AppendLine(formattedRows[i]);
                 }
             }
-            else // There are no rows/data
-            {
-                if (Config.hasInnerRows)
-                {
-                    builder.AppendLine(innerDivider);
-                }
-            }
 
             if (Config.hasBottomRow)
             {
