@@ -3,6 +3,7 @@
 
 ![image](https://user-images.githubusercontent.com/1400380/131178503-4ba32545-44e4-4ffc-a77e-dba9e96c74b7.png)
 
+_Code that generates of the above table can be found [here](https://github.com/douglasg14b/BetterConsoleTables/blob/224aff4a9629b1a2341062ad7585897ef03c9080/BetterConsoles.Tables.Examples/Program.cs#L82-L194)_
 
 **Note:** Readme is still WIP for V2. Please refer to the Examples project for examples on the V2 API.
 
