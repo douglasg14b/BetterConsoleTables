@@ -32,6 +32,9 @@ namespace BetterConsoles.Colors.Extensions
             {
                 return Popcnt.PopCount((uint)styles);
             }
+            {
+                return Popcnt.PopCount((uint)styles);
+            }
                 
                 return Popcnt.PopCount((uint)styles);
             uint count = 0;
