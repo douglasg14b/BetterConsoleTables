@@ -28,7 +28,11 @@ namespace BetterConsoles.Colors.Extensions
         public static uint BitCount(this FontStyleExt styles)
         {
 #if NETCOREAPP3_0_OR_GREATER || NET5_0_OR_GREATER
-            if(RuntimeInformation.ProcessArchitecture == Architecture.X64 || RuntimeInformation.ProcessArchitecture == Architecture.X86)
+            if(RuntimeInformation.ProcessArchitecture == Architecture.X64 || RuntimeInformation.ProcessArchitecture == Architecture.X86) 
+            {
+                return Popcnt.PopCount((uint)styles);
+            }
+                
                 return Popcnt.PopCount((uint)styles);
             uint count = 0;
             while (styles != 0)
