@@ -19,4 +19,8 @@
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 
+    <Target Name="CopyPackage" AfterTargets="Pack">
+		<Copy SourceFiles="bin\$(Configuration)\$(PackageId).$(PackageVersion).nupkg" DestinationFolder="..\Packages" />
+		<Copy SourceFiles="bin\$(Configuration)\$(PackageId).$(PackageVersion).snupkg" DestinationFolder="..\Packages" />
+	</Target>
 </Project>

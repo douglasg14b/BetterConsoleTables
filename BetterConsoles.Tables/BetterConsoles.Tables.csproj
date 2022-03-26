@@ -10,8 +10,8 @@
     <Copyright>Copyright 2020 (c) Douglas Gaskell. All rights reserved.</Copyright>
     <PackageTags>console table tables</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>2.0.3-rc1</Version>
-    <PackageVersion>2.0.3-rc1</PackageVersion>
+    <Version>2.0.4-rc1</Version>
+    <PackageVersion>2.0.4-rc1</PackageVersion>
     <Product>Better Console Tables</Product>
     <PackageLicenseExpression>LGPL-3.0-only</PackageLicenseExpression>
     <RepositoryUrl>https://github.com/douglasg14b/BetterConsoleTables</RepositoryUrl>
@@ -47,5 +47,10 @@
       <_Parameter1>BetterConsoles.Tables.Examples</_Parameter1>
     </AssemblyAttribute>
   </ItemGroup>
+
+	<Target Name="CopyPackage" AfterTargets="Pack">
+		<Copy SourceFiles="bin\$(Configuration)\$(PackageId).$(PackageVersion).nupkg" DestinationFolder="..\Packages" />
+		<Copy SourceFiles="bin\$(Configuration)\$(PackageId).$(PackageVersion).snupkg" DestinationFolder="..\Packages" />
+	</Target>
 
 </Project>
