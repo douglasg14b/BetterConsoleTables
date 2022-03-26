@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.InteropServices;
 #if NETCOREAPP3_0_OR_GREATER || NET5_0_OR_GREATER
 using System.Runtime.Intrinsics.X86;
 #endif
@@ -27,7 +28,17 @@ namespace BetterConsoles.Colors.Extensions
         public static uint BitCount(this FontStyleExt styles)
         {
 #if NETCOREAPP3_0_OR_GREATER || NET5_0_OR_GREATER
-            return Popcnt.PopCount((uint)styles);
+            if(RuntimeInformation.ProcessArchitecture == Architecture.X64 || RuntimeInformation.ProcessArchitecture == Architecture.X86) 
+            {
+                return Popcnt.PopCount((uint)styles);
+            }
+            uint count = 0;
+            while (styles != 0)
+            {
+                count++;
+                styles &= (styles - 1);
+            }
+            return count;
 #else
             uint count = 0;
             while (styles != 0)
