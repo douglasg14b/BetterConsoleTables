@@ -297,3 +297,7 @@ table.Config = TableConfiguration.Unicode();
 
 ![alt text](https://raw.githubusercontent.com/douglasg14b/BetterConsoleTables/master/Screenshot_6.png)
 
+
+## Licence clarification
+
+This LGPL-v3 license applies For all changes as part of the Version2 branch, from commit 0a2e191f96f7f1bb14f8a768d788e0a4aa272430 onwards. Previous to this all code is licensed under MIT.
