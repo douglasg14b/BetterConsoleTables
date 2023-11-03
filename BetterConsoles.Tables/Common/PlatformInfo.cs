@@ -63,7 +63,11 @@ namespace BetterConsoles.Tables.Common
                 {
                     try
                     {
+#if WINDOWS
                         m_consoleAvailable = Environment.UserInteractive && Console.Title.Length > 0;
+#else
+                        m_consoleAvailable = Environment.UserInteractive && Console.WindowHeight > 0;
+#endif
                     }
                     catch
                     {
