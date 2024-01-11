@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net5.0;net471;netstandard2.0;netcoreapp2.1;netcoreapp3.1;</TargetFrameworks>   
+    <TargetFrameworks>net6.0;net471;netstandard2.0;</TargetFrameworks>   
     <Authors>Douglas Gaskell</Authors>
     <Description>Better tables for your console application</Description>
     <PackageProjectUrl>https://github.com/douglasg14b/BetterConsoleTables</PackageProjectUrl>
@@ -10,8 +10,8 @@
     <Copyright>Copyright 2020 (c) Douglas Gaskell. All rights reserved.</Copyright>
     <PackageTags>console table tables</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>2.0.4-rc1</Version>
-    <PackageVersion>2.0.4-rc1</PackageVersion>
+    <Version>2.0.5-rc1</Version>
+    <PackageVersion>2.0.5-rc1</PackageVersion>
     <Product>Better Console Tables</Product>
     <PackageLicenseExpression>LGPL-3.0-only</PackageLicenseExpression>
     <RepositoryUrl>https://github.com/douglasg14b/BetterConsoleTables</RepositoryUrl>
@@ -41,6 +41,9 @@
    <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.3' ">
       <DefineConstants>$(DefineConstants);STANDARD;STANDARD13</DefineConstants>
    </PropertyGroup>
+	<PropertyGroup Condition=" '$(OS)' == 'Windows_NT' ">
+		<DefineConstants>$(DefineConstants);WINDOWS</DefineConstants>
+	</PropertyGroup>
 
   <ItemGroup>
     <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
