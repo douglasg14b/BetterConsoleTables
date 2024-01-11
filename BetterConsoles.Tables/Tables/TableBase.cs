@@ -27,6 +27,8 @@ namespace BetterConsoles.Tables
     // Table class that has individual row items of type TCell
     public abstract class TableBase<TTable, THeader, TCell> where TTable : TableBase<TTable, THeader, TCell>
     {
+        private const int MIN_CONSOLE_WIDTH = 0;
+        
         protected const char paddingChar = ' ';
         protected List<THeader> m_headers;
         protected List<TCell[]> m_rows;
@@ -397,7 +399,11 @@ namespace BetterConsoles.Tables
                 {
                     if (Config.ExpandConsole && RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
                     {
-                        Console.WindowWidth = Math.Min(renderedRow.Length + 1, Console.LargestWindowWidth - 1);
+                        int newWidth = Math.Min(renderedRow.Length + 1, Console.LargestWindowWidth - 1);
+                        if (newWidth > MIN_CONSOLE_WIDTH)
+                        {
+                            Console.WindowWidth = newWidth;
+                        }
                     }
                     return renderedRow;
                 }
